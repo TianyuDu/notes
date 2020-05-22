@@ -1,0 +1,97 @@
+\documentclass[11pt]{article}
+
+\usepackage{spikey}
+\usepackage{amssymb}
+\usepackage[margin=1in]{geometry}
+
+\title{Probabilistic Graphical Models}
+\author{Tianyu Du}
+
+\begin{document}
+	\maketitle
+	\section{Graphical Representations}
+	\subsection{Factors}
+	\begin{definition}
+		Let $X_1, X_2, \cdots, X_k$ be a set of random variables, then a \textbf{factor} $\phi$ is a mapping from values of these random variables to $\R$.
+		\begin{align}
+			\phi: Val(X_1, X_2, \cdots, X_k) \to \R
+		\end{align}
+		The set of random variables $\{X_1, X_2, \cdots, X_k\}$ is defined as the \textbf{scope} of $\phi$.
+	\end{definition}
+	
+	\begin{definition}
+		Let $\phi_1$ and $\phi_2$ be two factors with scopes $\{A,B\}$ and $\{B, C\}$.
+		Then the \textbf{factor product} $\phi_1 \times \phi_2$ is a factor with scope $\{A, B, C\}$ defined as
+		\begin{align}
+			\phi_1 \cdot \phi_2 (a, b, c) = \phi_1(a, b) \cdot \phi_2(b, c)
+		\end{align}
+	\end{definition}
+	
+	\begin{definition}
+		Let $\phi$ be a factor with scope $\{A, B, C\}$, then \textbf{marginalizing $C$ from $\phi$} results in a factor $\phi'$ with scope $\{A, B\}$ defined as the following:
+		\begin{align}
+			\phi'(a, b) = \sum_{c \in Val(C)} \phi(a, b, c)
+		\end{align}
+	\end{definition}
+	
+	\begin{definition}
+		The \textbf{factor reduction} operation restricts $\phi(A,B,C)$ to take only a specific value of $C=c$, and results in a factor $\phi'$ with scope $\{A, B\}$.
+		\begin{align}
+			\phi'(a, b) = \phi(a, b, c)
+		\end{align}
+	\end{definition}
+	
+	\subsection{Semantics and Factorization}
+	\begin{definition}
+		A \textbf{Bayesian network} consists of (i) a directed acyclic graph (DAG) $G$ whose nodes correspond to random variables $X_1, \cdots, X_n$
+		 (ii) and a conditional probability distribution $P(X_i|Par_G(X_i))$ for each node $X_i$. The joint distribution is defined as the factorization
+		 \begin{align}
+		 	P(X_1, \cdots, X_n) &= \prod_{i=1}^n P(X_i|Par_G(X_i))
+		 \end{align}
+	\end{definition}
+	
+	\begin{definition}
+		Let $G$ be a graph over $X_1, \cdots, X_n$, then the joint probability $P$ \textbf{factorizes} over $G$ if and only if
+		\begin{align}
+			P(X_1, \cdots, X_n) &= \prod_{i=1}^n P(X_i|Par_G(X_i))
+		\end{align}
+	\end{definition}
+	
+	\subsection{Pass of Influences in Bayesian Networks}
+	\begin{definition}
+		A path $X_1 - \dots - X_k$ in Bayesian network $G$ is \textbf{active} if there is no explaining-away structure $X_{i-1} \rightarrow X_i \leftarrow X_{i+1}$ in it.
+	\end{definition}
+	
+	\begin{definition}
+		Let $Z \subseteq V_G$ be a set of random variables in the Bayesian network, then a path $X_1 - \dots - X_k$ in $G$ is \textbf{active conditioned on $Z$} if 
+		\begin{enumerate}
+			\item for all explaining-away structure $X_{i-1} \rightarrow X_i \leftarrow X_{i+1}$ in the path, $X_i$ or some decedents of $X_i$ are in $Z$,
+			\item \ul{and} no other node in the path is in $Z$.
+		\end{enumerate}
+	\end{definition}
+	
+	\begin{definition}
+		Let $X, Y, Z \subseteq V_G$, if there is no path from $X$ to $Y$ is active conditioned on $Z$, then $X$ and $Y$ are \textbf{d-separated} by $Z$ in graph $G$ denoted as $X \perp_G Y | Z$.
+	\end{definition}
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
