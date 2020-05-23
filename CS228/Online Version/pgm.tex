@@ -7,6 +7,9 @@
 \title{Probabilistic Graphical Models}
 \author{Tianyu Du}
 
+\newcommand{\dsep}[0]{\text{d-sep}}
+\newcommand{\pa}[0]{\text{Par}}
+
 \begin{document}
 	\maketitle
 	\section{Graphical Representations}
@@ -46,14 +49,14 @@
 		A \textbf{Bayesian network} consists of (i) a directed acyclic graph (DAG) $G$ whose nodes correspond to random variables $X_1, \cdots, X_n$
 		 (ii) and a conditional probability distribution $P(X_i|Par_G(X_i))$ for each node $X_i$. The joint distribution is defined as the factorization
 		 \begin{align}
-		 	P(X_1, \cdots, X_n) &= \prod_{i=1}^n P(X_i|Par_G(X_i))
+		 	P(X_1, \cdots, X_n) &= \prod_{i=1}^n P(X_i|\pa_G(X_i))
 		 \end{align}
 	\end{definition}
 	
 	\begin{definition}
 		Let $G$ be a graph over $X_1, \cdots, X_n$, then the joint probability $P$ \textbf{factorizes} over $G$ if and only if
 		\begin{align}
-			P(X_1, \cdots, X_n) &= \prod_{i=1}^n P(X_i|Par_G(X_i))
+			P(X_1, \cdots, X_n) &= \prod_{i=1}^n P(X_i|\pa_G(X_i))
 		\end{align}
 	\end{definition}
 	
@@ -71,8 +74,90 @@
 	\end{definition}
 	
 	\begin{definition}
-		Let $X, Y, Z \subseteq V_G$, if there is no path from $X$ to $Y$ is active conditioned on $Z$, then $X$ and $Y$ are \textbf{d-separated} by $Z$ in graph $G$ denoted as $X \perp_G Y | Z$.
+		Let $X, Y, Z \subseteq V_G$, if there is no path from $X$ to $Y$ is active conditioned on $Z$, then $X$ and $Y$ are \textbf{d-separated} by $Z$ in graph $G$ denoted as $\dsep_G(X, Y|Z)$.
 	\end{definition}
+	
+	\subsection{Independencies and Factorizations}
+	\begin{definition}
+		Let $X, Y, Z$ be random variables with distribution $P$, then $X \perp Y$ if and only if $P(X, Y) = P(X)P(Y)$, $X \perp Y | Z$ if and only if $P(X, Y|Z) = P(X|Z)P(Y|Z)$.
+	\end{definition}
+	
+	\begin{proposition}
+		Let $X, Y, Z$ be random variables with distribution $P$, then $X \perp Y$ if and only if $P(X,Y)$ factorizes as the following
+		\begin{align}
+			P(X, Y) \propto \phi_1(X) \phi_1(Y) \label{eq:1}
+		\end{align}
+		and $X \perp Y|Z$ if and only if $P(X, Y, Z)$ factorizes as
+		\begin{align}
+			P(X, Y, Z) \propto \phi_1(X, Z) \phi_1(Y, Z) \label{eq:2}
+		\end{align}
+		
+		\begin{proof}
+			Relation (\ref{eq:1}) follows the definition immediately.
+			Suppose $X \perp Y|Z$, then
+			\begin{align}
+				P(X, Y | Z) &= P(X|Z)P(Y|Z) \\
+				\iff P(X,Y,Z) &= P(X|Z)P(Y|Z)P(Z) \\
+				P(X,Y,Z) &\propto P(X|Z)P(Z)P(Y|Z)P(Z) \\
+				&= P(X,Z) P(Y,Z) \\
+				&= \phi_1(X, Z) \phi_1(Y, Z)
+			\end{align}
+		\end{proof}
+	\end{proposition}
+	
+%	\begin{proposition}
+%		Generally, let $P$ be a distribution on random variables $X_1, \cdots, X_n$, then $X_i \perp X_j$ if and only if the factorization of $P$ contains $\phi_i(X_i)$ and $\phi_j(X_j)$.
+%	\end{proposition}
+	
+	\begin{theorem}[Factorization$\implies$Independence]
+		If $P$ factorizes over $G$, and $\dsep_G(X,Y|Z)$ then $P$ satisfies $(X\perp Y|Z)$.
+%		\begin{proof}
+%			Let $V$ denote the set of all random variables in the network and $V \backslash \{X, Y, Z\} = \{V_1, V_2, \cdots, V_n\}$.
+%			Because $P$ factorizes over $G$,
+%			\begin{align}
+%				P(X, Y, Z) &= \sum_{V_i: i=1,\cdots, n} P(X, Y, Z, V_1, V_2, \cdots, V_n) \\
+%				 &=\sum_{V_i: i=1,\cdots, n} P(X|\pa_G(X)) P(Y|\pa_G(Y)) P(Z|\pa_G(Z)) \prod_{i=1}^n P(V_i|\pa_G(V_i))
+%			\end{align}
+%		\end{proof}
+	\end{theorem}
+	
+	\begin{theorem}
+		For any random variable $X_i$ in the Bayesian network, $X_i$ is d-separated from all its non-descendants by $\pa_G(X_i)$.
+	\end{theorem}
+	
+	\begin{corollary}
+		If $P$ factorizes over $G$, then in $P$, any variable is independent of its non-descendants given its parents.
+	\end{corollary}
+	
+	\begin{definition}
+		Let $\mc{I}(G)$ denote the collection of independencies implicitly encoded by d-separations in graph $G$,
+		\begin{align}
+			\mc{I}(G) := \{(X\perp Y|Z): X, Y, Z \in V\ s.t.\ \dsep_G (X, Y | Z)\}
+		\end{align}
+		If a distribution $P$ over $V$ satisfies all independencies in $\mc{I}(G)$, then we say that $G$ is an \textbf{I-map} (independency map) of $P$.
+		
+		That is, the I-map of distribution $P$ is a graphical representation of all (and probably more) independencies of $P$.
+	\end{definition}
+	
+	\begin{example}
+		Let $P$ be a probability distribution and let $G$ be an I-map for $P$. Let $\mc{I}(P)$ and $\mc{I}(G)$ denote sets of independencies in $P$ and $G$.
+		Suppose $G$ is a I-map of $P$, then all independencies encoded in $G$ are satisfied by $P$, therefore,
+		\begin{align}
+			\mc{I}(G) \subseteq \mc{I}(P)
+		\end{align}
+	\end{example}
+	
+	\begin{example}
+		The I-map can be used for two graphs as well. $G_1$ is a I-map of $G_1$ if $\mc{I}(G_1) \subseteq \mc{I}(G_2)$.
+		That is, $G_1$ is an I-map of $G_2$ if it does not make independence assumptions that are not true in $G_2$.
+	\end{example}
+	
+	\begin{theorem}[Independence$\implies$Factorization]
+		If $G$ is an I-map for $P$, that is, $P$ adheres all independencies encoded in $G$, then $P$ factorizes over $G$.
+%		\begin{proof}
+%			
+%		\end{proof}
+	\end{theorem}
 \end{document}
 
 
