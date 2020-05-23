@@ -158,6 +158,62 @@
 %			
 %		\end{proof}
 	\end{theorem}
+	\subsection{Template Models}
+	\begin{definition}
+		A \textbf{template variable} $X(U_1, \cdots, U_k)$ is instantiated (duplicated) multiple times in a graph.
+		\textbf{Template models} are languages that specify how ground variables (i.e., instantiations of template variables) inherit dependency model from template.
+	\end{definition}
+	
+	\begin{notation}
+		Let $X^{(t)}$ denote the variable at time $t \Delta$, where $\Delta$ is the time granularity in the discrete timeline.
+		Let $X^{(t:t')} = \{X^{(t)}, ^{(t+1)}, \cdots, X^{(t')}\}$ denote the set of variables over a period of time.
+	\end{notation}
+	
+	\begin{definition}
+		A Bayesian network is said to satisfy the \textbf{Markov assumption} if
+		\begin{align}
+			X^{(t+1)} \perp X^{(0:t-1)} | X^{(t)}
+		\end{align}
+		When Markov assumption holds, we may express the joint distribution of all $X$ as
+		\begin{align}
+			P(X^{(0:T)}) = P(X^{(0)}) \prod_{t=0}^{T-1} P(X^{(t+1)}|X^{(t)})
+		\end{align}
+	\end{definition}
+	
+	\begin{definition}
+		A series of random variables $X^{(0)}, X^{(1)}, \cdots, X^{(T)}$ satisfies the \textbf{time invariance} assumption if there exists a template probability model $P(X'|X)$ such that for all $t$,
+		\begin{align}
+			P(X^{(t+1)}|X^{(t)}) = P(X'|X)
+		\end{align}
+	\end{definition}
+	
+	\begin{definition}
+		A \textbf{2-time-slice Bayesian network} (2TNB) over $X_1, \cdots, X_n$ ($n$ random variables for each time step) is specified as a Bayesian network fragment such that
+		\begin{itemize}
+			\item The nodes include $X_1', \cdots, X_n'$ and a subset of $X_1, \cdots, X_n$,
+			\item and only the nodes $X_n', \cdots, X_n'$ have parents and a conditional probability distribution.
+		\end{itemize}
+		Further, the 2TBN defines a conditional distribution
+		\begin{align}
+			P(X'|X) = \prod_{i=1}^n P(X_i' | \pa(X_i'))
+		\end{align}
+	\end{definition}
+	
+	\begin{definition}
+		A \textbf{dynamic Bayesian network} (DNB) over $X_1, \cdots, X_n$ is defined by
+		\begin{itemize}
+			\item a 2TNB, BN$_{\rightarrow}$, over $X_1, \cdots, X_n$,
+			\item and a Bayesian network, BN$^{(0)}$, over $X_1^{(0)}, \cdots, X_n^{(0)}$.
+		\end{itemize}
+	\end{definition}
+	
+	\begin{definition}
+		For a trajectory over $0, \cdots, T$, the \textbf{ground (unrolled) network} of a DNB is a model such that
+		\begin{itemize}
+			\item the dependency model for $X_1^{(0)}, \cdots, X_n^{(0)}$ is copied from BN$^{(0)}$,
+			\item and the dependency model for $X_1^{(t)}, \cdots, X_n^{(t)}$ is copied from BN$_{\rightarrow}$.
+		\end{itemize}
+	\end{definition}
 \end{document}
 
 
