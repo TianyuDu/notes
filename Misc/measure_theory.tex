@@ -1,0 +1,96 @@
+\documentclass[11pt]{article}
+
+\usepackage{spikey}
+\usepackage{amssymb}
+\usepackage[margin=1in]{geometry}
+
+\usepackage{setspace}
+\linespread{1.5}
+
+
+\title{Notes on Measure Theory}
+\author{Tianyu Du}
+
+\begin{document}
+	\maketitle
+	\begin{theorem}
+		There is no measure $\mu$ on $(\R, \mc{P}(\R))$ satisfying the following two conditions: (i) $\mu((a, b]) = b-a$ for every $a < b$ and (ii) $\mu(x+A) = \mu(A)$ for all $a \in \R$ and $A \in \mc{P}(\R)$. 
+	\end{theorem}
+	
+	\begin{proof}
+		Suppose, for contradiction, there exists such a measure $\mu$, then $\mu((0, 1]) = 1 < \infty$.
+		
+		Claim: the only measure on $(\R, \mc{P}(\R))$ satisfying $\mu((0, 1]) < \infty$ and $\mu(x+A) = \mu(A)$ is the zero measure.
+		
+		To prove the claim, let $I := (0, 1]$ and defien the following equivalence relation on $I$:
+		\begin{align}
+			x \sim y \iff x - y \in \Q
+		\end{align}
+		the corresponding equivalence class of $x$ on $I$ can be written as
+		\begin{align}
+			[x] = \{x+r: r \in \Q \land x+r \in I\}
+		\end{align}
+		The collection of all such equivalence classes, $\mc{A}$, is a disjoint decomposition of $I$. (for every $x \in I$, $[x]$ must in $\mc{A}$ and $x \in [x]$ trivially. If there exists different $[x] \neq [y]$ but $[x] \cap [y] \neq \varnothing$, take $z \in [x] \cap [y]$, by the transitivity of equivalence relation, $x \sim z \sim y$. Therefore, $[x] = [y]$, contradiction.)
+		
+		For each $[x] \in \mc{A}$, take exactly one $a_x \in [x]$ and define set $A := \{a_x: [x] \in \mc{A}\}$. As a result, set $A$ satisfies the following two properties:
+		\begin{enumerate}
+			\item $\forall x \in I, \exists a_x \in A\ s.t.\ a_x \in [x]$.
+			\item $\forall x, y \in A$, $x \sim y \implies x = y$.
+		\end{enumerate}
+		Since $\Q \cup (-1, 1]$ is countable, let $(r_n)_{n \in \N}$ be an enumeration of all elements in it.
+		
+		For each $n \in \N$, define $A_n := r_n + A$.
+		
+		Note that for any $m, n$ such that $A_m \cap A_n \neq \varnothing$, take $x \in A_m \cap A_n$. By definition, 
+		\begin{align}
+				x &= r_n + a_n \\
+				x &= r_m + a_m
+		\end{align}
+		where $a_n, a_m \in A$ and $r_n, r_m \in \Q$. Consequently,
+		\begin{align}
+			a_n - a_m = r_m - r_n \in \Q
+		\end{align}
+		Therefore, $a_n \sim a_m$. By the second property of $A$, $a_n = a_m$. Thus, $r_m = r_n$ and $m = n$.
+		
+		Take the counterposition of what we just proved, $m \neq n \implies A_m \cap A_n = \varnothing$.
+		
+		Let $z \in (0, 1]$, there exists some $a \in A$ such that $z \in [x]$. That is, $z = x + r$ for some $r \in \Q \cap (-1, 1]$. There must exist some $m \in \N$ such that $r_m = r$, and consequently, $z \in A_m$.
+		 
+		Therefore, $(0, 1] \subseteq \bigcup_{n\in \N} A_n \subseteq (-1, 2]$ (the second relation is obvious). Moreover,
+		\begin{align}
+			\mu((0, 1]) \leq \mu(\bigcup_{n\in \N} A_n) \leq \mu((-1, 2]) = \mu((-1, 0]) + \mu((0, 1]) + \mu((1, 2]) = 3 \mu((0, 1])
+		\end{align}
+		Note that we just proved $\bigcup_{n\in \N} A_n$ is a disjoint union, hence,
+		\begin{align}
+			\mu((0, 1]) \leq \sum_{n=1}^\infty \mu(A_n) \leq 3\mu((0, 1]) \\
+			\implies((0, 1]) \mu \leq \sum_{n=1}^\infty \mu(A + r_n) \leq 3\mu((0, 1]) \\
+			\implies \mu((0, 1]) \leq \sum_{n=1}^\infty \mu(A) \leq 3\mu((0, 1])
+		\end{align}
+		Since $\mu((0, 1])$ is finite, the only value $\mu(A)$ can take is zero, and $\mu(I) = 0$ as well. Consequently, for any set $S \in \mc{P}(\R)$, if $S \subseteq I$, then $\mu(S) \leq \mu(I)$ and $\mu(S) = 0$. Otherwise, let $l = \floor{\inf(S)}$ and $u = \ceil{\sup(S)}$.
+		\begin{align}
+			I \subseteq S \subseteq \bigcup_{n=l}^{u} (n, n+1]
+		\end{align}
+		Therefore,
+		\begin{align}
+			0 \leq \mu(S) \leq \sum_{n=l}^{u} \mu(n + (0, 1]) = \sum_{n=l}^{u} \mu((0, 1]) = 0
+		\end{align}
+		It's shown that $\mu(S) = 0$ for every $S \subseteq \mc{P}(\R)$.
+		
+		This leads to a contradiction to the first property required ($\mu((a, b]) = b-a$).
+	\end{proof}
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
