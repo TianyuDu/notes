@@ -591,7 +591,75 @@
 	\begin{proof}
 		
 	\end{proof}
+	
+	\begin{remark}
+		Let $P$ be a distribution and let
+		\begin{align}
+			\mc{I}(P) = \{(X \indep Y|Z): P \tx{ satisfies }(X \indep Y|Z)\}
+		\end{align}
+		denote the collection of independencies satisfied by $P$. As mentioned before, $P$ factorizes over $G$ implies $G$ is an I-map for $P$, that is,
+		\begin{align}
+			\mc{I}(G) \subseteq \mc{I}(P)
+		\end{align}
+		Note that the converse is not always true.
+	\end{remark}
 
+	\begin{remark}
+		A graph is said to be \textbf{sparser} if it encodes more independencies, and therefore fewer connections and parameters.
+		Note that sparser graphs are more informative since they encode more independency assumptions.
+	\end{remark}
+
+	\begin{definition}
+		Let $P$ be a probability distribution, then a Bayesian network (or a Markov network) $G$ is a \textbf{perfect map} if $\mc{I}(G) = \mc{I}(P)$. That is, $G$ perfectly captures independencies in $P$.
+	\end{definition}
+
+	\begin{proposition}
+		Perfect maps are not unique.
+	\end{proposition}
+	
+	\begin{proof}
+		Let $G_1$ be the graph $X \rightarrow Y$ and $G_2$ be the graph $X \leftarrow Y$. Both $\mc{I}(G_1) = \mc{I}(G_2) = \varnothing$. Therefore, both $G_1$ and $G_2$ are I-maps for any distribution $P$.
+	\end{proof}
+	
+	\begin{definition}
+		Two graphs $G_1$ and $G_2$ over random variables $X_1, \cdots, X_n$ are \textbf{I-equivalent} if $\mc{I}(G_1) = \mc{I}(G_2)$. Many features of graphs are preserved within the same I-equivalence class.
+	\end{definition}
+	
+	\subsection{Log-Linear Models}
+	
+	\begin{definition}
+		A \textbf{log-linear representation} of distribution consists of a set of features $\{f_j\}$ and corresponding scopes $\{D_j\}$. The unnormalized distribution is defined as
+		\begin{align}
+			\tilde{P} &= \exp \left(- \sum_{j} w_j f_j(D_j) \right) \\
+			&= \sum_j \exp(-w_j f_j(D_j))
+		\end{align}
+		The exact distribution can be computed using partition function as usual.
+	\end{definition}
+	
+	\begin{example}[Metric MRFs]
+		For simplicity, suppose all random variables $X_i$ take values from space $V$.
+		Let $\mu: V \times V \to \R_+$ be a distance function satisfying
+		\begin{enumerate}
+			\item Reflexivity: $\mu(v, v) = 0$ for all $v \in V$,
+			\item Symmetry: $\mu(v_1, v_2) = \mu(v_2, v_1)$ for all $v_1, v_2 \in V$,
+			\item Triangle inequality: $\mu(v_1, v_2) \leq \mu(v_1, v_3) + \mu(v_3, v_2)$ for all $v_1, v_2, v_3 \in V$.
+		\end{enumerate}
+		Define the feature function $f_{ij}(X_i, X_j) = \mu(X_i, X_j)$ and $w_{ij} > 0$.
+		Using such metric, when more pairs $(X_i, X_j)$ in the network are far away from each other, the probability assigned to this network is lower.
+	\end{example}
+	
+	\begin{example}[Shared Features]
+		We may specify a set of scopes $S(f_k)$ for each feature $f_k$.
+		For example, if we want to apply feature $f_k$ to all adjacent nodes, then
+		\begin{align}
+			S(f_k) = \{\{X_i, X_j\}: X_i\tx{ and }X_j \tx{ are adjacent} \}
+		\end{align}
+		Applying the same weight $w_k$ and feature constructor $f_k$ on all scopes in $S(f_k)$, then summing them up gives the potential of feature $k$.
+		\begin{align}
+			w_k \sum_{D \in S(f_k)} f_k(D)
+		\end{align}
+		The product of potentials from all features gives the unnormalized probability.
+	\end{example}
 
 	\section{Inference}
 	\section{Learning}
