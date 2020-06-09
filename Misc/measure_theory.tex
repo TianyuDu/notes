@@ -140,7 +140,7 @@
 	
 	\section{Measurable Spaces and Measurable Maps}
 	\begin{definition}
-		Let $(X_1, \mc{A}_1)$ and $(X_2, \mc{A}_2)$ be two measurable spaces. A function $f: X_1 \to X_2$ is a \textbf{measurable map} with respect to $\mc{A}_1$ and $\mc{A}_2$ if
+		Let $(X_1, \mc{A}_1)$ and $(X_2, \mc{A}_2)$ be two measurable spaces. A function $f: X_1 \to X_2$ is a \textbf{measurable map} with respect to $\mc{A}_1$ and $\mc{A}_2$ (sometimes written as $f: (X_1, \mc{A}_1) \to (X_2, \mc{A}_2)$) if
 		\begin{align}
 			f^{-1}(A_2) \in \mc{A}_1\quad \forall A_2 \in \mc{A}_2
 		\end{align}
@@ -174,7 +174,9 @@
 	\end{theorem}
 	
 	\begin{proof}
+		For measurable spaces $(X_1, \mc{A}_1)$, $(X_2, \mc{A}_2)$, and $(X_3, \mc{A}_3)$, let $f: (X_1, \mc{A}_1) \to (X_2, \mc{A}_2)$ and $g: (X_2, \mc{A}_2) \to (X_3, \mc{A}_3)$ be two measurable functions.
 		
+		Let $A_3 \in \mc{A}_3$, $A_2 := g^{-1}(A_3) \in \mc{A}_2$. Similarly, $A_1 := f^{-1}(A_2) \in \mc{A}_1$ as well. Note that $A_1 = (g \circ f)^{-1}(A_3)$, therefore, $g \circ f$ is measurable.
 	\end{proof}
 	
 	\begin{theorem}
@@ -185,26 +187,143 @@
 		
 	\end{proof}
 	
-	\section{Lebesgue Measures}
+	\section{Lebesgue Measures and Lebesgue Integrals}
 	\begin{definition}
-		A function $f: X \to \R$ is a \textbf{simple function} if it can be written as a linear combination of finitely many indicator functions.
+		Let $(X, \mc{A}, \mu)$ be a measure space and for any $A \in \mc{A}$, the \textbf{Lebesgue integral} of indicator function $\mc{X}_A$ on $X$ is defined to be $\mu(A) \in [0, \infty]$.
 		\begin{align}
-			f = \sum_{i=1}^k c_i \mc{X}_{A_i}
+			\int_X \mc{X}_A\ d\mu := \mu(A)
+		\end{align}
+	\end{definition}
+	
+	\begin{definition}
+		A function $f: (X, \mc{A}) \to (\R, \mc{B}(\R))$ is a \textbf{simple function} (also termed step function and stair-case function) if there exists finitely many $A_1, \cdots, A_n \in \mc{A}$ and $c_1, \cdots, c_n \in \R$ such that
+		\begin{align}
+			f = \sum_{i=1}^n c_i \mc{X}_{A_i}
+		\end{align}
+		That is, a function $f$ is simple if it can be expressed as a linear combination of \emph{finitely} many indicators.
+		
+		Let $\mathbb{S}^+$ denote the set of non-negative simple functions.
+		\begin{align}
+			\mathbb{S}^+ := \left\{
+				f: (X, \mc{A}) \to (\R, \mc{B}(\R))\ \vert\ f \tx{ is simple and } f \geq 0
+			\right\}
+		\end{align}
+		Since simple functions only take finitely many values, every $f \in \mathbb{S}^+$ can be written as
+		\begin{align}
+			f = \sum_{t \in f(X)} t \mc{X}_{\{x\in X|f(x) = t\}} = \sum_{i=1}^n c_i \mc{X}_{A_i}, \quad c_i \geq 0
 		\end{align}
 	\end{definition}
 	
 	\begin{theorem}
 		Simple functions are measurable.
 	\end{theorem}
+
 	
-	\begin{definition}[Lebesgue integral for simple functions]
-	\end{definition}
-	
-	\begin{definition}[Lebesgue integral for non-negative functions]
+	\begin{definition}[Lebesgue integral for $\mathbb{S}^+$]
+		For $f \in \mathbb{S}^+$ such that $f = \sum_{i=1}^n c_i \mc{X}_{A_i}$ with $c_i \geq 0$, the \textbf{Lebesgue integral} of $f$ with respect to $\mu$ is
 		\begin{align}
-			\int_X f\ d\mu := \sup\left\{\int_X s\ d\mu: s \in \mathbb{S}^+ \tx{ and } s \leq f \right\}
+			I(f) = \int_X f\ d\mu := \sum_{i=1}^n c_i \mu(A_i) \in [0, \infty]
 		\end{align}
 	\end{definition}
+	
+	\begin{theorem}
+		The Lebesgue integral of $f, g \in \mathbb{S}^+$ satisfies
+		\begin{enumerate}
+			\item $I(\alpha f + \beta g) = \alpha I(f) + \beta I(g)$ for $\alpha, \beta \geq 0$,
+			\item $f \leq g \implies I(f) \leq I(g)$.
+		\end{enumerate}
+	\end{theorem}
+	
+	\begin{proof}
+		
+	\end{proof}
+	
+	\begin{definition}[Lebesgue integral for non-negative functions]
+		For $f \geq 0$, the \textbf{Lebesgue integral} of $f$ with respect to measure $\mu$ is
+		\begin{align}
+			I(f) = \int_X f\ d\mu := \sup\left\{\int_X s\ d\mu: s \in \mathbb{S}^+ \tx{ and } s \leq f \right\}
+		\end{align}
+	\end{definition}
+	
+	\begin{definition}
+		A function $f$ is \textbf{$\mu$-integrable} if $\int_X f\ d\mu < \infty$.
+	\end{definition}
+	
+	\begin{theorem}\label{thm:1}
+		Let $f, g: (X, \mc{A}) \to (\R, \mc{B}(\R))$ be measurable functions, if $f = g$ except a $\mu$-measure-zero set, that is,
+		\begin{align}
+			\mu\left(\left\{
+				x \in X\ |\ f(x) \neq g(x)
+			\right\}\right) = 0
+		\end{align}
+		then $\int_X f\ d\mu = \int_X g\ d\mu$.
+	\end{theorem}
+	
+	\begin{lemma}\label{lem:1}
+		Let $h: X \to [0, \infty)$ be a simple function, for any $\tilde{X} \subseteq X$ such that $\mu(\tilde{X}^c) = 0$, $\int_X h\ d\mu$ is independent from the value of $h$ on $\tilde{X}^c$.
+	\end{lemma}
+	
+	\begin{proof}[Proof. of Lemma \ref{lem:1}]
+		Since $h$ is a simple function, it takes only finitely many values and can be written as
+		\begin{align}
+			h = \sum_{t \in h(X)} t \mc{X}_{\{x \in X | h(x) = t\}} = \sum_{t \in h(X) \backslash \{0\}} t \mc{X}_{\{x \in X | h(x) = t\}}
+		\end{align}
+		define 
+		\begin{align}
+			\tilde{h} = \begin{cases}
+				h(x) &\tx{ if } x \in \tilde{X} \\
+				a &\tx{ if } x \in \tilde{X}^c
+			\end{cases}
+		\end{align}
+		where $a \in [0, \infty)$ takes an arbitrary value, and $\tilde{h} \in \mathbb{S}^+$ as well.
+		\begin{align}
+			\int_X \tilde{h}\ d\mu &= \sum_{t \in \tilde{h}(X)} t \mu(\{x \in X | \tilde{h}(x) = t\})\\
+			&= a \underbrace{\mu(\tilde{X}^c)}_{=0} + \sum_{t \in h(\tilde{X}) \backslash \{0\}} t \mu(\{x \in \tilde{X} | h(x) = t\}) \\
+			&= \sum_{t \in h(\tilde{X}) \backslash \{0\}} t \mu(\{x \in \tilde{X} | h(x) = t\}) \\
+			&= \sum_{t \in h(\tilde{X}) \backslash \{0\}} t \mu(\{x \in \tilde{X} | h(x) = t\}) +
+			\sum_{t \in h(\tilde{X}) \backslash\{0\}} t \underbrace{\mu(\{x \in \tilde{X}^c | h(x) = t\})
+			}_{=0} \\
+			&= \sum_{t \in h(\tilde{X}) \backslash \{0\}} t \mu(\{x \in \tilde{X} | h(x) = t\} \cup \{x \in \tilde{X}^c | h(x) = t\}) \\
+			&= \sum_{t \in h(\tilde{X}) \backslash \{0\}} t \mu(\{x \in X | h(x) = t\}) + \sum_{t' \in h(X) \backslash (h(\tilde{X}) \cup \{0\})} t' \mu(\{x \in X | h(x) = t'\}) \label{eq:1}
+		\end{align}
+		Note that $t'$s are values that are attained in $\tilde{X}^c$ only, therefore, $\{x \in X | h(x) = t'\} \subseteq \tilde{X}^c$ and have measure zero.
+		\begin{align}
+			(\ref{eq:1}) &= \sum_{t \in h(X) \backslash \{0\}} t \mu(\{x \in X | h(x) = t\}) = \int_X h\ d\mu
+		\end{align}
+		Hence, the value of $\int_X h\ d\mu$ is the same no matter how we change $h$'s values on $\tilde{X}^c$.
+	\end{proof}
+	
+	\begin{proof}[Proof. of Theorem \ref{thm:1}]
+		
+	\end{proof}
+
+	\begin{theorem}
+		Let $f, g: (X, \mc{A}) \to (\R, \mc{B}(\R))$ be measurable functions, if $f \leq g$ except a $\mu$-measure-zero set, then $\int_X f\ d\mu \leq \int_X g\ d\mu$.
+	\end{theorem}
+	
+	\begin{proof}
+		
+	\end{proof}
+
+	\begin{theorem}
+		Let $f: (X, \mc{A}) \to (\R, \mc{B}(\R))$ be measurable functions, $f = 0$ except a $\mu$-measure-zero set if and only if $\int_X f\ d\mu = 0$.
+	\end{theorem}
+	
+	\begin{proof}
+		
+	\end{proof}
+	
+	\begin{theorem}[Monotone Convergence Theorem]
+		For measure space $(X, \mc{A}, \mu)$, let $(f_n: X \to [0,\infty))_{n \in \N}$ be a sequence of measurable functions such that
+		\begin{enumerate}
+			\item $f_{n} \leq f_{n+1}$ except for a $\mu$-measure-zero set,
+			\item $\lim_{n\to\infty}$ converges point-wisely to $f$ except for a $\mu$-measure-zero set.
+		\end{enumerate}
+		Then,
+		\begin{align}
+			\lim_{n \to \infty} \int_X f_n\ d\mu = \int_X \lim_{n \to \infty} f_n\ d\mu = \int_X f\ d\mu
+		\end{align}
+	\end{theorem}
 \end{document}
 
 
