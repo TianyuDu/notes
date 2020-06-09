@@ -14,8 +14,8 @@
 
 \begin{document}
 	\maketitle
-	
-	\section{Sigma Algebra}
+	\tableofcontents
+	\section{Sigma Algebras}
 	\begin{definition}
 		For a set $X$, a set $\mc{A} \subseteq \mc{P}(X)$ is a \textbf{\s-algebra} if it satisfies the following properties:
 		\begin{enumerate}
@@ -294,7 +294,21 @@
 	\end{proof}
 	
 	\begin{proof}[Proof. of Theorem \ref{thm:1}]
-		
+		Let $\tilde{X} := \{x \in X: f(x) \neq g(x)\}$. Define
+		\begin{align}
+			\tilde{f}(x) = \begin{cases}
+				f(x) &\tx{ if } x \in \tilde{X} \\
+				0 &\tx{ if } x \in \tilde{X}^c
+			\end{cases} \quad
+			\tilde{g}(x) = \begin{cases}
+				g(x) &\tx{ if } x \in \tilde{X} \\
+				0 &\tx{ if } x \in \tilde{X}^c
+			\end{cases}
+		\end{align}
+		So that $\tilde{f} = \tilde{g}$ for all $x \in X$. By Lemma \ref{lem:1},
+		\begin{align}
+			\int_X f\ d\mu = \int_X \tilde{f}\ d\mu = \int_X \tilde{g}\ d\mu = \int_X g\ d\mu 
+		\end{align}
 	\end{proof}
 
 	\begin{theorem}
@@ -302,7 +316,21 @@
 	\end{theorem}
 	
 	\begin{proof}
-		
+		Let $\tilde{X} := \{x \in X: f(x) \leq g(x)\}$. Define
+		\begin{align}
+			\tilde{f}(x) = \begin{cases}
+				f(x) &\tx{ if } x \in \tilde{X} \\
+				0 &\tx{ if } x \in \tilde{X}^c
+			\end{cases} \quad
+			\tilde{g}(x) = \begin{cases}
+				g(x) &\tx{ if } x \in \tilde{X} \\
+				0 &\tx{ if } x \in \tilde{X}^c
+			\end{cases}
+		\end{align}
+		So that $\tilde{f} \leq \tilde{g}$ everywhere. By Lemma \ref{lem:1},
+		\begin{align}
+			\int_X f\ d\mu = \int_X \tilde{f}\ d\mu \leq \int_X \tilde{g}\ d\mu = \int_X g\ d\mu 
+		\end{align}
 	\end{proof}
 
 	\begin{theorem}
@@ -310,7 +338,7 @@
 	\end{theorem}
 	
 	\begin{proof}
-		
+		Similar to previous proofs.
 	\end{proof}
 	
 	\begin{theorem}[Monotone Convergence Theorem]
@@ -324,6 +352,10 @@
 			\lim_{n \to \infty} \int_X f_n\ d\mu = \int_X \lim_{n \to \infty} f_n\ d\mu = \int_X f\ d\mu
 		\end{align}
 	\end{theorem}
+	
+	\begin{proof}
+		
+	\end{proof}
 \end{document}
 
 
