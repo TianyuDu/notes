@@ -148,7 +148,7 @@
 	\end{definition}
 	
 	\begin{theorem}
-		Let $(X, \mc{A})$ be a measurable space, then the indicator function for any $A \in \mc{A}$, $\mc{X}_A: X \to \R$, is measurable with respect to $\mc{A}$ and $\mc{B}(\R)$.
+		Let $(X, \mc{A})$ be a measurable space, then the indicator (characteristic) function for any $A \in \mc{A}$, $\mc{X}_A: X \to \R$, is measurable with respect to $\mc{A}$ and $\mc{B}(\R)$.
 		\begin{align}
 			\mc{X}_A(x) := \begin{cases}
 				1 &\tx{ if } x \in A \\
@@ -187,12 +187,24 @@
 	
 	\section{Lebesgue Measures}
 	\begin{definition}
-		\textbf{step function}
+		A function $f: X \to \R$ is a \textbf{simple function} if it can be written as a linear combination of finitely many indicator functions.
+		\begin{align}
+			f = \sum_{i=1}^k c_i \mc{X}_{A_i}
+		\end{align}
 	\end{definition}
 	
 	\begin{theorem}
-		Step functions are measurable.
+		Simple functions are measurable.
 	\end{theorem}
+	
+	\begin{definition}[Lebesgue integral for simple functions]
+	\end{definition}
+	
+	\begin{definition}[Lebesgue integral for non-negative functions]
+		\begin{align}
+			\int_X f\ d\mu := \sup\left\{\int_X s\ d\mu: s \in \mathbb{S}^+ \tx{ and } s \leq f \right\}
+		\end{align}
+	\end{definition}
 \end{document}
 
 
