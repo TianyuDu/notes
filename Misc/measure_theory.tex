@@ -250,7 +250,7 @@
 	\end{definition}
 	
 	\begin{theorem}\label{thm:1}
-		Let $f, g: (X, \mc{A}) \to (\R, \mc{B}(\R))$ be measurable functions, if $f = g$ except a $\mu$-measure-zero set, that is,
+		Let $f, g: (X, \mc{A}) \to (\R, \mc{B}(\R))$ be measurable functions, if $0 \leq f = g$ except a $\mu$-measure-zero set, that is,
 		\begin{align}
 			\mu\left(\left\{
 				x \in X\ |\ f(x) \neq g(x)
@@ -294,42 +294,74 @@
 	\end{proof}
 	
 	\begin{proof}[Proof. of Theorem \ref{thm:1}]
-		Let $\tilde{X} := \{x \in X: f(x) \neq g(x)\}$. Define
+		Let $\tilde{X} := \{x \in X: f(x) \neq g(x)\}$, for each simple function $h$ in above set, define
 		\begin{align}
-			\tilde{f}(x) = \begin{cases}
-				f(x) &\tx{ if } x \in \tilde{X} \\
-				0 &\tx{ if } x \in \tilde{X}^c
-			\end{cases} \quad
-			\tilde{g}(x) = \begin{cases}
-				g(x) &\tx{ if } x \in \tilde{X} \\
+			\tilde{h} = \begin{cases}
+				h(x) &\tx{ if } x \in \tilde{X} \\
 				0 &\tx{ if } x \in \tilde{X}^c
 			\end{cases}
 		\end{align}
-		So that $\tilde{f} = \tilde{g}$ for all $x \in X$. By Lemma \ref{lem:1},
+		Then,
 		\begin{align}
-			\int_X f\ d\mu = \int_X \tilde{f}\ d\mu = \int_X \tilde{g}\ d\mu = \int_X g\ d\mu 
+			\int_X f\ d\mu &= \sup \left \{I(h)\ |\ h \in \mathbb{S}^+, h \leq f \tx{ on } X \right\} \\
+			&= \sup \left \{I(\tilde{h})\ |\ \tilde{h} \in \mathbb{S}^+, \tilde{h} \leq f \tx{ on } \tilde{X} \right\} \\
+			&= \sup \left \{I(\tilde{h})\ |\ \tilde{h} \in \mathbb{S}^+, \tilde{h} \leq g \tx{ on } \tilde{X} \right\} \\
+			&= \int_X g\ d\mu
 		\end{align}
+%		Let $\tilde{X} := \{x \in X: f(x) \neq g(x)\}$. Define
+%		\begin{align}
+%			\tilde{f}(x) = \begin{cases}
+%				f(x) &\tx{ if } x \in \tilde{X} \\
+%				0 &\tx{ if } x \in \tilde{X}^c
+%			\end{cases} \quad
+%			\tilde{g}(x) = \begin{cases}
+%				g(x) &\tx{ if } x \in \tilde{X} \\
+%				0 &\tx{ if } x \in \tilde{X}^c
+%			\end{cases}
+%		\end{align}
+%		So that $\tilde{f} = \tilde{g}$ for all $x \in X$. By Lemma \ref{lem:1},
+%		\begin{align}
+%			\int_X f\ d\mu = \int_X \tilde{f}\ d\mu = \int_X \tilde{g}\ d\mu = \int_X g\ d\mu 
+%		\end{align}
 	\end{proof}
 
 	\begin{theorem}
-		Let $f, g: (X, \mc{A}) \to (\R, \mc{B}(\R))$ be measurable functions, if $f \leq g$ except a $\mu$-measure-zero set, then $\int_X f\ d\mu \leq \int_X g\ d\mu$.
+		Let $f, g: (X, \mc{A}) \to (\R, \mc{B}(\R))$ be measurable functions, if $0 \leq f \leq g$ except a $\mu$-measure-zero set, then $\int_X f\ d\mu \leq \int_X g\ d\mu$.
 	\end{theorem}
 	
 	\begin{proof}
-		Let $\tilde{X} := \{x \in X: f(x) \leq g(x)\}$. Define
+%		Define
+%		\begin{align}
+%			\tilde{f}(x) = \begin{cases}
+%				f(x) &\tx{ if } x \in \tilde{X} \\
+%				0 &\tx{ if } x \in \tilde{X}^c
+%			\end{cases} \quad
+%			\tilde{g}(x) = \begin{cases}
+%				g(x) &\tx{ if } x \in \tilde{X} \\
+%				0 &\tx{ if } x \in \tilde{X}^c
+%			\end{cases}
+%		\end{align}
+%		So that $\tilde{f} \leq \tilde{g}$ everywhere.
+		By definition of Lebesgue integral,
 		\begin{align}
-			\tilde{f}(x) = \begin{cases}
-				f(x) &\tx{ if } x \in \tilde{X} \\
-				0 &\tx{ if } x \in \tilde{X}^c
-			\end{cases} \quad
-			\tilde{g}(x) = \begin{cases}
-				g(x) &\tx{ if } x \in \tilde{X} \\
+			\int_X f\ d\mu = \sup \left \{I(h)\ |\ h \in \mathbb{S}^+, h \leq f \tx{ on } X \right\}
+		\end{align}
+		Let $\tilde{X} := \{x \in X: f(x) \leq g(x)\}$, for each simple function $h$ in above set, define
+		\begin{align}
+			\tilde{h} = \begin{cases}
+				h(x) &\tx{ if } x \in \tilde{X} \\
 				0 &\tx{ if } x \in \tilde{X}^c
 			\end{cases}
 		\end{align}
-		So that $\tilde{f} \leq \tilde{g}$ everywhere. By Lemma \ref{lem:1},
+		Then $h \leq f \iff \tilde{h} \leq f$, and $I(h) = I(\tilde{h})$ by Lemma \ref{lem:1}.
 		\begin{align}
-			\int_X f\ d\mu = \int_X \tilde{f}\ d\mu \leq \int_X \tilde{g}\ d\mu = \int_X g\ d\mu 
+			\sup \left \{I(h)\ |\ h \in \mathbb{S}^+, h \leq f \tx{ on } X \right\} &= \sup \left \{I(\tilde{h})\ |\ \tilde{h} \in \mathbb{S}^+, \tilde{h} \leq f \tx{ on } \tilde{X} \right\} \\
+			&\leq \sup \left \{I(\tilde{h})\ |\ \tilde{h} \in \mathbb{S}^+, \tilde{h} \leq g \tx{ on } \tilde{X} \right\} \\
+			&= \int_X g\ d\mu
+		\end{align}
+		Therefore,
+		\begin{align}
+			\int_X f\ d\mu \leq \int_X g\ d\mu
 		\end{align}
 	\end{proof}
 
