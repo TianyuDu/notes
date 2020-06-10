@@ -304,10 +304,12 @@
 		Then,
 		\begin{align}
 			\int_X f\ d\mu &= \sup \left \{I(h)\ |\ h \in \mathbb{S}^+, h \leq f \tx{ on } X \right\} \\
-			&= \sup \left \{I(\tilde{h})\ |\ \tilde{h} \in \mathbb{S}^+, \tilde{h} \leq f \tx{ on } \tilde{X} \right\} \\
-			&= \sup \left \{I(\tilde{h})\ |\ \tilde{h} \in \mathbb{S}^+, \tilde{h} \leq g \tx{ on } \tilde{X} \right\} \\
+			&= \sup \left \{I(\tilde{h})\ |\ {h} \in \mathbb{S}^+, {h} \leq f \tx{ on } {X} \right\} \\
+			&= \sup \left \{I(\tilde{h})\ |\ {h} \in \mathbb{S}^+, {h} \leq f \tx{ on } \tilde{X} \right\} \label{eq:1}\\
+			&= \sup \left \{I(\tilde{h})\ |\ {h} \in \mathbb{S}^+, {h} \leq g \tx{ on } \tilde{X} \right\} \\
 			&= \int_X g\ d\mu
 		\end{align}
+		Where equation (\ref{eq:1}) holds because the value of $h$ on $\tilde{X}^c$ does not affect $I(\tilde{h})$.
 %		Let $\tilde{X} := \{x \in X: f(x) \neq g(x)\}$. Define
 %		\begin{align}
 %			\tilde{f}(x) = \begin{cases}
@@ -355,8 +357,8 @@
 		\end{align}
 		Then $h \leq f \iff \tilde{h} \leq f$, and $I(h) = I(\tilde{h})$ by Lemma \ref{lem:1}.
 		\begin{align}
-			\sup \left \{I(h)\ |\ h \in \mathbb{S}^+, h \leq f \tx{ on } X \right\} &= \sup \left \{I(\tilde{h})\ |\ \tilde{h} \in \mathbb{S}^+, \tilde{h} \leq f \tx{ on } \tilde{X} \right\} \\
-			&\leq \sup \left \{I(\tilde{h})\ |\ \tilde{h} \in \mathbb{S}^+, \tilde{h} \leq g \tx{ on } \tilde{X} \right\} \\
+			\sup \left \{I(h)\ |\ h \in \mathbb{S}^+, h \leq f \tx{ on } X \right\} &= \sup \left \{I(\tilde{h})\ |\ {h} \in \mathbb{S}^+, {h} \leq f \tx{ on } \tilde{X} \right\} \\
+			&\leq \sup \left \{I(\tilde{h})\ |\ {h} \in \mathbb{S}^+, {h} \leq g \tx{ on } \tilde{X} \right\} \\
 			&= \int_X g\ d\mu
 		\end{align}
 		Therefore,
