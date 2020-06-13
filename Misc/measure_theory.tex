@@ -328,11 +328,11 @@
 		\begin{align}
 			\int_X f\ d\mu &= \sup \left \{I(h)\ |\ h \in \mathbb{S}^+, h \leq f \tx{ on } X \right\} \\
 			&= \sup \left \{I(\tilde{h})\ |\ {h} \in \mathbb{S}^+, {h} \leq f \tx{ on } {X} \right\} \\
-			&= \sup \left \{I(\tilde{h})\ |\ {h} \in \mathbb{S}^+, {h} \leq f \tx{ on } \tilde{X} \right\} \label{eq:1}\\
+			&= \sup \left \{I(\tilde{h})\ |\ {h} \in \mathbb{S}^+, {h} \leq f \tx{ on } \tilde{X} \right\} \label{eq:2}\\
 			&= \sup \left \{I(\tilde{h})\ |\ {h} \in \mathbb{S}^+, {h} \leq g \tx{ on } \tilde{X} \right\} \\
 			&= \int_X g\ d\mu
 		\end{align}
-		Where equation (\ref{eq:1}) holds because the value of $h$ on $\tilde{X}^c$ does not affect $I(\tilde{h})$.
+		Where equation (\ref{eq:2}) holds because the value of $h$ on $\tilde{X}^c$ does not affect $I(\tilde{h})$.
 %		Let $\tilde{X} := \{x \in X: f(x) \neq g(x)\}$. Define
 %		\begin{align}
 %			\tilde{f}(x) = \begin{cases}
@@ -474,7 +474,7 @@
 	\end{proof}
 
 	\begin{lemma}[Fatou's Lemma]\label{fatous}
-		For a measure space $(X, \mc{A}, \mu)$, let $(f_n)_{n \in \N}$ be a sequence of measurable functions with range $[0, \infty]$, then
+		For a measure space $(X, \mc{A}, \mu)$, let $(f_n)_{n \in \N}$ be a sequence of \ul{measurable} (note this is the only requirement) functions with range $[0, \infty]$, then
 		\begin{align}
 			\int_X \liminf_{n \to \infty} f_n\ d\mu \leq \liminf_{n \to \infty} \int_X f_n\ d\mu
 		\end{align}
@@ -487,6 +487,41 @@
 	\begin{proposition}
 		Limit of measurable functions is measurable.
 	\end{proposition}
+	
+	\begin{proof}[Proof of Lemma \ref{fatous}]
+	    Define
+	    \begin{align}
+	        g_n(x) &:= \inf_{k \geq n} f_k(x)
+	       % \\
+	       % g &:= \lim_{n \to \infty} g_n \equiv \liminf_{n\to\infty}f_n
+	    \end{align}
+	    Note that $(g_n)$ is a non-decreasing sequence of measurable functions, the Monotone convergence theorem suggests
+	    \begin{align}
+	        \int_X \lim_{n \to \infty} g_n\ d\mu
+	        = \lim_{n\to\infty} \int_X g_n\ d\mu
+	    \end{align}
+	    Since $g_n$'s are non-decreasing, $g_n = \inf_{k \geq n} g_k$ for every $n \in \N$ and $\lim g_n = \liminf g_n$.
+	    Consequently,
+	    \begin{align}
+	        \lim_{n\to\infty}\int_X g_n\ d\mu = \liminf_{n\to\infty}\int_X g_n\ d\mu
+	    \end{align}
+	    Moreover, for every $n \in \N$, $g_n \leq f_n$ by the definition, therefore,
+	    \begin{align}
+	        \int_X g_n\ d\mu \leq \int_X f_n\ d\mu
+	    \end{align}
+	    This inequality is preserved under $\liminf$, hence
+	    \begin{align}
+	        \liminf_{n\to\infty}\int_X g_n\ d\mu \leq \liminf_{n\to\infty}\int_X f_n\ d\mu
+	    \end{align}
+	    Put everything together, 
+	    \begin{align}
+	        \int_X \liminf_{n \to \infty}f_n\ d\mu
+	        \equiv\int_X \lim_{n \to \infty} g_n\ d\mu
+	        = \lim_{n\to\infty} \int_X g_n\ d\mu
+	        = \liminf_{n\to\infty}\int_X g_n\ d\mu
+	        \leq \liminf_{n\to\infty}\int_X f_n\ d\mu
+	    \end{align}
+	\end{proof}
 \end{document}
 
 
