@@ -262,7 +262,7 @@
 	\end{proof}
 	
 	\begin{definition}[Lebesgue integral for non-negative functions]
-		For $f \geq 0$, the \textbf{Lebesgue integral} of $f$ with respect to measure $\mu$ is
+		For $f \geq 0$ be a measurable function, the \textbf{Lebesgue integral} of $f$ with respect to measure $\mu$ is
 		\begin{align}
 			I(f) = \int_X f\ d\mu := \sup\left\{\int_X s\ d\mu: s \in \mathbb{S}^+ \tx{ and } s \leq f \right\}
 		\end{align}
@@ -472,7 +472,14 @@
 			&= \sum_{n=1}^\infty \int_X g_n\ d\mu
 		\end{align}
 	\end{proof}
-	
+
+	\begin{lemma}[Fatou's Lemma]\label{fatous}
+		For a measure space $(X, \mc{A}, \mu)$, let $(f_n)_{n \in \N}$ be a sequence of measurable functions with range $[0, \infty]$, then
+		\begin{align}
+			\int_X \liminf_{n \to \infty} f_n\ d\mu \leq \liminf_{n \to \infty} \int_X f_n\ d\mu
+		\end{align}
+	\end{lemma}
+
 	\begin{proposition}
 		Infimum of measurable functions is measurable.
 	\end{proposition}
