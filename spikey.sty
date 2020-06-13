@@ -1,0 +1,152 @@
+\ProvidesPackage{spikey}
+% Macro package by Tianyu Du.
+
+\RequirePackage[utf8]{inputenc}
+\RequirePackage[english]{babel}
+\RequirePackage{amsthm}
+\RequirePackage{amsmath}
+\RequirePackage{amssymb}
+\RequirePackage{dsfont}
+% \RequirePackage[pdftex,dvipsnames]{xcolor}  % Coloured text etc.
+\RequirePackage{xcolor}  % Coloured text etc.
+\RequirePackage{pifont} % http://ctan.org/pkg/pifont
+\RequirePackage{soul}
+\RequirePackage{centernot}
+\RequirePackage{mathtools}
+
+% ================ Shortcuts ================
+\newcommand{\tx}[1]{\text{{#1}}}
+\newcommand{\mc}[1]{\mathcal{{#1}}}
+\newcommand{\tbf}[1]{\textbf{#1}}
+\newcommand{\cmark}[0]{\ding{51}}
+\newcommand{\xmark}[0]{\ding{55}}
+
+% ================ Colors ================
+\newcommand{\ve}[1]{\textbf{#1}}
+\newcommand{\bs}[1]{\boldsymbol{#1}}
+\newcommand{\red}[1]{\textcolor{red}{#1}}
+\newcommand{\green}[1]{\textcolor{green}{#1}}
+\newcommand{\blue}[1]{\textcolor{blue}{#1}}
+\newcommand{\orange}[1]{\textcolor{orange}{#1}}
+
+% ================ Theorems ================
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{notation}{Notation}[section]
+\newtheorem{corollary}{Corollary}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{proposition}{Proposition}[section]
+\newtheorem{remark}{Remark}[section]
+\newtheorem{assumption}{Assumption}[section]
+\newtheorem{example}{Example}[section]
+\newtheorem{property}{Property}[section]
+\newtheorem{axiom}{Axiom}[section]
+\newtheorem{rules}{Rule}[section]
+\newtheorem{algorithm}{Algorithm}[section]
+\newtheorem{conclusion}{Conclusion}[section]
+\newtheorem{criterion}{Conclusion}[section]
+
+% ================ Mathematics: General ================
+% Change QED symbol to blacksquare
+\renewcommand\qedsymbol{$\blacksquare$}
+
+% Bold symbols for frequently used vector.
+\newcommand{\vex}[0]{\textbf{x}}
+\newcommand{\bfX}[0]{\textbf{X}}
+\newcommand{\vey}[0]{\textbf{y}}
+\newcommand{\vez}[0]{\textbf{z}}
+\newcommand{\vea}[0]{\textbf{a}}
+\newcommand{\veb}[0]{\textbf{b}}
+\newcommand{\vep}[0]{\textbf{p}}
+\newcommand{\vew}[0]{\textbf{w}}
+\newcommand{\vet}[0]{\textbf{t}}
+\newcommand{\veh}[0]{\textbf{h}}
+
+
+% Fields
+\newcommand{\R}[0]{\mathbb{R}} % Real numbers.
+\newcommand{\C}[0]{\mathbb{C}} % Complex numbers
+\newcommand{\Q}[0]{\mathbb{Q}} % Rationals
+\newcommand{\N}[0]{\mathbb{N}} % Naturals
+\newcommand{\Z}[0]{\mathbb{Z}} % Integers
+\newcommand{\nnr}[0]{\mathbb{R}_{\geq0}}
+\newcommand{\RM}[2]{M_{{#1} \times {#2}}(\mathbb{R})}  % Real matrix space.
+\newcommand{\M}[3]{M_{{#1} \times {#2}}({#3})}  % Arbitrary matrix space.
+
+% Operators
+\newcommand{\id}[1]{\mathds{1}\{{#1}\}} % Indicator Function
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\argmin}{argmin}
+
+% Indices
+\newcommand{\upi}[0]{^{(i)}} % Upper index i.
+\newcommand{\upj}[0]{^{(j)}} % Upper index j.
+
+% ================ Algebra ================
+% Transformations.
+\newcommand{\trans}[3]{{#1}: {#2} \to {#3}}
+% Coordinate.
+\newcommand{\coor}[2]{[\vec{{#1}}]_{{#2}}}
+% Transformation's matrix representation
+\newcommand{\tmat}[3]{[{#1}]_{{#2}}^{{#3}}}
+% Vector set, with index.
+\newcommand{\vset}[3]{\{\vec{{#1}_{#2}}, \dots, \vec{{#1}_{#3}}\}}
+% Scalar set, with index.
+\newcommand{\sset}[3]{\{{{#1}_{#2}}, \dots, {{#1}_{#3}}\}}
+% Tuple of scalars.
+\newcommand{\stuple}[3]{({{#1}_{#2}}, \dots, {{#1}_{#3}})}
+% Inner product.
+\newcommand{\inner}[2]{\langle {#1}, {#2} \rangle}
+% Absolute value.
+\newcommand{\abs}[1]{\left \vert {#1} \right \vert}
+% Norm.
+\newcommand{\norm}[1]{\vert \vert {#1} \vert \vert}
+
+% ================ Calculus & Real Analysis ================
+% Partial Derivative
+\newcommand{\pd}[2]{\frac{\partial{#1}}{\partial{#2}}}
+\newcommand{\curl}[0]{\text{curl}}
+\newcommand{\grad}[0]{\text{grad}}
+\newcommand{\dive}[0]{\text{div}}
+
+\newcommand{\seq}[2]{({#1}_{#2})_{{#2}=1}^\infty} % Sequence.
+\newcommand{\ser}[2]{\sum_{{#2}=1}^\infty {#1}_{#2}} % Series.
+
+% ================ Statistics ================
+% Expectation
+\newcommand{\expe}[0]{\mathbb{E}}
+\newcommand{\expect}[1]{\mathbb{E}\left[{#1}\right]}
+% Variance
+\newcommand{\var}[1]{\mathbb{V}[{#1}]}
+% Probability
+\newcommand{\prob}[1]{\mathbb{P}[{#1}]}
+\newcommand{\indep}{\perp \!\!\! \perp}
+
+% ================ Economics ================
+\newcommand{\pref}[0]{\succsim} % Weakly preferred.
+
+% ================ Markers ================
+% \newcommand{\todo}[1]{\hl{#1}}
+
+
+
+\RequirePackage{lipsum}                     % Dummytext
+\RequirePackage{xargs}                      % Use more than one optional parameter in a new commands
+\RequirePackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
+
+
+
+\newcommandx{\unsure}[2][1=]{\todo[linecolor=red,backgroundcolor=red!25,bordercolor=red,#1]{#2}}
+\newcommandx{\change}[2][1=]{\todo[linecolor=blue,backgroundcolor=blue!25,bordercolor=blue,#1]{#2}}
+\newcommandx{\info}[2][1=]{\todo[linecolor=OliveGreen,backgroundcolor=OliveGreen!25,bordercolor=OliveGreen,#1]{#2}}
+\newcommandx{\improvement}[2][1=]{\todo[linecolor=Plum,backgroundcolor=Plum!25,bordercolor=Plum,#1]{#2}}
+\newcommandx{\thiswillnotshow}[2][1=]{\todo[disable,#1]{#2}}
+
+
+
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+
+
