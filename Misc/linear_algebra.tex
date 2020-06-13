@@ -9,9 +9,87 @@
 \linespread{1.5}
 
 
-\title{Topics on Linear Algebra \\ \small MIT 18.065}
+\title{Topics on Linear Algebra \\ \small Based on MIT 18.06sc and 18.065}
 \author{Tianyu Du}
 
 \begin{document}
 	\maketitle
+	\section{Projection onto Subspaces}
+	\section{Singular Value Decomposition}
+	\paragraph{Decomposition}
+	Let $A \in \R^{m \times n}$, suppose $m > n$, then $A$ can be written as
+		\begin{align}
+			A = U \Sigma V^T
+		\end{align}
+	where $U$ is a $m \times m$ orthonormal matrix with \textbf{left singular vectors} as its columns,
+	$\Sigma$ is a $m \times n$ orthonormal matrix with \textbf{singular values} on its diagonal, and $V$ is a $n \times n$ matrix with \textbf{right singular vectors} as its columns.
+	Note that $\Sigma$ is constructed by stacking a $n \times n$ diagonal matrix $diag(\sigma_1, \sigma_2, \cdots, \sigma_n)$ with a zero matrix of size $(m-n) \times n$.
+	\begin{align}
+		U &= [\mathbf{u}_1 | \mathbf{u}_2 |\cdots | \mathbf{u}_m] \\
+		\Sigma &= \begin{bmatrix}
+			\sigma_1 & 0 & \cdots & 0 \\
+			0 & \sigma_2 & \cdots & 0 \\
+			0 & 0 & \ddots & 0 \\
+			0 & 0 & \cdots & \sigma_n \\
+			0 & \cdots & \ddots & 0 \\
+			0 & 0 & 0 & 0 \\
+		\end{bmatrix} \\
+		V &= [\mathbf{v}_1 | \mathbf{v}_2 | \cdots | \mathbf{v}_m]
+	\end{align}
+	\paragraph{Singular Values and Singular Vectors} Like solving $A \vex = \lambda \vex$ for eigenvalues/vectors, here we wish to identify $r = rank(A)$ triples of $(\mathbf{v}_i, \sigma_i, \mathbf{u}_i)$ such that $(\mathbf{v}_i)$ and $(\mathbf{u}_i)$ are orthonormal.
+	Moreover, these singular values/vectors need to satisfy
+	\begin{align}
+		A \mathbf{v}_i &= \sigma_i \mathbf{u}_i\quad \forall i \in \{1, 2, \cdots, r\} \\
+		A \mathbf{v}_j &= 0\quad \forall j \in \{r+1, r+2, \cdots, n\}\quad (\dagger)
+	\end{align}
+
+	\paragraph{Finding Singular Values and Vectors}
+	Suppose $A = U \Sigma V^T$,
+	\begin{align}
+		A^T A &= (U \Sigma V^T)^T U \Sigma V^T \\
+		&= V \Sigma^T U^T U \Sigma V^T \\
+		&= V \Sigma^T \Sigma V^T \\
+		&= V diag(\sigma_1^2, \sigma_2^2, \cdots, \sigma_n^2) V^T
+	\end{align}
+	Because $A^T A$ is symmetric and positive semidefinite, all of it's eigenvalues are non-negative. Moreover, $A^TA$ admits the eigenvalue decomposition $Q \Lambda Q^T$. Therefore, $V = Q$ and $\sigma_i = \sqrt{\lambda_i}$.
+	
+	Similarly, $A A^T = U \Sigma \Sigma^T U^T$, therefore, $U$ consists of eigenvectors of $A A^T$.
+	
+	Note that $rank(A^TA) = rank(A) = r$, $A^T A \in \R^{n \times n}$ has $n - r$ eigenvectors corresponding to $\lambda = 0$.
+	Let $\{\mathbf{v}_1, \cdots, \mathbf{v}_r\}$ denote eigenvectors of $A^TA$ with $\lambda > 0$, and $\{\mathbf{v}_{r+1}, \cdots, \mathbf{v}_{n}\}$ are eigenvectors with zero eigenvalues.
+	
+	Similarly, let $\{\mathbf{u}_1, \cdots, \mathbf{u}_r\}$ and $\{\mathbf{u}_{r+1}, \cdots, \mathbf{u}_m\}$ denote eigenvectors of $AA^T$ corresponding to positive and zero eigenvalues.
+
+	As a result, the representation in $(\dagger)$ can be written as 
+	\begin{align}
+		A [\mathbf{v}_1, \cdots, \mathbf{v}_r, \cdots, \mathbf{v}_n] &= [\mathbf{u}_1, \cdots, \mathbf{u}_r, \cdots, \mathbf{u}_n, \cdots, \mathbf{u}_m] \begin{bmatrix}
+			\sigma_1 & \cdots & 0 \\
+			0 & \ddots & 0 \\
+			0 & \cdots & \sigma_n \\
+			0 & \cdots & 0 \\
+		\end{bmatrix} \\
+		\implies A V &= U \Sigma \\
+		\implies A V V^T &= U \Sigma V^T \\
+		\implies A &= U \Sigma V^T
+	\end{align}
+	Which gives us the singular value decomposition of $A$.
+	\section{Graph Clustering}
 \end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
