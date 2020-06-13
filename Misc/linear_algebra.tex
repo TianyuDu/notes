@@ -25,7 +25,7 @@
 	$\Sigma$ is a $m \times n$ orthonormal matrix with \textbf{singular values} on its diagonal, and $V$ is a $n \times n$ matrix with \textbf{right singular vectors} as its columns.
 	Note that $\Sigma$ is constructed by stacking a $n \times n$ diagonal matrix $diag(\sigma_1, \sigma_2, \cdots, \sigma_n)$ with a zero matrix of size $(m-n) \times n$.
 	\begin{align}
-		U &= [\mathbf{u}_1 | \mathbf{u}_2 |\cdots | \mathbf{u}_m] \\
+		U &= [\mathbf{u}_1 , \mathbf{u}_2 ,\cdots , \mathbf{u}_m] \\
 		\Sigma &= \begin{bmatrix}
 			\sigma_1 & 0 & \cdots & 0 \\
 			0 & \sigma_2 & \cdots & 0 \\
@@ -34,7 +34,7 @@
 			0 & \cdots & \ddots & 0 \\
 			0 & 0 & 0 & 0 \\
 		\end{bmatrix} \\
-		V &= [\mathbf{v}_1 | \mathbf{v}_2 | \cdots | \mathbf{v}_m]
+		V &= [\mathbf{v}_1 , \mathbf{v}_2 , \cdots , \mathbf{v}_m]
 	\end{align}
 	\paragraph{Singular Values and Singular Vectors} Like solving $A \vex = \lambda \vex$ for eigenvalues/vectors, here we wish to identify $r = rank(A)$ triples of $(\mathbf{v}_i, \sigma_i, \mathbf{u}_i)$ such that $(\mathbf{v}_i)$ and $(\mathbf{u}_i)$ are orthonormal.
 	Moreover, these singular values/vectors need to satisfy
@@ -60,7 +60,7 @@
 	
 	Similarly, let $\{\mathbf{u}_1, \cdots, \mathbf{u}_r\}$ and $\{\mathbf{u}_{r+1}, \cdots, \mathbf{u}_m\}$ denote eigenvectors of $AA^T$ corresponding to positive and zero eigenvalues.
 
-	As a result, the representation in $(\dagger)$ can be written as 
+	As a result, the representation in $(\dagger)$ can be written as (p.s. probably this argument only works for $rank(A) = n$?)
 	\begin{align}
 		A [\mathbf{v}_1, \cdots, \mathbf{v}_r, \cdots, \mathbf{v}_n] &= [\mathbf{u}_1, \cdots, \mathbf{u}_r, \cdots, \mathbf{u}_n, \cdots, \mathbf{u}_m] \begin{bmatrix}
 			\sigma_1 & \cdots & 0 \\
