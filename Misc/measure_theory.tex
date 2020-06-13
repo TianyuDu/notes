@@ -453,7 +453,7 @@
 	\end{proof}
 	
 	\begin{corollary}
-		Let $(g_n)_{n \in \N}$ be a sequence of non-negative measurable functions, $g_n: X \to [0, \infty]$, then the series
+		Let $(g_n)_{n \in \N}$ be a sequence of non-negative measurable functions, $g_n: X \to [0, \infty]$, then the integral of series equals the series of integrals:
 		\begin{align}
 			\sum_{n=1}^\infty g_n: X \to [0, \infty]
 		\end{align}
@@ -462,6 +462,16 @@
 			\int_X \sum_{n=1}^\infty g_n\ d\mu = \sum_{n=1}^\infty \int_X g_n\ d\mu
 		\end{align}
 	\end{corollary}
+	
+	\begin{proof}
+		Let $g_k := \sum_{n=1}^k g_n$ and $g = \lim_{k \to \infty} g_k$. Since $g_n \geq 0$, $g_k \leq g_{k+1}$ for every $k$. By the monotone convergence theorem,
+		\begin{align}
+			\int_X \lim_{k\to\infty} g_k &= \lim_{k\to \infty} \int_X g_k\ d\mu \\
+			\implies \int_X \sum_{n=1}^\infty g_n\ d\mu &= \lim_{k \to \infty} \int_X \sum_{n=1}^k  g_n\ d\mu \\
+			&= \lim_{k \to \infty} \sum_{n=1}^k \int_X g_n\ d\mu \\
+			&= \sum_{n=1}^\infty \int_X g_n\ d\mu
+		\end{align}
+	\end{proof}
 	
 	\begin{proposition}
 		Infimum of measurable functions is measurable.
