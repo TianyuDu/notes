@@ -411,8 +411,57 @@
 	\end{theorem}
 	
 	\begin{proof}
+		Since $f_{n} \leq f_{n+1}$ almost everywhere, and $f_n \to f$ point-wisely almost everywhere, therefore,
+		\begin{align}
+			f_n \leq f_{n+1} \leq f\quad \forall n \in \N \tx{ except a set with zero measure}
+		\end{align}
+		Consequently,
+		\begin{align}
+			\int_X f_n\ d\mu &\leq \int_X f_{n+1}\ d\mu\leq \int_X f\ d\mu\quad \forall n \in \N
+		\end{align}
+		As a result,
+		\begin{align}
+			\lim_{n \to \infty} \int_X f_n\ d\mu \leq \int_X f\ d\mu \label{eq:res1}
+		\end{align}
+		Let $h$ be a simple function such that $0 \leq h \leq f$, let $\varepsilon > 0$, define
+		\begin{align}
+			X_n &:= \left\{x \in X\ |\ f_n(x) \geq (1 - \varepsilon) h(x) \right\} \\
+			\tilde{X} &:= \bigcup_{n=1}^\infty X_n
+		\end{align}
+		Note that $f_{n+1} \geq f_n$ implies $X_{n} \subseteq X_{n+1}$ and $\lim_{n\to \infty} X_n = \tilde{X}$.
+		Moreover, because the monotonicity and point-wise convergence happen almost everywhere in $X$, 
+		almost all $x \in X$ are in some $X_n$ with $n$ sufficiently large, hence $\mu(\tilde{X}^c) = 0$.
 		
+		Because $X_n \subseteq X$ and $f_n \geq 0$, for any $n \in \N$,
+		\begin{align}
+			\int_X f_n\ d\mu &\geq \int_{X_n}f_n\ d\mu \geq \int_{X_n} (1 - \varepsilon) h\ d\mu \\
+			\implies \lim_{n \to \infty} \int_X f_n\ d\mu &\geq \lim_{n \to \infty} \int_{X_n} (1 - \varepsilon) h\ d\mu \\
+			&= \int_{\tilde{X}} (1 - \varepsilon) h\ d\mu \\
+			&= \int_{X} (1 - \varepsilon) h\ d\mu
+		\end{align}
+		Where the last equality holds because $\mu(\tilde{X}^c) = 0$.
+		
+		Since this inequality holds for all $\varepsilon > 0$,
+		\begin{align}
+			\lim_{n \to \infty} \int_X f_n\ d\mu &\geq \lim_{\varepsilon \to 0^+} \int_{X} (1 - \varepsilon) h\ d\mu = \int_X h\ d\mu
+		\end{align}
+		moreover, this inequality holds for all $0 \leq h \leq f$,
+		\begin{align}
+			\lim_{n \to \infty} \int_X f_n\ d\mu &\geq \int_{X} f\ d\mu \label{eq:res2}
+		\end{align}
+		Results (\ref{eq:res1}) and (\ref{eq:res2}) lead to the conclusion.
 	\end{proof}
+	
+	\begin{corollary}
+		Let $(g_n)_{n \in \N}$ be a sequence of non-negative measurable functions, $g_n: X \to [0, \infty]$, then the series
+		\begin{align}
+			\sum_{n=1}^\infty g_n: X \to [0, \infty]
+		\end{align}
+		is measurable, and
+		\begin{align}
+			\int_X \sum_{n=1}^\infty g_n\ d\mu = \sum_{n=1}^\infty \int_X g_n\ d\mu
+		\end{align}
+	\end{corollary}
 	
 	\begin{proposition}
 		Infimum of measurable functions is measurable.
