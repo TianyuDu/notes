@@ -522,6 +522,101 @@
 	        \leq \liminf_{n\to\infty}\int_X f_n\ d\mu
 	    \end{align}
 	\end{proof}
+	
+	\begin{definition}
+	    For a measure space $(X, \mc{A}, \mu)$, define the \textbf{$\mc{L}^p$ space} of measurable functions to be
+	    \begin{align}
+	        \mc{L}^p(X, \mc{A}, \mu) := 
+	        \left\{
+	            f: X \to \R\ \Big|\ 
+	            f \tx{ is measurable and }
+	            \left(\int_X |f|^p\ d\mu \right)^{1/p} < \infty
+	        \right\}
+	    \end{align}
+	    where $\left(\int_X |f|^p\ d\mu \right)^{1/p}$ is called the \textbf{$p$-norm} of $f$, denoted as $\norm{f}_p$. For simplicity, the $\mc{L}^p$ space is often denoted as $\mc{L}^p(\mu)$.
+	\end{definition}
+	
+	\begin{definition}
+	    Let $(X, \mc{A}, \mu)$ be a measure space, let $f \in \mc{L}^1(\mu)$ be an arbitrary function. $f$ can be expressed as the sum of two non-negative functions $f^+$ and $f^-$.
+	    In particular,
+	    \begin{align}
+	        f^+(x) := \begin{cases}
+	            f(x) &\tx{ if } f(x) \geq 0 \\
+	            0 &\tx{ otherwise}
+	        \end{cases}\quad
+	        f^-(x) := \begin{cases}
+	            -f(x) &\tx{ if } f(x) \leq 0 \\
+	            0 &\tx{ otherwise}
+	        \end{cases}
+	    \end{align}
+	    Then, the \textbf{Lebesgue integral} of function $f$ is defined as
+	    \begin{align}
+	        \int_X f\ d\mu := \int_X f^+\ d\mu - \int_X f^-\ d\mu
+	    \end{align}
+	\end{definition}
+	
+	\begin{theorem}[Lebesgue's Dominated Convergence Theorem]
+        For a measure space $(X, \mc{A}, \mu)$, let $f_n: X \to \R$ be measurable function for each $n \in \N$.
+        Suppose $(f_n)$ converges point-wisely to $f: X \to \R$ almost everywhere w.r.t. measure $\mu$\footnote{When we say a property holds almost everywhere w.r.t. measure $\mu$, it means the set on which this property does not hold has measure zero under $\mu$.}.
+        If there exists $g \in \mc{L}^1(X, \mc{A}, \mu)$ such that $|f_n| \leq g$ for all $n \in \N$, then
+        \begin{enumerate}
+            \item $f_n \in \mc{L}^1(X, \mc{A}, \mu)$ for every $n \in \N$ and $f \in \mc{L}^1(X, \mc{A}, \mu)$,
+            \item we may exchange the limit and integral.
+            \begin{align}
+                \lim_{n \to \infty} \int_X f_n\ d\mu &= \int_X f\ d\mu
+            \end{align}
+        \end{enumerate}
+	\end{theorem}
+	
+	\begin{proof}
+	    Since $|f_n| \leq g$, for every $n \in \N$
+	    \begin{align}
+	        \int_X |f_n|\ d\mu \leq \int_X g\ d\mu \leq \int_X |g|\ d\mu < \infty
+	    \end{align}
+	    Because $f$ is the point-wise limit of $f_n$ almost everywhere, $|f| \leq g$ almost everywhere as well.
+	    Therefore,
+	    \begin{align}
+	        \int_X |f|\ d\mu \leq \int_X g\ d\mu < \infty
+	    \end{align}
+	    Hence $f_n, f \in \mc{L}^1$ for all $n$.
+	    
+	    To prove the second conclusion, we are going to show a stronger result:
+	    \begin{align}
+	        \lim_{n \to \infty} \int_X \abs{f_n - f}\ d\mu = 0
+	    \end{align}
+	    By triangle inequality, the following inequality holds almost everywhere for every $n \in \N$:
+	    \begin{align}
+	        \abs{f_n - f} \leq \abs{f_n} - \abs{f} \leq 2 g
+	    \end{align}
+	    as a result,
+	    \begin{align}
+	        \int_X  \abs{f_n - f}\ d\mu \leq \int_X \abs{f_n}\ d\mu + \int_X \abs{f}\ d\mu
+	    \end{align}
+	    Define
+	    \begin{align}
+            h_n := 2g - \abs{f_n - f} \geq 0
+	    \end{align}
+	    and $h_n$ is measurable as well. By Fatou's lemma,
+	    \begin{align}
+	        \int_X \liminf_{n\to\infty} h_n\ d\mu &\leq  \liminf_{n\to\infty} \int_X h_n\ d\mu \\
+	        \implies
+	        \int_X 2g\ d\mu - \int_X \underbrace{\liminf_{n \to \infty} \abs{f_n - f}}_{=0}\ d\mu &\leq \int_X 2g\ d\mu - \limsup_{n\to\infty} \int_X \abs{f_n - f}\ d\mu \\
+	        \implies
+	        \int_X 2g\ d\mu &\leq \int_X 2g\ d\mu - \limsup_{n\to\infty} \int_X \abs{f_n - f}\ d\mu \\
+	        \implies
+	        \liminf_{n\to\infty} \int_X \abs{f_n - f}\ d\mu &\leq \limsup_{n\to\infty} \int_X \abs{f_n - f}\ d\mu \leq 0 \\
+	        \implies \lim_{n \to \infty}\int_X \abs{f_n - f}\ d\mu &\leq 0 \label{eq:3}
+	    \end{align}
+	    Moreover,
+	    \begin{align}
+	        0 &\leq \abs{\int_X f_n\ d\mu - \int_X f\ d\mu} = \abs{\int_X f_n - f\ d\mu}
+	        \leq \abs{\int_X \abs{f_n - f}\ d\mu} = \int_X \abs{f_n - f}\ d\mu
+	    \end{align}
+	    Hence, \textbf{TODO: FIX HERE}
+	    \begin{align}
+	        \lim_{n \to \infty} \int_X \abs{f_n - f}\ d\mu \geq 0
+	    \end{align}
+	\end{proof}
 \end{document}
 
 
