@@ -430,7 +430,7 @@
 		\end{align}
 		Note that $f_{n+1} \geq f_n$ implies $X_{n} \subseteq X_{n+1}$ and $\lim_{n\to \infty} X_n = \tilde{X}$.
 		Moreover, because the monotonicity and point-wise convergence happen almost everywhere in $X$, 
-		almost all $x \in X$ are in some $X_n$ with $n$ sufficiently large, hence $\mu(\tilde{X}^c) = 0$ (this holds for the limit $\tilde{X}^c$ only but not for $\tilde{X}_n^c$).
+		almost all $x \in X$ are in some $X_n$ with $n$ sufficiently large, hence $\mu(\tilde{X}^c) = 0$ (this holds for the limit $\tilde{X}^c$ only but not necessarily for $X_n^c$).
 		
 		Because $X_n \subseteq X$ and $f_n \geq 0$, for any $n \in \N$,
 		\begin{align}
@@ -580,7 +580,7 @@
 	    \end{align}
 	    Hence $f_n, f \in \mc{L}^1$ for all $n$.
 	    
-	    To prove the second conclusion, we are going to show a stronger result:
+	    To prove the second conclusion, we are going to show
 	    \begin{align}
 	        \lim_{n \to \infty} \int_X \abs{f_n - f}\ d\mu = 0
 	    \end{align}
@@ -605,16 +605,22 @@
 	        \int_X 2g\ d\mu &\leq \int_X 2g\ d\mu - \limsup_{n\to\infty} \int_X \abs{f_n - f}\ d\mu \\
 	        \implies
 	        \liminf_{n\to\infty} \int_X \abs{f_n - f}\ d\mu &\leq \limsup_{n\to\infty} \int_X \abs{f_n - f}\ d\mu \leq 0 \\
-	        \implies \lim_{n \to \infty}\int_X \abs{f_n - f}\ d\mu &\leq 0 \label{eq:3}
+	        \implies \lim_{n \to \infty}\int_X \abs{f_n - f}\ d\mu &\leq 0
+	    \end{align}
+	    Since $\abs{f_n - f} \geq 0$, the limit must be non-negative as well, hence
+	    \begin{align}
+	        \lim_{n \to \infty}\int_X \abs{f_n - f}\ d\mu &= 0 \label{eq:3}
 	    \end{align}
 	    Moreover,
 	    \begin{align}
-	        0 &\leq \abs{\int_X f_n\ d\mu - \int_X f\ d\mu} = \abs{\int_X f_n - f\ d\mu}
-	        \leq \abs{\int_X \abs{f_n - f}\ d\mu} = \int_X \abs{f_n - f}\ d\mu
+	        0 &\leq \abs{\int_X f_n\ d\mu - \int_X f\ d\mu} \\
+	        &= \abs{\int_X f_n - f\ d\mu} \\
+	        &\leq \int_X \abs{f_n - f}\ d\mu \to 0 \tx{ as } n \to \infty
 	    \end{align}
-	    Hence, \textbf{TODO: FIX HERE}
+	    By squeeze theorem,
 	    \begin{align}
-	        \lim_{n \to \infty} \int_X \abs{f_n - f}\ d\mu \geq 0
+	        \lim_{n \to \infty} \abs{\int_X f_n\ d\mu - \int_X f\ d\mu} = 0 \\
+	        \implies \lim_{n \to \infty} \int_X f_n\ d\mu = \int_X f\ d\mu
 	    \end{align}
 	\end{proof}
 \end{document}
