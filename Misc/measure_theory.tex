@@ -212,6 +212,13 @@
 	
 	\section{Lebesgue Measures and Lebesgue Integrals}
 	\begin{definition}
+	    For measurable space $(\R, \mc{B}(\R)))$, the \textbf{Lebesgue measure} $\mu: \mc{B}(\R) \to [0, \infty]$ is defined as
+	    \begin{align}
+	        \mu([a, b)) = b - a
+	    \end{align}
+	\end{definition}
+	
+	\begin{definition}
 		Let $(X, \mc{A}, \mu)$ be a measure space and for any $A \in \mc{A}$, the \textbf{Lebesgue integral} of indicator function $\mc{X}_A$ on $X$ is defined to be $\mu(A) \in [0, \infty]$.
 		\begin{align}
 			\int_X \mc{X}_A\ d\mu := \mu(A)
@@ -624,7 +631,7 @@
 	    \end{align}
 	\end{proof}
 	
-	\section{Caratheodory's Extension Theorem}
+	\section{Constructing Measures}
 	
 	\begin{definition}
 	    For an arbitrary set $X$ and its power set $\mc{P}(X)$, $\mc{A} \subseteq \mc{P}(X)$ is said to be a \textbf{semi-ring} of sets if it satisfies
@@ -663,6 +670,41 @@
 	
 	\begin{proof}
 	\end{proof}
+	
+	\begin{definition}
+	    Let $F: \R \to \R$ be an monotonically non-decreasing function, then we may construct a pre-measure $\mu_F$ on semi-ring $\mc{A} := \{[a,b)\ |\ a, b \in \R, a \leq b\}$ such that
+	    \begin{align}
+	        \tilde{mu}_F([a, b)) &= F(b^-) - F(a^-) \\&= \lim_{x \to b^-} F(x) - \lim_{x \to a^-} F(x)\quad (\dagger)
+	    \end{align}
+	    By the Caratheodory's extension theorem, there exists a unique measure $\mu_F$ on $\sigma(\mc{A}) = \mc{B}(\R)$ satisfying ($\dagger$).
+	    Then $\mu_F$ is essentially the measure constructed by $F$ on measurable space $(\R, \mc{B}(\R))$.
+	\end{definition}
+	
+	\begin{example}
+	    Let $F(x) := x$, then $\mu_F([a, b)) = b - a$ is the Lebesgue measure.
+	\end{example}
+	
+	\begin{example}
+	    Let $F(x) := 1\ \forall x \in \R$, then $\mu_F([a, b)) = 0$ is the zero measure.
+	\end{example}
+	
+	\begin{example}
+	    Let $F(x) = \id{x \geq 0}$, then for every $\varepsilon_1, \varepsilon_2 > 0$, $\mu_F([-\varepsilon_1, \varepsilon_2)) = 1$ and for any other half-open interval $I$ such that $0 \notin I$, $\mu_F(I) = 0$. In this case, $\mu_F$ is the Dirac measure $\delta_0$.
+	\end{example}
+	
+	\begin{example}
+	    Let $F: \R \to \R$ be any non-decreasing and continuously differentiable function, so that $F': \R \to [0, \infty)$.
+	    Because $\mu_F([a, b))$ satisfies
+	    \begin{align}
+	        \mu_F([a, b)) &= F(b^-) - F(a^-) \\
+	        &= F(b) - F(a) \\
+	        &= \int_a^b F'(x)\ dx
+	    \end{align}
+	    where $dx$ is the normal Lebesgue measure and $F'(x)$ is called the density function. Then for every $A \in \mc{B}(\R)$, the measure
+	    \begin{align}
+	        \mu_F(A) := \int_A F'(x)\ dx
+	    \end{align}
+	\end{example}
 \end{document}
 
 
