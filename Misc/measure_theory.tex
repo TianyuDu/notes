@@ -705,6 +705,52 @@
 	        \mu_F(A) := \int_A F'(x)\ dx
 	    \end{align}
 	\end{example}
+	
+	\begin{notation}
+	    For now, let's consider the measure space $(\R, \mc{B}(\R), \lambda)$, where $\lambda$ is the Lebesgue measure defined as $\lambda([a, b)) := b - a$.
+	\end{notation}
+	
+	\begin{definition}
+	    Let $\lambda$ and $\mu$ be two measures on the measurable space $(\R, \mc{B}(\R))$ (for our consideration here, $\lambda$ is the Lebesgue measure), then $\mu$ is \textbf{absolutely continuous} (w.r.t. the Lebesgue measure) if
+	    \begin{align}
+	        \forall A \in \mc{B}(\R),\ \lambda(A) = 0 \implies \mu(A) = 0
+	    \end{align}
+	    denoted as $\mu \ll \lambda$.
+	\end{definition}
+	
+	\begin{definition}
+	    A measure $\mu$ is \textbf{singular} w.r.t. $\lambda$ if there exists $N \in \mc{B}(\R)$ such that
+	    \begin{align}
+	        \lambda(N) = 0 \land \mu(N^c) = 0
+	    \end{align}
+	    denoted as $\mu \perp \lambda$.
+	\end{definition}
+	
+	\begin{definition}
+	    A measure $\mu$ on $(X, \mc{A})$ is said to be \textbf{\s-finite} if there exists a sequence of $(E_n)$ satisfying
+	    \begin{align}
+	        X = \bigcup_{n=1}^\infty E_n
+	    \end{align}
+	    and $\mu(E_n) < \infty$ for all $n \in \N$.
+	\end{definition}
+
+    \begin{theorem}[Lebesgue Decomposition]
+        Let $\mu: \R \to [0, \infty)$ be a \s-finite measure on $(\R, \mc{B}(\R))$, there exists a \ul{unique} decomposition $\mu_{ac}, \mu_s: \mc{B}(\R) \to [0, \infty]$ such that
+        \begin{align}
+            \mu &= \mu_{ac} + \mu_s \\
+            \mu_{ac} &\ll \lambda \\
+            \mu_s &\perp \lambda
+        \end{align}
+    \end{theorem}
+    
+    \begin{theorem}[Radon-Nikodym]
+        Let $\mu$ be \s-finite measure on measurable space $(X, \mc{A})$ such that $\mu$ is absolutely continuous (w.r.t. the Lebesgue measure $\lambda$).
+        Then there is a ($\lambda$-)measurable map $h: \R \to [0, \infty)$ (the density function) satisfying
+        \begin{align}
+            \mu (A) = \int_A h\ d\lambda\quad \forall A \in \mc{B}(\R)
+        \end{align}
+        The measurable map $h$ is defined as the \textbf{Radon–Nikodym derivative}, and is often denoted as $\frac{d \mu}{d \lambda}$.
+    \end{theorem}
 \end{document}
 
 
