@@ -69,6 +69,48 @@
 		\end{align}
 	\end{definition}
 	
+	\begin{theorem}\label{thm:a}
+        Let $\mc{O}$ and $\mc{C}$ denote collections of open and close sets in $\R$, by definition, $\mc{B}(\R) \equiv \sigma(\mc{O})$. Moreover, $\mc{B}(\R) = \sigma(\mc{C})$ as well.
+    \end{theorem}
+    
+    \begin{proof}
+        For every open interval $(a, b) \subseteq \R$,
+        \begin{align}
+            (a, b) = \bigcup_{n=1}^\infty [a + 1/n, b - 1/n] \in \sigma(\mc{C})
+        \end{align}
+        Let $A \in \mc{B}(\R)$, then $A$ is resulted from a sequence of (countable) intersection, (countable) union and complement operations on open sets.
+        Because every open sets can be written as a countable union of open intervals, $A$ can also be constructed using a sequence of above-mentioned operations from open intervals. Hence $A$ is resulted from a sequence of operations on elements in $\sigma(\mc{C})$ as well, therefore $A \in \sigma(\mc{C})$.
+
+        Similarly, for every closed interval $[a, b] \subseteq \R$,
+        \begin{align}
+            [a, b] = \bigcup_{n=1}^\infty \left(
+            (-\infty, a - 1/n)
+            \cup (b +1/n, \infty)
+            \right)^c \in \sigma(\mc{O})
+        \end{align}
+        Therefore, for every $F\in \sigma(\mc{O})$, $F \in \sigma(\mc{C})$ and $\sigma(\mc{O}) = \sigma(\mc{C})$.
+    \end{proof}
+    
+    \begin{theorem}
+        Let $\mc{H}$ denote the collection of all half-open intervals in $\R$:
+        \begin{align}
+            \mc{H} := \{[a, b)\ |\ a, b \in \R, a \leq b\}
+        \end{align}
+        then $\mc{B}(\R) = \sigma(\mc{H})$.
+    \end{theorem}
+
+    \begin{proof}
+        For every half-open interval $[a, b)$, it can be expressed as
+        \begin{align}
+            [a, b) = \left((-\infty, a) \cup [b, \infty) \right)^c \in \mc{B}(\R)
+        \end{align}
+        and every open interval can be written as
+        \begin{align}
+            (a, b) = \bigcup_{n=1}^\infty [a+1/n, b) \in \sigma(\mc{H})
+        \end{align}
+        The proof is similar to Theorem (\ref{thm:a}).
+    \end{proof}
+
 	\begin{remark}
 		We do not use the entire power set for analysis because it's too large to construct a sensible measure on (see Theorem \ref{thm:nomeasure}).
 	\end{remark}
