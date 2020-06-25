@@ -7,10 +7,12 @@
 \usepackage{setspace}
 \linespread{1.15}
 
-\newcommand{\s}[0]{$\sigma$}
+\numberwithin{equation}{section}
 
 \title{Notes on Measure Theory}
 \author{Tianyu Du}
+
+\newcommand{\s}[0]{$\sigma$}
 
 \begin{document}	
 	\maketitle
@@ -797,6 +799,56 @@
         \end{align}
         The measurable map $h$ is defined as the \textbf{Radon–Nikodym derivative}, and is often denoted as $\frac{d \mu}{d \lambda}$.
     \end{theorem}
+    
+    \section{Image Measure and Change of Variables}
+    \begin{definition}
+        Let $h: (X, \mc{A}) \to (Y, \mc{C})$ be a measureable function, let $\mu$ be a measure on $(X, \mc{A})$. The \textbf{image measure} (pushforward measure) of $h$ and $\mu$, denoted as $h_*\mu$, is a measure on $(Y, \mc{C})$ defined as following:
+        \begin{align}
+            \forall c \in \mc{C},\ h_*\mu(c) := \mu(h^{-1}(c)) 
+        \end{align}
+        Because $h$ is measurable, $h^{-1}(c) \in \mc{A}$ all the time and the above notion of image measure is well-defined.
+    \end{definition}
+
+    \begin{example}
+        Let $(\Omega, \mc{F}, \mu)$ be a probability space and $X: \Omega \to \R$ is a random variable. Then the probability distribution $P$ of $X$ on $\R$ is precisely the image measure of $\mu$:
+        \begin{align}
+            P(X = x) := \mu(X^{-1}(\{x\}))
+        \end{align}
+    \end{example}
+
+    \begin{theorem}[Change of Variables]
+        Consider a measure space $(X, \mc{A}, \mu)$, measurable space $(Y, \mc{C})$, and a measurable function $h: X \to Y$.
+        Let $h_{*\mu}$ denote the image measure on $(Y, \mc{C})$.
+        Moreover, suppose there is a integrable function $g: Y \to \R$, then
+        \begin{align}
+            \int_Y g\ d(h_*\mu) = \int_X g\circ h\ d\mu
+        \end{align}
+    \end{theorem}
+    
+    \begin{proof}
+        \ul{(i) The change of variable formula holds for characteristic functions.}
+        
+        Let $c \in \mc{C}$ and $\mc{X}_c$ be the characteristic function, then
+        \begin{align}
+            \int_Y \mc{X}_c(y)\ d(h_*\mu) &= h_*\mu(c) = \mu (h^{-1}(c)) \\
+            \int_X \mc{X}_c(h(x))\ d\mu &= \mu(\{x \in X: h(x) \in c\}) = \mu(h^{-1}(c))
+        \end{align}
+        \ul{(ii) The change of variable formula holds for simple functions.}
+        
+        Let $g = \sum_{i=1}^n \lambda_i \mc{X}_{c_i}$ be a simple function on $(Y, \mc{C})$, by the linearity of integrals,
+        \begin{align}
+            \int_Y \sum_{i=1}^n \lambda_i \mc{X}_{c_i}\ d(h_*\mu) &= \sum_{i=1}^n \int_Y \lambda_i \mc{X}_{c_i}\ d(h_*\mu) \\
+            &= \sum_{i=1}^n \lambda_i \mu(h^{-1}(c_i))
+        \end{align}
+        and
+        \begin{align}
+            \int_X \sum_{i=1}^n \lambda_i \mc{X}_{c_i}(h(x))\ d\mu &= \sum_{i=1}^n \int_X \lambda_i \mc{X}_{c_i}(h(x))\ d\mu \\
+            &= \sum_{i=1}^n \lambda_i \mu(h^{-1}(c_i))
+        \end{align}
+        \ul{(iii) The change of variable formula holds for non-negative measurable functions.}
+        
+        Let $g: Y \to [0, \infty)$ be a measurable function, then 
+    \end{proof}
 \end{document}
 
 
