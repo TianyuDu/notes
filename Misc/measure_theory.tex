@@ -847,7 +847,26 @@
         \end{align}
         \ul{(iii) The change of variable formula holds for non-negative measurable functions.}
         
-        Let $g: Y \to [0, \infty)$ be a measurable function, then 
+        Let $g: Y \to [0, \infty)$ be a measurable function, then by the definition of Lebesgue integral:
+        \begin{align}
+        	\int_Y g\ d(h_*\mu) &\equiv \sup \{
+        		\int_Y \tilde{s}\ d(h_*\mu)\ |\ \tilde{s} \tx{ is simple and } \tilde{s}(y) \leq g(y)\ \forall y \in Y
+        	\} \\
+        	&= \sup \{
+        		\int_Y \tilde{s}\ d(h_*\mu)\ |\ \tilde{s} \tx{ is simple and } \tilde{s}(h(x)) \leq g(h(x))\ \forall x \in X
+        	\} \label{eq:2}
+        \end{align}
+        Note that $s := \tilde{s}\circ h$ is simple as well.
+        \begin{align}
+        	(\ref{eq:2}) &= \sup \{
+        		\int_X \tilde{s}(h(x))\ d\mu\ |\ \tilde{s} \tx{ is simple and } \tilde{s}(h(x)) \leq g(h(x))\ \forall x \in X
+        	\} \\
+        	&= \sup \{
+        		\int_X s\ d\mu\ |\ s:X \to \R \tx{ is simple and } s \leq g\circ h
+        	\} \\
+        	&\equiv \int_X g\circ h\ d\mu
+        \end{align}
+        \ul{(iv) The general case.} An arbitrary measurable function $g$ may be written as the difference of two non-negative measurable function: $g = g^+ - g^-$. Applying the linearity of integrals and the result for non-negative functions leads to the general result.
     \end{proof}
 \end{document}
 
