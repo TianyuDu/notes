@@ -4,3 +4,5 @@
 \contentsline {section}{\numberline {3}Lebesgue Measures and Lebesgue Integrals}{6}% 
 \contentsline {section}{\numberline {4}Constructing Measures}{14}% 
 \contentsline {section}{\numberline {5}Image Measure and Change of Variables}{16}% 
+\contentsline {section}{\numberline {6}Outer Measures}{19}% 
+\contentsline {subsection}{\numberline {6.1}Construct Measures from Outer Measures}{19}% 
