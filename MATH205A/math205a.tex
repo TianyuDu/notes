@@ -1,0 +1,474 @@
+\documentclass[11pt]{article}
+
+\usepackage{spikey}
+\usepackage{amssymb}
+\usepackage[margin=1in]{geometry}
+
+\usepackage{setspace}
+\linespread{1.15}
+
+\title{Lecture Notes \\ MATH205A: Real Analysis I (Autumn 2020) \\ @ Stanford University}
+
+\author{Tianyu Du}
+
+\begin{document}
+	\maketitle
+	\section{Measures}
+	\subsection{Motivation}
+	\textbf{Motivation of this course} is to define a notion of \emph{length} on subsets of $\R$ such that
+	\begin{enumerate}
+		\item $length([a,b]) = b - a$.
+		\item (countable additivity) $length(\bigcup^\infty A_i) = \sum^\infty length(A_i)$ where $A_i$'s are disjoint.
+		\item (translation invariance) for all $a \in \R$, $length(A + a) = length(A)$.
+	\end{enumerate}
+	\begin{fact} it is impossible to construct such length for all subsets of $\R$.
+	\begin{proof}
+		This proof shows it is impossible to construct a notion of length on $[0, 1]$ with desired properties.
+		
+		For $x, y \in [0, 1]$, define an equivalence relation as $x \sim y \iff x - y \in \Q$. By the axiom of choice, we may construct a set $A$ containing exactly one element from each equivalence class of $x \in [0, 1]$. Obviously, $A \subseteq [0, 1]$.
+		
+		For each $r \in [-1, 1] \cap \Q$, let $A_r := A + r$, and $A_r \subseteq [-1, 2]$.
+		By translation invariance, $length(A_r) = length(A)$.
+		Note that for any $y \in [0, 1]$, there exists some $x \in A$ such that $x \sim y$, therefore, $y \in A_{y-x} \subseteq \bigcup_r A_r$. Hence, $[0, 1] \subseteq \bigcup_r A_r$.
+		
+		If the notion of length satisfies countable additivity, $length(\bigcup_r A_r)$ is either zero or infinity, which leads to a contradiction.
+	\end{proof}
+	\end{fact}
+	
+	\textbf{Lebesgue's Resolution}: we only defines length for a subset of $\mc{P}(\R)$, which contains \emph{everything that may ever arrive in practice}, i.e., $\sigma$-algebras.
+	
+	\subsection{Algebras and \salg}
+	
+	\begin{definition}
+		Let $X$ be a set, a collection $\mc{A}$ of subsets of $X$ is called an \textbf{algebra} if
+		\begin{enumerate}
+			\item $X \in \mc{A}$,
+			\item $A \in \mc{A} \implies A^c \in \mc{A}$,
+			\item $A, B \in \mc{A} \implies A \cup B \in \mc{A}$.
+		\end{enumerate}
+		Consequently: (1) $A, B \in \mc{A} \implies A \cap B \in \mc{A}$; (2) $A_1, \dots, A_n \in \mc{A} \implies \bigcup_i A_i, \bigcap_i A_i \in \mc{A}$ (easily shown by induction); (3) $\varnothing \in \mc{A}$.
+	\end{definition}
+	
+	\begin{definition}
+		Let $X$ be a set, a collection $\mc{A}$ of subsets of $X$ is called a $\sigma$-\textbf{algebra} if
+		\begin{enumerate}
+			\item $X \in \mc{A}$,
+			\item $A \in \mc{A} \implies A^c \in \mc{A}$,
+			\item $A_1, A_2 \dots, \in \mc{A}, \implies \bigcup_i^\infty A_i \in \mc{A}$.
+		\end{enumerate}
+	\end{definition}
+	
+	\begin{example}[trivial examples]
+		The power set of $X$ is a $\sigma$-algebra on $X$; $\{\varnothing, X\}$ is a $\sigma$-algebra on $X$.
+	\end{example}
+	
+	\begin{example}[finite/co-finite algebra]
+		Let $X$ be an infinite set and $\mc{A}$ be the collection of subsets $A$ such that either $A$ is finite or $A^c$ is finite. $\mc{A}$ is an algebra.
+		\begin{proof}
+			$X \in \mc{A}$ since $X^c = \varnothing$ is finite. For a $X \in \mc{A}$, if $X$ is finite, then $X^c \in \mc{A}$. If $X$ is infinite, $X^c$ is finite and $X^c \in \mc{A}$. Let $A, B \in \mc{A}$, if both $A$ and $B$ are finite, $A \cup B$ is finite and in $\mc{A}$. If $A$ is finite and $B$ is co-finite, then $(A \cup B)^c = A^c \cap B^c \subseteq B^c$ is finite. If both $A$ and $B$ are co-finite, $(A \cup B)^c$ is finite so that $A \cup B \in \mc{A}$.
+		\end{proof}
+		Note the $\mc{A}$ is \ul{not} a $\sigma$-algebra if $X$ is infinite: take distinct points $x_1, x_2, \dots \in \mc{A}$, then the union of them is neither finite or co-finite, and therefore not in $\mc{A}$.
+	\end{example}
+	
+	\begin{example}[countable/co-countable $\sigma$-algebra]
+		The collection of subsets $A \subseteq X$, such that either $A$ is countable or $A^c$ is countable, forms a $\sigma$-algebra.
+	\end{example}
+	
+	\begin{example}
+		Let $X = \R$ and $\mc{A}$ be the collection of all \ul{finite} \ul{disjoint} unions of half-open intervals (i.e., sets like $(a, b], (-\infty, b], (a, \infty)$), $\mc{A}$ is an algebra. (Not working for open intervals).
+	\end{example}
+	
+	\begin{example}[counter example]
+		Let $X$ be an infinite set, $\mc{A}$ be the collection of finite subsets of $X$. Then, $\mc{A}$ is \ul{not} an algebra.
+	\end{example}
+	
+	\begin{proposition}
+		Let $X$ be a set and $\{\mc{A}_i\}_{i \in \mc{I}}$ be an arbitrary (not necessarily countable) collection of $\sigma$-algebras, then $\bigcap_{i \in \mc{I}} \mc{A}_i$ is a $\sigma$-algebra.
+		\begin{proof}
+			Since $X \in \mc{A}_i$ for all $i \in \mc{I}$
+		\end{proof}
+	\end{proposition}
+	
+	\begin{corollary}
+		Let $X$ be a set, and $\mc{P}$ is an arbitrary collection of subsets of $X$, then $\exists !$ smallest $\sigma$-algebra $\mc{A}$ containing $\mc{P}$. That is, for any $\sigma$-algebra $\mc{B} \supseteq \mc{P}$, $\mc{A} \subseteq \mc{B}$. $\mc{A}$ is defined as the $\sigma$-algebra \textbf{generated by} $\mc{P}$, denoted as $\sigma(\mc{P})$.
+	\end{corollary}
+	
+	\begin{proof}
+		For any $\mc{P}$, the power set of $X$ is obviously a $\sigma$-algebra containing $\mc{P}$. Then we can take $\mc{A}$ as the intersection of all $\sigma$-algebras containing $\mc{P}$.
+	\end{proof}
+	
+	\subsection{Borel $\sigma$-algebra}
+	\begin{definition}
+		The \textbf{Borel \salg} of $\R$, denoted as $\mc{B}(\R)$, is the \salg generated by the set of \ul{open intervals} in $\R$.
+	\end{definition}
+	
+	\begin{fact}
+		$\mc{B}(\R)$ is generated by the collection of all closed intervals as well.
+		\begin{proof}
+			Let $\mc{F}$ denote the \salg generated by all closed intervals. Any open interval can be written as a countable union of closed sets: $(a, b) = \bigcup_{n=1}^\infty [a+1/n, b-1/n]$, therefore $(a, b) \in \mc{F}$ and $\mc{B}(\R) \subseteq \mc{F}$.
+			
+			Similarly, $[a, b] = \bigcap_{n=1}^\infty (a-1/n, b+1/n)$, hence $\mc{B}(\R)$ is a \salg contains all closed sets. Therefore, $\mc{F} \subseteq \mc{B}(\R)$.
+		\end{proof}
+	\end{fact}
+	
+	\begin{fact}
+		$\mc{B}(\R)$ is generated by \begin{enumerate}
+			\item all open sets,
+			\item all closed sets,
+			\item all half-open intervals.
+		\end{enumerate}
+	\end{fact}
+	
+	\begin{example}[counter example]
+		\br is \ul{not} generated by the collection of singletons.
+		\begin{proof}
+			
+		\end{proof}
+	\end{example}
+	
+	\begin{definition}
+		The Borel algebra of $\R^d$, $\mc{B}(\R^d)$, is the \salg generated by
+		\begin{enumerate}
+			\item all open sets in $\R^d$,
+			\item all closed sets in $\R^d$,
+			\item all closed cubes (regions) in $\R^d$: $\prod_{i=1}^d [a_i, b_i]$.
+		\end{enumerate}
+	\end{definition}
+	
+	\subsection{Measures}
+	\begin{definition}
+		For a set $X$ and a \salg $\mc{A}$ of $X$, the pair $(X, \mc{A})$ is called a \textbf{measurable space}.
+	\end{definition}
+	
+	\begin{definition}
+		A \textbf{measure} $\mu$ on a measurable space $(X, \mc{A})$ is a map $\mu: \mc{A} \to [0, \infty]$ such that
+		\begin{enumerate}
+			\item $\mu(\varnothing) = 0$,
+			\item $\mu(\cup_i^\infty A_i) = \sum_{i}^\infty \mu(A_i)$ for disjoint sequence $(A_i)$
+		\end{enumerate}
+		For now, we don't require the translation invariance property.
+		
+		The triple $(X, \mc{A}, \mu)$ is called a \textbf{measure space}.
+	\end{definition}
+	
+	\begin{example}[counting measure]
+		
+	\end{example}
+	
+	\begin{example}[point-mass measure]
+		
+	\end{example}
+	
+	\begin{proposition}
+		A measure $\mu$ possesses the following basic properties:
+		\begin{enumerate}
+			\item (Monotonicity) $A \subseteq B \implies \mu(A) \leq \mu(B)$.
+			\item (Sub-additivity) $\mu(\bigcup_{i=1}^\infty A_i) \leq \sum_{i=1}^\infty \mu(A_i)$.
+			\item Let $A_1 \subseteq A_2 \subseteq \dots$ be an increasing set, let $\cup_{i=1}^\infty A_i$ denoted $A_i \nearrow A$, $\mu(A) = \lim_{n \to \infty} \mu(A_n)$.
+			\item If $A_1 \searrow A \equiv \cap_{i=1}^\infty A_i$, and \red{there exists $\mu(A_i) < \infty$}, then $\mu(A) = \lim_{n \to \infty} \mu(A_n)$.
+		\end{enumerate}
+		\begin{proof}
+			
+		\end{proof}
+	\end{proposition}
+	
+	\begin{example}[counter example]
+		Let $X = \Z$, $\mc{A} = 2^\Z$ and $\mu$ be the counting measure. Define $A_i = \{i, i+1, \dots \}$, then $A_i \searrow A = \varnothing$, but $\lim_{n \to \infty} \mu(A_n) = \infty \neq \mu(\varnothing)$.
+	\end{example}
+	
+	\subsection{Outer Measure}
+	\begin{definition}
+		Let $X$ be a set, $\mu^*: 2^X \to [0, \infty]$ is an \textbf{outer measure} if
+		\begin{enumerate}
+			\item $\mu^*(\varnothing) = 0$.
+			\item $\mu^*(A) \leq \mu^*(B)$ whenever $A \subseteq B$.
+			\item (countable sub-additivity) $\mu^*(\cup_{i=1}^\infty A_i) \leq \sum_{i=1}^\infty \mu^*(A_i)$.
+		\end{enumerate}
+		Key difference between outer measure and measure:
+		\begin{enumerate}
+			\item Outer measure does not require countable additivity,
+			\item outer measure is defined on $2^X$ instead of a \salg.
+		\end{enumerate}
+	\end{definition}
+	
+	\begin{example}
+		
+	\end{example}
+	
+	\subsection{Lebesgue Measure on $\R$}
+	\begin{definition}
+		Let $A \subseteq \R$, define the \textbf{Lebesgue outer measure}:
+		\begin{align}
+			\lambda^*(A) = \inf \left\{
+			\sum_{i \in \N} b_i - a_i : A \subseteq \bigcup_{i \in \N} (a_i, b_i)
+			\right\}
+		\end{align}
+		The Lebesgue outer measure of a set $A$ is simply in the infimum of total lengths (the conventional notion of length) of open intervals cover $A$.
+	\end{definition}
+	
+	\begin{proposition}
+		The Lebesgue measure satisfies the following properties:
+		\begin{enumerate}
+			\item $\lambda^*$ is an outer measure on $\R$,
+			\item $\lambda^*([a, b]) = b - a$ for all $a < b$.
+		\end{enumerate}
+		\begin{proof}
+			(1.1) $\lambda^*(\varnothing) = 0$ since $(-\varepsilon, \varepsilon)$ covers $\varnothing$ for arbitrarily small $\varepsilon$.
+			
+			(1.2) Let $A \subseteq B$, $\Omega_A$ and $\Omega_B$ be collection of sequences of open intervals covering $A$ and $B$ respectively.
+			Then, any cover of $B$ must be a cover of $A$, that is, $\Omega_A \subseteq \Omega_B$.
+			Therefore, $\lambda^*(A) \leq \lambda^*(B)$.
+			
+			(1.3) Let $A_1, A_2, \dots \subseteq \R$ and $A = \bigcup_{i=1}^\infty A_i$. For all $i$, we may find $(a_{ij}, b_{ij})$ covers $A_i$ such that
+			\begin{align}
+				\sum_{j=1}^\infty (b_{ij} - b_{ij}) \leq  \lambda^*(A_i) + \varepsilon 2^{-i}
+			\end{align}
+			Also, $\{(a_{ij}, b_{ij})\}_{i,j}$ is a countable union of open intervals that covers $A$.
+			\begin{align}
+				\lambda^*(A) &\leq \sum_{i=1}^\infty \sum_{j=1}^\infty (b_{ij} - a_{ij}) \\
+				&\leq \sum_{i=1}^\infty (\lambda^*(A_i) + \varepsilon 2^{-i}) \\
+				&=\sum_{i=1}^\infty \lambda^*(A_i) + \varepsilon
+			\end{align}
+			Therefore, $\lambda^*(A) \leq \sum_{i=1}^\infty \lambda^*(A_i)$.
+			
+			(2) Note that $[a, b] \subseteq (a-\varepsilon, b+\varepsilon)$ for all $\varepsilon > 0$.
+			Therefore,
+			\begin{align}
+				\lambda^*([a, b]) \leq \inf_{\varepsilon > 0} \lambda^*(a-\varepsilon, b+\varepsilon) = b - a
+			\end{align}
+			Now show $\lambda^*([a, b]) \geq b - a$.
+			We want to show that $\sum_{i=1}^\infty (b_i - a_i) \geq b - a$ for all possible covering of $[a, b]$, which implies the infimum of them is at least $b - a$.
+			
+			Take an arbitrary covering $\{(a_i, b_i)\}_i$ of $[a, b]$.
+			Since $[a, b]$ is compact, there exists a finite covering $[a, b] \subseteq \bigcup_{i=1}^n (a_i, b_i)$ (reindexed), it suffices to show the finite sum $\sum_{i=1}^\infty (b_i - a_i) \geq b - a$.
+			
+			(1) We firstly define an \emph{interval} to be any open, closed or half-open intervals. The \emph{length} of an interval is the difference between two end points.
+			
+			Note that if an interval $I$ contains a finite collection of disjoint sub-intervals, then the length of $I$ is at least the sum of lengths of sub-intervals. The equality holds when $I$ is exactly finite union of disjoint sub-intervals.
+			
+			(2) Suppose $[a, b] \subseteq \bigcup_{i=1}^n (a_i, b_i)$, let $I_i = [a, b] \cap (a_i, b_i)$.
+			Easy to verify that the length of $I_i \leq$ length of $(a_i, b_i) = b_i - a_i$.
+			Moreover, $\bigcup_{i=1}^n I_i = [a, b] \cup \bigcup_{i=1}^n (a_i, b_i) = [a, b]$.
+			
+			(3) For all $i$, define $I'_i = I_i \backslash (I_1 \cup I_2 \cup \dots \cup I_{i-1})$. This procedure allows us to express $[a, b]$ as a finite union of disjoint sub-intervals: $[a, b] = \bigcup_{i=1}^n I'_i$. Each $I'_i$ is a finite union of disjoint intervals as well, the conventional notion of $I'_i$ is well-defined.
+			Then $b - a = $ sum of lengths of $I'_i$.
+			
+			However, $\ell(I'_i) \leq \ell(I_i) \leq b_i - a_i$ and sum of lengths of $I_i' \leq$ sum of lengths of $I_i \leq \sum_{i=1}^n b_i - a_i$.
+			Therefore, $b - a \leq \sum_{i=1}^n b_i - a_i \leq \sum_{i=1}^\infty b_i - a_i$.
+			Hence, $b - a = \sum_{i=1}^\infty b_i - a_i$ and $\lambda^*[a, b] = b - a$ consequently.
+		\end{proof}
+	\end{proposition}
+	
+	\subsection{Construct Lebesgue Measure}
+	
+	\begin{definition}
+		Let $X$ be a set with outer measure $\mu^*$. A set $B \subseteq X$ is $\mu^*$-\textbf{measurable} if
+		\begin{align}
+			\forall A \subseteq X, \mu^*(A) = \mu^*(A \cap B) + \mu^*(A \cap B^c)
+		\end{align}
+	\end{definition}
+	
+	\begin{theorem}
+		For any set $X$ with outer measure $\mu^*$ on it, let $\mc{M}_{\mu^*}$ denote the set of all $\mu^*$-\textbf{measurable} sets. Then, $\mc{M}_{\mu^*}$ is a \salg and $\mu^*|_{\mc{M}_{\mu^*}}$ ($\mu^*$ restricted to $\mc{M}_{\mu^*}$) is a measure.
+	\end{theorem}
+	
+	\begin{proof}
+		To show $B$ is $\mu^*$-measurable, it suffices to show that $\forall A \subseteq X, \mu^*(A) \geq \mu^*(A \cap B) + \mu^*(A \cap B^c)$, because the opposite inequality always holds by sub-additivity.
+		
+		(1.1) Let $A \subseteq X$, $\mu^*(A \cap \varnothing) + \mu^*(A \cap \varnothing^c) = \mu^*(A \cap \varnothing^c) = \mu^*(A)$, therefore, $\varnothing \in \mc{M}_{\mu^*}$.
+		
+		(1.2) Let $A \subseteq X$ and $B \in \mc{M}_{\mu^*}$, $\mu^*(A) = \mu^*(A \cap B) + \mu^*(A \cap B^c) = \mu^*(A \cap (B^c)^c) + \mu^*(A \cap B^c)$. Hence, $B^c \in \mc{M}_{\mu^*}$.
+		
+		(1.3.1) Let $B_1, B_2 \in \mc{M}_{\mu^*}$, we are going to show $B_1 \cup B_2 \in \mc{M}_{\mu^*}$.
+		Fix any $A \subseteq X$, 
+		\begin{align}
+			\mu^*(A \cap (B_1 \cup B_2)) &= \mu^*(A \cap (B_1 \cup B_2) \cap B_1) + \mu^*(A \cap (B_1 \cup B_2) \cap B_1^c) \\
+			&= \mu^*(A \cap B_1) + \mu^*(A \cap B_1^c \cap B_2)
+		\end{align}
+		Moreover,
+		\begin{align}
+			\mu^*(A \cap (B_1 \cup B_2)^c) &= \mu^*(A \cap B_1^c \cap B_2^c)
+		\end{align}
+		Therefore,
+		\begin{align}
+			\mu^*(A \cap (B_1 \cup B_2)) + \mu^*(A \cap (B_1 \cup B_2)^c) &= \mu^*(A \cap B_1) + \mu^*(A \cap B_1^c \cap B_2) +  \mu^*(A \cap B_1^c \cap B_2^c) \\
+			&= \mu^*(A \cap B_1) + \mu^*(A \cap B_1^c) \tx{ since } B_2 \in \mc{M}_{\mu^*} \\
+			&= \mu^*(A) \tx{ since } B_1 \in \mc{M}_{\mu^*}
+		\end{align}
+		Therefore, $\mc{M}_{\mu^*}$ is an algebra.
+		
+		(1.3.2) Now show that $\mc{M}_{\mu^*}$ is a \salg. For any sequence of sets $A_i \in \mc{M}_{\mu^*}$, we can define $B_n := A_n \backslash \cup_{j=1}^{i-1} A_j$ such that $\cup B_i = \cup A_i$.
+		Therefore, it is suffices to show $\mc{M}_{\mu^*}$ is closed under countable disjoint unions.
+		
+		We are going to show the union $\cup B_i$ is $\mu^*$-measurable for any disjoint sequence of $\mu^*$-measurable $B_i$'s.
+		
+		Claim: let $A \subseteq X$, $\mu^*(A) = \sum_{i=1}^n \mu^*(A \cap B_i) + \mu^*(A \cap (\cup_{i=1}^n B_i)^c)$.
+		The claim can be proved by induction on $n$.
+		
+		When $n = 1$, $\mu^*(A) = \mu^*(A \cap B) + \mu^*(A \cap B^c)$ because $B_1$ is $\mu^*$-measurable.
+		
+		Suppose the claim holds for $n$, then
+		\begin{align}
+			\mu^*(A \cap (\cup_{i=1}^n B_i)^c) &= \mu^*(A \cap (\cup_{i=1}^n B_i)^c \cap B_{n+1}) + \mu^*(A \cap (\cup_{i=1}^n B_i)^c \cap B_{n+1}^c)
+		\end{align}
+		because $B_{n+1} \in \mc{M}_{\mu^*}$. Moreover, since all $B_i$'s are disjoint, $B_{n+1} \subseteq B_{i}^c$ for all $i$.
+		Hence, 
+		\begin{align}
+			B_{n+1} \subseteq \cap_{i=1}^n B_i^c = (\cup_{i=1}^n B_i)^c
+		\end{align}
+		Also,
+		\begin{align}
+			(\cup_{i=1}^n B_i)^c \cap B_{n+1}^c = \cap_{i=1}^{n+1} B_i^c
+		\end{align}
+		Consequently,
+		\begin{align}
+			\mu^*(A \cap (\cup_{i=1}^n B_i)^c) &= \mu^*(A \cap B_{n+1}) + \mu^*(A \cap (\cup_{i=1}^{n+1} B_i)^c)
+		\end{align}
+		Hence,
+		\begin{align}
+			\mu^*(A) &= \sum_{i=1}^n \mu^*(A \cap B_i) + \mu^*(A \cap (\cap_{i=1}^n B_i^c)) \\
+			&\geq \sum_{i=1}^n \mu^*(A \cap B_i) + \mu^*(A \cap (\cap_{i=1}^\infty B_i^c)) \\
+			&= \sum_{i=1}^n \mu^*(A \cap B_i) + \mu^*(A \cap (\cup_{i=1}^\infty B_i)^c) 
+		\end{align}
+		Take $n \to \infty$
+		\begin{align}
+			\mu^*(A) &\geq \sum_{i=1}^\infty \mu^*(A \cap B_i) + \mu^*(A \cap (\cup_{i=1}^\infty B_i)^c) \\
+			&\geq \mu^*(A \cap \cup_{i=1}^\infty B_i) + \mu^*(A \cap (\cup_{i=1}^\infty B_i)^c)
+		\end{align}
+		Therefore, $\cup_{i=1}^\infty B_i$ is $\mu^*$-measurable.
+		
+		(2) Let $B_1, B_2, \dots$ be a sequence of disjoint sets from $\mc{M}_{\mu^*}$. Using the above fact and take $A = \cup_{i=1}^\infty B_i$,
+		\begin{align}
+			\mu^*(A) \geq \mu^*(\cup_{i=1}^\infty B_i) + \mu^*(\varnothing) = \mu^*(\cup_{i=1}^\infty B_i)
+		\end{align}
+		The opposite inequality holds by sub-additivity. Therefore, $\mu^*$ is a measure on $\mc{M}_{\mu^*}$.
+	\end{proof}
+	
+	\begin{definition}
+		Let $\lambda^*$ be the Lebesgue outer measure on $\R$, then the collection $\mc{M}_{\lambda^*}$ of $\lambda^*$-measurable sets is called the \textbf{Lebesgue \salg}. The restriction $\lambda = \lambda^*|_{\mc{M}_{\lambda^*}}$, which is a measure on $\mc{M}_{\lambda^*}$, is called the \textbf{Lebesgue measure}. Any set in $\mc{M}_{\lambda^*}$ is called a \textbf{Lebesgue measurable set}.
+	\end{definition}
+	
+	\begin{theorem}
+		\br $\subseteq \mc{M}_{\lambda^*}$.
+		\begin{proof}
+			Note that $\{(-\infty, b]:b\in\R\}$ generates \br, it suffices to show $\{(-\infty, b]:b\in\R\} \subseteq \mc{M}_{\lambda^*}$.
+			
+			Let $B = (-\infty, b]$, we are going to show $B$ is $\lambda^*$-measurable. Let $A \subseteq \R$ and $(a_n, b_n)$ be a sequence of open intervals covers $A$. For every $n \in \N$,
+			\begin{align}
+				\lambda^*((a_n, b_n) \cap B) + \lambda^*((a_n, b_n) \cap B^c) = \lambda^*((a_n, b_n) \cap (-\infty, b]) + \lambda^*((a_n, b_n) \cap (b, \infty))
+			\end{align}
+			Three cases follow:
+			\begin{enumerate}
+				\item $b > b_n$: $\lambda^*((a_n, b_n) \cap B) + \lambda^*((a_n, b_n) \cap B^c) = \lambda^*((a_n, b_n)) = b_n - a_n$.
+				\item $b_n > b > a_n$:  $\lambda^*((a_n, b_n) \cap B) + \lambda^*((a_n, b_n) \cap B^c) = \lambda^*((a_n, b]) + \lambda^*((b, b_n]) = b_n - a_n$.
+				\item $a_n > b$: $\lambda^*((a_n, b_n) \cap B) + \lambda^*((a_n, b_n) \cap B^c) = \lambda^*((a_n, b_n)) = b_n - a_n$.
+			\end{enumerate}
+			Therefore,
+			\begin{align}
+				\lambda^*((a_n, b_n) \cap B) + \lambda^*((a_n, b_n) \cap B^c) = b_n - a_n
+			\end{align}
+			By monotonicity and sub-additivity:
+			\begin{align}
+				\lambda^*(A \cap B) + \lambda^*(A \cap B^c) &\leq \lambda^*(\cup (a_n, b_n) \cap B) + \lambda^* (\cup (a_n, b_n) \cap B^c ) \\
+				&\leq \sum \lambda^*((a_n, b_n) \cap B) + \lambda^*((a_n, b_n) \cap B^c) \\
+				&= \sum_{n=1}^\infty b_n - a_n
+			\end{align}
+			Take the infimum of all such covering, we can show
+			\begin{align}
+				\lambda^*(A \cap B) + \lambda^*(A \cap B^c) &\leq \lambda^*(A)
+			\end{align}
+			Therefore, $B$ is $\mu^*$-measurable and $\mc{M}_{\lambda^*}$ is a \salg containing all such intervals and \br $\subseteq \mc{M}_{\lambda^*}$.
+		\end{proof}
+	\end{theorem}
+	
+	\subsection{Lebesgue Measure on $\R^d$}
+	\begin{definition}
+		Steps to construct Lebesgue measure on $\R^d$:
+		\begin{enumerate}
+			\item Define open cubes on $\R^d$ as a Cartesian product of open intervals: $Q := \prod_{i=1}^d (a_i, b_i)$. Define Lebesgue outer measure:
+			\begin{align}
+				\lambda^*(A) := \inf \left\{ \sum_{n=1}^\infty \prod_{i=1}^d (b_{ni} - a_{ni}) : A \subseteq \bigcup_{n=1}^\infty Q_n \right\}
+			\end{align}
+			\item Show $\lambda^*$ is an outer measure and $\lambda^*(Q) = \prod_{i=1}^d (b_{i} - a_{i})$.
+			\item $\mc{M}_{\lambda^*}$ is the Lebesgue \salg on $\R^d$. Restricting $\lambda^*$ on $\mc{M}_{\lambda^*}$ defines the Lebesgue measure.
+			\item Show that any Borel set in $\R^d$ is Lebesgue measurable by showing that there is a generating set of \brd is in $\mc{M}_{\lambda^*}$.
+		\end{enumerate}
+	\end{definition}
+	
+	\subsection{Uniqueness of the Lebesgue Measure}
+	\paragraph{The next goal} is to prove the uniqueness of Lebesgue measure on \brd subject to the criterion that the measure of any interval (cube) is the volume in the usual sense (product of side lengths).
+
+	\begin{theorem}
+		Let $\lambda$ be the Lebesgue measure on $\R^d$, then for any Lebesgue measurable set $A$,
+		\begin{enumerate}
+			\item $\lambda(A) = \inf \{\lambda(U) : \tx{open } U \supseteq A\}$,
+			\item $\lambda(A) = \sup \{\lambda(K) : \tx{compact } U \subseteq A\}$.
+		\end{enumerate}
+		\begin{proof}
+			(1.1) WLOG $\lambda(A) < \infty$, by monotonicity, $\lambda(A) \leq \lambda(U)$ for any open cover, $\lambda(A) \leq \inf \{..\}$.
+			
+			(1.2)Let $\varepsilon > 0$, $\exists$ a sequence of open intervals $(R_i)$ such that 
+			\begin{align}
+				\lambda(A) \leq \sum^\infty_{i=1} \lambda(R_i) \leq \lambda(A) + \varepsilon
+			\end{align}
+			Let $U := \cup R_i$ open, hence $\inf \{..\} \leq \lambda(U) \leq \sum^\infty_{i=1} \lambda(R_i) \leq \lambda(A) + \varepsilon$. Since this $\varepsilon$ can be arbitrarily small, we conclude $\inf\{..\} \leq \lambda(A)$.
+			
+			(2.1) let $A$ be a Lebesgue measurable set, \ul{assume $A$ is bounded}, so that $\lambda(A) < \infty$. Then there exists a compact $C \supseteq A$. $C \backslash A$ is Lebesgue measurable as well.
+			
+			By conclusion of part (1), there exists a open set $U \supseteq C \backslash A$ such that 
+			\begin{align}
+				\lambda(C \backslash A) \leq \lambda(U) \leq \lambda(C \backslash A) + \varepsilon
+			\end{align}
+			Let $K = C \backslash U$, $K$ is compact. Moreover, let $a \in K$, then $a \in C$ and $a \notin U$. Therefore, $a \notin C \backslash A$, it must be $x \in A$. Hence, $K \subseteq A$.
+			\begin{align}
+				\lambda(K) &= \lambda(C \backslash U) \\
+				&\geq \lambda(C) - \lambda(U) \\
+				&\geq \lambda(C) - (\lambda(C \backslash A) + \varepsilon) \\
+				&=\lambda(C) - \lambda(C) + \lambda(A) - \varepsilon \\
+				&=\lambda(A) - \varepsilon
+			\end{align}
+			Take $\varepsilon \to 0$ and $\lambda(A) \leq \sup \{..\}$. By monotonicity, $\lambda(A) \geq \sup \{..\}$.
+			
+			(2.2) Other cases: suppose $A$ is unbounded and $\lambda(A) > 0$. Take an arbitrary $b < \lambda(A)$. We will show that $\sup\{..\} \geq b$, this will prove that $\lambda(A) \leq \sup\{...\}$.
+			
+			To show $\sup\{..\} \geq b$, it suffices to show that there exists a compact set $K \subseteq A$ such that $\lambda(K) \geq b$.
+			
+			Let $\{C_j\}_{j=1}^\infty$ be a sequence of compact sets increasing to $\R^d$.
+			
+			Then $A \cap C_j \uparrow A$ and $\lambda(A \cap C_1) < \infty$, which implies $\lambda(A) = \lim_{j \to \infty} \uparrow \lambda(A \cap C_j)$. Since $b < \lambda(A)$, there exists $j$ such that $\lambda(A \cap C_j) \geq b$, where $A \cap C_j$ is compact. Hence, $b \leq \sup\{..\}$ and $\lambda(A) \leq \sup\{..\}$.
+			$\lambda(A) \geq \sup\{..\}$ holds by monotonicity.
+			
+			When $\lambda(A) = 0$, $0 \leq \lambda(K)$ for all $K$ so that $0 \leq \sup\{..\}$. The opposite inequality holds by monotonicity.
+		\end{proof}
+	\end{theorem}
+
+	\section{Integrations}
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
