@@ -402,7 +402,7 @@
 		Let $\lambda$ be the Lebesgue measure on $\R^d$, then for any Lebesgue measurable set $A$,
 		\begin{enumerate}
 			\item $\lambda(A) = \inf \{\lambda(U) : \tx{open } U \supseteq A\}$,
-			\item $\lambda(A) = \sup \{\lambda(K) : \tx{compact } U \subseteq A\}$.
+			\item $\lambda(A) = \sup \{\lambda(K) : \tx{compact } K \subseteq A\}$.
 		\end{enumerate}
 		\begin{proof}
 			(1.1) WLOG $\lambda(A) < \infty$, by monotonicity, $\lambda(A) \leq \lambda(U)$ for any open cover, $\lambda(A) \leq \inf \{..\}$.
@@ -441,6 +441,101 @@
 			When $\lambda(A) = 0$, $0 \leq \lambda(K)$ for all $K$ so that $0 \leq \sup\{..\}$. The opposite inequality holds by monotonicity.
 		\end{proof}
 	\end{theorem}
+
+
+	\begin{lemma}
+		For each $k \in \Z$, define \textbf{dyadic cubes} in $\R^d$ as set in the following form:
+		\begin{align}
+			\prod_{i=1}^d [j_i 2^{-k}, (j_i + 1) 2^{-k})
+		\end{align}
+		where $j_i \in \Z$ for every $i$. Let $\mc{D}$ denote the collection of dyadic cubes.
+
+		Then, any open set $U \subseteq \R^d$ can be expressed as a \ul{countable} union of some members of $\mc{D}$.
+		
+		A dyadic cube of side length $2^{-k}$ has a unique parent of side length $2^{-k+1}$ and a unique grandparent with side length $2^{-k+2}$.
+		
+		\begin{proof}
+			Given open set $U$, let $\mc{D}_U$ denote the set of all dyadic half open cubes $D$ such that $D \subseteq U$ but the parent of $U$ does not fully contain $U$.
+			
+			Claim 1: $U = \bigcup_{D \in \mc{D}_U} D$. Obviously, $\bigcup_{D \in \mc{D}_U} \subseteq U$.
+			To show the converse, take any $x \in U$, since $U$ is open, there exists $D \in \mc{D}_U$ such that $x \in D \subseteq U$.
+			
+			Let $D_0$ be the \ul{earliest} ancestor of $D$ such that $x \in D_0 \subseteq U$. Obviously, $D_0 \in \mc{D}_U$. Therefore, $U \subseteq \bigcup_{D \in \mc{D}_U} D$.
+			
+			Claim 2: Two dyadic cubes can overlap if and only if one is the ancestor of the other. By construction, dyadic cubes in $\mc{D}_U$ are disjoint.
+			
+			Claim 3: $\mc{D}_U$ is countable because $\mc{D}$ is itself countable.
+		\end{proof}
+	\end{lemma}
+
+	\begin{proposition}
+		Lebesgue measure is the only measure on $(\R^d, \mc{B}(\R^d))$ which assigns the \emph{correct volume} to any $d$-dimensional intervals or even any $d$-dimensional dyadic cube.
+		\begin{proof}
+			Let $\lambda$ denote the Lebesgue measure, let $\mu$ be another measure satisfying the desired property.
+			
+			By lemma, for all open set $U$, $\mu(U) = \sum_{j=1}^\infty \mu(D_j) = \sum_{j=1}^\infty \lambda(D_j) = \lambda(U)$, where $\{D_j\}$ is a collection of disjoint dyadic cubes contains with union $U$.
+			Therefore, \ul{$\lambda(A) = \mu(A)$ for all open Borel set $A$}.
+			
+			Let $A \in \mc{B}(\R^d)$, let open $U \supseteq A$, then $\mu(A) \leq \mu(U) = \lambda(U)$ for all $U$.
+			Taking the infimum over all $U \supseteq A$, we conclude \ul{$\mu(A) \leq \lambda(A)$ for all Borel set $A$}.
+
+			Next, take any \ul{bounded} Borel set $A$, let $V$ be a bounded open set containing $A$. Then,
+			\begin{align}
+				\mu(V) &= \mu(A) + \mu(V \backslash A) \\
+				&\leq \lambda(A) + \lambda(V \backslash A) \\
+				&= \lambda(V)
+			\end{align}
+			But we also know that $\mu(V) = \lambda(V)$ since $V$ is open, the inequality holds as equality. Moreover, the previous conclusion implies $\mu(A) \leq \lambda(A)$ and $\mu(V \backslash A) \leq \lambda(V \backslash A)$, it must be $\mu(A) = \lambda(A)$ and $\mu(V \backslash A) = \lambda(V \backslash A)$. Therefore, \ul{$\mu(A) = \lambda(A)$ for all bounded Borel set $A$}.
+			
+			Lastly, any Borel set can be written as a a countable disjoint union of bounded Borel set, therefore, \ul{$\mu(A) = \lambda(A)$ for all Borel set $A$}.
+		\end{proof}
+	\end{proposition}
+	
+	\begin{proposition}
+		The Lebesgue outer measure on $\R^d$ is translation invariant. In particular, Lebesgue measure is translation invariant and any translation of Lebesgue measurable set is Lebesgue measurable.
+		\begin{proof}
+			$\lambda^*(A + x) = \lambda^*(A)$ follows the definition of $\lambda^*$: translate all covering intervals by $+x$ and the volumes of these intervals stay the same. Since $\lambda$ is simply the restriction of $\lambda^*$ on Lebesgue measurable sets, $\lambda$ is translation invariant as well.
+			
+			Now take Lebesgue measurable $B$, for all$A \subseteq \R^d$:
+			\begin{align}
+				\lambda^*(A) &= \lambda^*(A \cap B) + \lambda^*(A \cap B^c) \\
+				\implies \lambda^*(A-x) &= \lambda^*((A-x) \cap B) + \lambda^*((A-x) \cap B^c)
+			\end{align}
+			Note that
+			\begin{align}
+				(A - x) + x &= A \\
+				(A - x) \cap B + x &= A \cap (B + x) \\
+				(A - x) \cap B^c + x &= A \cap (B + x)^c
+			\end{align}
+			By translational invariance of $\lambda^*$, 
+			\begin{align}
+				\lambda^*(A) = \lambda^*(A \cap (B+x)) + \lambda^*(A \cap (B+x)^c)
+			\end{align}
+			Therefore, $B + x$ is Lebesgue measurable as well.
+		\end{proof}
+	\end{proposition}
+
+	\begin{theorem}
+		Let $\mu$ be a non-zero measure on $(\R^d, \mc{B}(\R^d)$, which is finite on bounded Borel sets and translation invariant. Then, $\mu(A) = c \lambda(A)$ for all $A \in \mc{B}(\R^d)$, where $\lambda$ is the Lebesgue measure.
+	\end{theorem}
+	
+	\begin{remark}
+		Borel \salg is closed under translation.
+	\end{remark}
+	
+	\begin{proof}
+		Let $c = \mu([0, 1)^d) \in (0, \infty)$. Then $[0, 1)^d$ is the disjoint union of $2^{dk}$ half-open dyadic intervals with side length $2^{-k}$. All of these sub-intervals have the same $\mu$ since $\mu$ is translation invariant. Therefore, for every dyadic sub-interval with side length $2^{-k}$, $\mu(D) = 2^{-dk} c$.
+		
+		Let $\nu(A) = \frac{1}{c} \mu(A)$, then $\nu$ is a measure that is finite on bounded sets and agrees with $\lambda$ on all half-open dyadic cubes. By the previous proposition, $\lambda$ is the only measure assign correct volumes to dyadic cubes, therefore, $\nu = \lambda$.
+	\end{proof}
+	
+	\begin{theorem}
+		Under the axiom of choice, there exists a non-Lebesgue subset of $\R$.
+	\end{theorem}
+	
+	\begin{proof}
+		Todo.
+	\end{proof}
 
 	\section{Integrations}
 \end{document}
