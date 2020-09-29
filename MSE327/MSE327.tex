@@ -1,0 +1,177 @@
+\documentclass[11pt]{article}
+
+\usepackage{spikey}
+\usepackage{amssymb}
+\usepackage[margin=1in]{geometry}
+
+\usepackage{setspace}
+\linespread{1.15}
+
+\title{Lecture Notes \\ MS\&E: Causal Inferences (Autumn 2020) \\ @ Stanford University}
+
+\newcommand{\science}[0]{\underline{\textbf{Y}}}
+
+\author{Tianyu Du}
+
+\begin{document}
+	\maketitle
+	\section{Potential Outcome Framework}
+	\subsection{Rubin Causal Model / Neyman-Rubin Potential Causal Framework}
+	\paragraph{Define assignments and potential outcomes}
+	\begin{itemize}
+		\item Let $i = 1, 2, \dots, N$ be indices of $N$ units (subjects).
+		\item For simplicity, assume binary intervention $Z_i$ with value $z_i \in \{0, 1\}$ or \{control, treatment\}.
+		\item Let vector of random variables $\textbf{Z} = (Z_1, Z_2, \dots, Z_N)$ be the population assignment. A realization of \textbf{Z}, $\textbf{z} = (z_1, z_2, \dots, z_N)$, denotes actual treatment assignments to the population.
+		\item $Y_i(\textbf{z})$ denotes the potential outcome of unit $i$ when the entire population receives treatment \textbf{z}.
+		\item A \textbf{z} defines an universe / realization of \textbf{Z}, therefore, there are $2^N$ potential outcomes for each unit $i$.
+	\end{itemize}
+
+	\begin{assumption}
+		The Stable Unit Treatment Value Assumption (SUTVA).
+		\begin{enumerate}
+			\item No interference between units: outcome of unit $i$ is not affected by treatment of player $j$ for all $j \neq i$.
+			\begin{align}
+				\quad \textbf{z}_i = \textbf{z}'_i \implies Y_i(\textbf{z}) = Y_i(\textbf{z}')
+			\end{align}
+			With the first assumption holds, we can write the potential outcome of unit $i$ as a function of $z_i$ only: $Y_i(z_i)$.
+			\item No hidden version of treatments: $Y_i(z_i)$ is a well-defined function.
+			\begin{align}
+				z_i = z_i' \implies Y_i(z_i) = Y(z_i')
+			\end{align}
+		\end{enumerate}
+	\end{assumption}
+	Given SUTVA, there are only 2 potential outcomes for each unit $i$.
+
+	\paragraph{The Science} Denote the vector of potential outcomes $\textbf{Y}(0) := (Y_1(0), Y_2(0), \dots, Y_N(0))$ and $\textbf{Y}(1) := (Y_1(1), Y_2(1), \dots, Y_N(1))$.
+	The science (aka. schedule of potential outcomes) is defined as
+	\begin{align}
+		\science := (\textbf{Y}(0), \textbf{Y}(1))
+	\end{align}
+	$\science$ tells outcomes in all factual and counterfactual scenarios.
+	
+	\begin{definition}
+		An \textbf{assignment mechanism} is a distribution of \textbf{Z}. A generic mechanism is often denoted as $\textbf{Z} \sim \eta$.
+		An assignment mechanism is a \textbf{randomized experiment} if
+		\begin{enumerate}
+			\item \emph{Probabilistic}: $0 < P(z_i|\textbf{X}, \textbf{Y}(0), \textbf{Y}(1)) < 1$.
+			\item \emph{Known assignment mechanism}: the assignment can be expressed explicitly.
+			\item \emph{Individualistic}: $P(z_i|\textbf{X}, \textbf{Y}(0), \textbf{Y}(1)) = P(z_i|X_i, Y_i(0), Y_i(1))$.
+			\item \emph{Unconfoundness} $P(\textbf{z}|\textbf{X}, \textbf{Y}(0), \textbf{Y}(1)) = P(\textbf{z}|\textbf{X})$, where \textbf{X} is known and observed covariates.
+		\end{enumerate}
+	\end{definition}
+	
+	\begin{remark}
+		The unconfoundness assumption cannot be tested empirically since we never have full knowledge on the science.
+	\end{remark}
+	
+	\subsection{Neymanian Inference}
+	\paragraph{Average Treatment Effect and Difference in Mean Estimator} 
+	\begin{itemize}
+		\item Define the \textbf{average treatment effect} (ATE) to be $\tau = \overline{\textbf{Y}(1)} - \overline{\textbf{Y}(0)}$.
+		\item Let $\vez^{obs}$ and $\vey^{abs}$ denote the observed treatment assignment and outcome.
+		\item We may construct the \textbf{difference in mean} estimator for ATE: $\hat{\tau}^{DIM} = \overline{\vey^{obs}(1)} - \overline{\vey^{obs}(0)}$.
+		\item Given the $\science$, each realization of $\vez$ leads to one value of $\hat{\tau}$. The $\vez \sim \eta$ induces a distribution on $\hat{\tau} \sim P_\eta$.
+	\end{itemize}
+	
+	\begin{definition}
+		Given an assignment mechanism $\eta$, the \textbf{bias} of an estimator is
+		\begin{align}
+			Bias_\eta(\hat{\tau}, \tau, \science) = \expe_{\vez \sim \eta} (\hat{\tau}(\vez, \science)) - \tau(\science)
+		\end{align}
+		An estimator is \textbf{unbiased} for $\tau$ under design $\eta$ if for all $\science$, $Bias_\eta(\hat{\tau}, \tau, \science) = 0$.
+	\end{definition}
+	We can rewrite the observed outcome as
+	\begin{align}
+		y_i = z_i y_i(1) + (1-z_i) y_i(0)
+	\end{align}
+	
+	\subsection{Causal Estimands}
+	\paragraph{Clarification}
+	\begin{itemize}
+		\item Estimand: the quantity of interest to be estimated.
+		\item Estimator: a procedure to approximate estimand from data.
+	\end{itemize}
+	
+	\begin{example}
+		Examples of causal estimands include
+		\begin{itemize}
+			\item Individual treatment effect: $\tau_i := y_i(1) - y_i(0)$.
+			\item Average treatment effect: $\tau^{ATE} := \overline{\vey_i(1)} - \overline{\vey_i(0)}$.
+			\item Conditional average treatment effect: let $X_i$ be the controlled co-variate, $\tau_x := \frac{1}{N_x} \sum_{i=1}^N \id{X_i = x} \tau_i$.
+			\item Lift: $L := \frac{\overline{\vey_i(1)} - \overline{\vey_i(0)}}{\overline{\vey_i(0)}}$.
+		\end{itemize}
+	\end{example}
+
+	\paragraph{Super-population Estimands} So far, we have fixed and finite population without a model. $\tau$ is specific to the population of size $N$. We may assume the $N$ units are actually i.i.d. samples from a super-population:
+	\begin{align}
+		(Y_i(0), Y_i(1)) \overset{i.i.d.}{\sim} P
+	\end{align}
+	with
+	\begin{align}
+		\expe_P(Y_i(0)) = \mu_0 \\
+		\expe_P(Y_i(1)) = \mu_1
+	\end{align}
+	One super-population estimand is $\theta = \expe(\tau) = \mu_1 - \mu_0$, we may construct models to estimate parameters $\mu_0$ and $\mu_1$.
+	
+	\subsection{No Causation without Manipulation}
+	
+	\section{Randomized Experiments: Neyman v.s. Fisher Inferences}
+	\subsection{The randomization based framework}
+	\par Throughout this section, we assume SUTVA. However, the randomization removes the need for most assumptions beyond SUTVA.
+	\paragraph{Reasoned-Basis for Inference}
+	\begin{itemize}
+		\item Recall: observed $y_i = z_i y_i(1) + (1-z_i) y_i(0)$.
+		\item Classical statistics:
+		\begin{enumerate}
+			\item Assume $y_i|(z_i=1) \sim \mc{N}(\mu_1, \sigma_1^2),\ y_i|(z_i=0) \sim \mc{N}(\mu_0, \sigma_0^2)$.
+			\item Compute MLE $\hat{\mu}_1^{MLE}$ and $\hat{\mu}_0^{MLE}$.
+			\item Estimate $\hat{\tau}^{MLE} = \hat{\mu}_1^{MLE} - \hat{\mu}_0^{MLE}$.
+		\end{enumerate}
+		\item Randomization-based inference:
+		\begin{enumerate}
+			\item Consider \science as fixed, but unobserved.
+			\item \vez is a random variable.
+			\item \vey(\vez) is the observed realization from a function of \vez. (recall: \vez defines \vey through $\eta$.)
+			\item No other assumptions.
+			\item All randomness came from \vez, the distribution of $\vez \sim P_\eta(\vez)$ will play a crucial role.
+		\end{enumerate}
+	\end{itemize}
+	
+	\paragraph{Assignment Mechanism}
+	\begin{example}[Bernoulli Assignment]
+		Let $p \in (0, 1)$, $P(z_i = 1) = p$, $P(\vez) = \prod_{i=1}^N p^{z_i} (1-p)^{1-z_i}$.
+	\end{example}
+	
+	\begin{example}[Completely Randomized Design (CRD)]
+		CRD($N_1$, $N$) randomly draws $N_1$ units from $N$ units and assigns them treatment.
+		\begin{align}
+			P(z_i=1) &= \frac{N_1}{N} \\
+			P(\vez) &= \begin{cases}
+				{N \choose N_1}^{-1} &\tx{ if } \sum z_i = N_1 \\
+				0 &\tx{ otherwise}
+			\end{cases}
+		\end{align}
+	\end{example}
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
