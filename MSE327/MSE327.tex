@@ -10,6 +10,7 @@
 \title{Lecture Notes \\ MS\&E: Causal Inferences (Autumn 2020) \\ @ Stanford University}
 
 \newcommand{\science}[0]{\underline{\textbf{Y}}}
+\newcommand{\tauhat}[0]{\hat{\tau}}
 
 \author{Tianyu Du}
 
@@ -152,6 +153,108 @@
 			\end{cases}
 		\end{align}
 	\end{example}
+	
+	\begin{proposition}
+		Let $\tau = \tau^{ATE}$ and $\hat{\tau} = \hat{\tau}^{DIM}$, suppose $\eta = CRD(N_1, N)$ with $0 < N_1 < N$, then the difference-in-mean estimator is unbiased. That is, for all \science, $Bias_\eta(\hat{\tau}, \tau; \science) = 0$.
+		\begin{proof}
+			\begin{align}
+				\hat{\tau}^{DIM} &\equiv \frac{1}{\sum z_i} \sum_{i=1}^N z_i y_i - \frac{1}{\sum (1-z_i)} \sum_{i=1}^N (1-z_i) y_i \\
+				&= \frac{1}{N_1} \sum_{i=1}^N z_i y_i - \frac{1}{N-N_1} \sum_{i=1}^N (1-z_i) y_i \tx{ by CRD} \\
+				\implies \expe_\eta [\hat{\tau}^{DIM}] &= \frac{1}{N_1} \sum_{i=1}^N \expe_\eta[z_i y_i] - \frac{1}{N-N_1} \sum_{i=1}^N \expe_\eta[(1-z_i) y_i] \\
+				&= \frac{1}{N_1} \sum_{i=1}^N \expe_\eta[z_i y_i(1)] - \frac{1}{N-N_1} \sum_{i=1}^N \expe_\eta[(1-z_i) y_i(0)] \\
+				&= \frac{1}{N_1} \sum_{i=1}^N y_i(1) \expe_\eta[z_i] - \frac{1}{N-N_1} \sum_{i=1}^N  y_i(0) \expe_\eta[(1-z_i)] \\
+				&= \frac{1}{N_1} \sum_{i=1}^N y_i(1) \frac{N_1}{N} - \frac{1}{N-N_1} \sum_{i=1}^N  y_i(0) \frac{N-N_1}{N} \\
+				&= \frac{1}{N} \sum_{i=1}^N y_i(1) - y_i(0)
+			\end{align}
+		\end{proof}
+	\end{proposition}
+	
+	\begin{definition}
+		The variance of estimator $\hat{\tau}$ is defined as
+		\begin{align}
+			Var_\eta(\hat{\tau}) := \expe_\eta [(\hat{\tau} - \expe_\eta[\hat{\tau}])^2]
+		\end{align}
+	\end{definition}
+	
+	\begin{proposition}
+		Let $\tau = \tau^{ATE}$ and $\hat{\tau} = \hat{\tau}^{DIM}$, suppose $\eta = CRD(N_1, N)$ with $0 < N_1 < N$, define $N_0 = N - N_1$. Then,
+		\begin{align}
+			Var_\eta(\hat{\tau}) = \frac{V_1}{N_1} + \frac{V_0}{N_0} - \frac{V_{1,0}}{N}
+		\end{align}
+		where $V_a$ is the variance of potential outcome $a$ and $V_{1,0}$ is the variance of treatment effect.
+		\begin{align}
+			V_{a}&=\frac{1}{N-1} \sum_i \left(y_{i}(a)-\bar{y}(a)\right)^2\ a \in \{0, 1\} \\
+			V_{1,0} &= \frac{1}{N-1} \sum_{i}\left(\tau_{i}-\tau\right)^2
+		\end{align}
+	\end{proposition}
+	
+	\subsection{Inferences}
+	\begin{itemize}
+		\item Suppose we have a \ul{normal approximation} is large samples:
+		\begin{align}
+			\frac{\hat{\tau} - \tau}{\sigma(\hat{\tau})} \sim \mc{N}(0, 1)	
+		\end{align}
+		Then,
+		\begin{align}
+			CI_{1-\alpha} = [\tauhat - q_{1-\alpha/2} \sigma(\tauhat), \tauhat + q_{1-\alpha/2} \sigma(\tauhat)]
+		\end{align}
+		The confidence interval satisfies
+		\begin{align}
+			P_\eta (\tau \in CI_{1-\alpha}) \approx 1 - \alpha
+		\end{align}
+		\item However, $v$ and $\sigma \equiv \sqrt{v}$ depends on unknown quantities (true variances of potential outcomes and treatment effects). We need to estimate $\hat{v}$ using data.
+		\item In general, we wish construct a \ul{conservative} estimation $\hat{v}$ such that $\expe[\hat{v}] \geq v$, which leads to a larger confidence interval satisfying $P_\eta(\tau \in \hat{CI}_{1-\alpha}) \geq 1 - \alpha$.
+		\item Specifically, we can use conventional sample estimations for $V_1$ and $V_0$ while ignoring the variance of treatment effects. Doing so leads to a conservative estimation of variance.
+	\end{itemize}
+	
+	\begin{proposition}
+		The Neyman estimator of variance is
+		\begin{align}
+			\hat{v} = \frac{\hat{V_1}}{N_1} + \frac{\hat{V_0}}{N_0}
+		\end{align}
+		where
+		\begin{align}
+			\hat{v}_{1}&=\frac{1}{N_{1}-1} \sum_{i=1}^N z_{i}\left(y_{i}^{obs}-\overline{y}^{obs}\right)^2 \\
+			\hat{v}_{0}&=\frac{1}{N_{0}-1} \sum_{i=1}^N (1-z_{i})\left(y_{i}^{obs}-\overline{y}^{obs}\right)^2
+		\end{align}
+		under $CRD(N_1, N_0)$,
+		\begin{align}
+			\expe_\eta[\hat{v}] \geq Var_\eta(\tauhat)
+		\end{align}
+	\end{proposition}
+	\subsection{Hypothesis Testing: As a Stochastic Proof by Contradiction}
+	\begin{itemize}
+		\item $H_0: \overline{Y}(1) = \overline{Y}(0)$ (i.e., $\tau^{ATE} = 0$).
+		\item Define $T^{obs} = \frac{\tauhat-0}{\sqrt{\hat{v}}} = \frac{\tauhat}{\sqrt{\hat{v}}}$.
+		\item Define the $p$-value as $1 - \Phi(T^{obs})$ (one-sided) or $2 (1 - \Phi(T^{obs}))$ (two-sided).
+		\item Then,
+		\begin{align}
+			P_\eta(p \leq \alpha | H_0) \leq \alpha
+		\end{align}
+		\item That is, we firstly suppose $H_0$ to be true, in this case, $T^{obs}$ should follow $\mc{N}(0, 1)$ (the null distribution). If we observe some $T^{obs}$ that is unlikely under the null distribution, that is, $T^{obs}$ contradicts the null distribution, we reject $H_0$.
+	\end{itemize}
+	
+	\subsection{Horvitz-Thompson Estimator for $\tau^{ATE}$}
+	\begin{definition}
+		Let $\eta$ be any design that is a randomized experiment, let $\Pi_i = P_\eta(Z_i=1)$ and $0 < \Pi_i < 1$. Define
+		\begin{align}
+			\tauhat^{HT} = \frac{1}{N} \sum_{i=1}^N \frac{z_i}{\Pi_i}y_i + \frac{1}{N} \sum_{i=1}^N \frac{1-z_i}{1-\Pi_i}y_i
+		\end{align}
+		Note that $\tauhat^{HT}$ is a special case of \ul{inverse propensity-score weighting} (IPW) estimators.
+	\end{definition}
+	
+	\begin{proposition}
+		Let $\eta$ be any design that is a randomized experiment, then the HT estimator $\tauhat^{HT}$ is \ul{unbiased} for $\tau^{ATE}$.
+		\begin{proof}
+			\begin{align}
+				\expe_\eta \tauhat^{HT} &= \frac{1}{N} \sum_{i=1}^N \expe_\eta [\frac{z_i}{\Pi_i}y_i] + \frac{1}{N} \sum_{i=1}^N \expe_\eta[\frac{1-z_i}{1-\Pi_i}y_i] \\
+				&= \frac{1}{N} \sum_{i=1}^N \expe_\eta [\frac{z_i}{\Pi_i}y_i(1)] + \frac{1}{N} \sum_{i=1}^N \expe_\eta[\frac{1-z_i}{1-\Pi_i}y_i(0)] \\
+				&= \frac{1}{N} \sum_{i=1}^N \expe_\eta[z_i] \frac{1}{\Pi_i}y_i(1) + \frac{1}{N} \sum_{i=1}^N \expe_\eta[1-z_i] \frac{1}{1-\Pi_i}y_i(0) \\
+				&= \frac{1}{N} \sum_{i=1}^N y_i(1) + \frac{1}{N} \sum_{i=1}^N y_i(0) \\
+				&= \tau^{ATE}
+			\end{align}
+		\end{proof}
+	\end{proposition}
 \end{document}
 
 
