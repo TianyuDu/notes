@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.5.8)  28 SEP 2020 14:03
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.5.8)  30 SEP 2020 19:18
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -734,20 +734,20 @@ Overfull \hbox (3.22473pt too wide) in paragraph at lines 495--497
 LaTeX Font Info:    Try loading font information for U+dsrom on input line 582.
  (/usr/local/texlive/2019/texmf-dist/tex/latex/doublestroke/Udsrom.fd
 File: Udsrom.fd 1995/08/01 v0.1 Double stroke roman font definitions
-) [12] [13] [14] (/Users/tianyudu/Documents/Stanford/Stanford Notes/MATH205A/.texpadtmp/math205a.aux) ) 
+) [12] [13] [14] [15] [16] [17] [18] (/Users/tianyudu/Documents/Stanford/Stanford Notes/MATH205A/.texpadtmp/math205a.aux) ) 
 Here is how much of TeX's memory you used:
- 24970 strings out of 492616
- 488369 string characters out of 6129482
- 614386 words of memory out of 5000000
- 28505 multiletter control sequences out of 15000+600000
- 541687 words of font info for 60 fonts, out of 8000000 for 9000
+ 24976 strings out of 492616
+ 488428 string characters out of 6129482
+ 615386 words of memory out of 5000000
+ 28509 multiletter control sequences out of 15000+600000
+ 542428 words of font info for 64 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 69i,20n,83p,492b,317s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 69i,20n,83p,492b,337s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/doublestroke/dsrom10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on "/Users/tianyudu/Documents/Stanford/Stanford Notes/MATH205A/.texpadtmp/math205a.pdf" (14 pages, 240407 bytes).
+Output written on "/Users/tianyudu/Documents/Stanford/Stanford Notes/MATH205A/.texpadtmp/math205a.pdf" (18 pages, 253583 bytes).
 PDF statistics:
- 149 PDF objects out of 1000 (max. 8388607)
- 98 compressed objects within 1 object stream
+ 162 PDF objects out of 1000 (max. 8388607)
+ 106 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  109 words of extra memory for PDF output out of 10000 (max. 10000000)
 
