@@ -4,6 +4,8 @@
 \usepackage{amssymb}
 \usepackage[margin=1in]{geometry}
 
+\usepackage[ruled,vlined]{algorithm2e}
+
 \usepackage{setspace}
 \linespread{1.15}
 
@@ -188,7 +190,7 @@
 		\end{align}
 	\end{proposition}
 	
-	\subsection{Inferences}
+	\subsection{Inferences: Neymanian}
 	\begin{itemize}
 		\item Suppose we have a \ul{normal approximation} is large samples:
 		\begin{align}
@@ -255,6 +257,64 @@
 			\end{align}
 		\end{proof}
 	\end{proposition}
+	
+	\subsection{Fisher Randomization Test}
+	\begin{itemize}
+		\item Neymanian makes very few assumptions,
+		\item but requires asymptotic arguments: $T^{obs} \sim \mc{N}(0, 1)$,
+		\item for CRD we may derive the asymptotic distribution easily, but this is much harder for other designs.
+		\item FRT assumes nothing beyond SUTVA.
+	\end{itemize}
+	\paragraph{Nayman's $H_0$ v.s. Fisher's $H_0$} $H_0^{Fisher}$ is stronger than $H_0^{Neyman}$:
+	\begin{align}
+		H_0^{Neyman}:& \tau^{ATE} = 0 \\
+		H_0^{Fisher}:& Y_i(0) = Y_i(1)\ \forall i \in [N]
+	\end{align}
+	\paragraph{FRT Workflow}
+	\begin{itemize}
+		\item Set \science\  fixed but unknown.
+		\item Observe $\vez^{obs} \sim \eta$ and $\vey^{obs} = y(\vez^{obs})$.
+		\item Compute $T(\vez^{obs}, \vey^{obs})$ such as $\frac{1}{N_1} \sum z_i y_i + \frac{1}{N_0} \sum (1-z_i) y_i$.
+		\item Suppose the null hypothesis $H_0$ is true, such as $Y_i(0) = Y_i(1)$.
+		\item Deduce $\science^*$\ based on $H_0$ and $\vey^{obs}$.
+		\item Given the deduced $\science^*$\, how likely is it that we observe $T^{obs}$?
+		\item Iterate over all possible $\vez'$, compute $\vey' = \science^*(\vez')$ and $T(\vez', \vey')$.
+		\item The distribution of computed $T(\vez', \vey')$ is called the null distribution.
+		\item The $p$-value is $P_\eta(T(\vez, \science^*(\vez)) \geq T^{obs} | H_0)$ and measures how likely $T^{obs}$ occurs under $H_0$.
+	\end{itemize}
+	
+	\begin{algorithm}[H]
+		\caption{Fisher's Randomization Test}
+		\textbf{Inputs}: $\vez^{obs}, \vey^{obs}, T(\cdot), \eta$\;
+		\textbf{Returns}: estimated $p$-value.\;
+		$T^{obs} \leftarrow T(\vez^{obs}, \vey^{obs})$\;
+		Deduce $\science^*$\ from $H_0$\;
+		\For{$k=1, 2, \dots, K$} {
+			Sample $\vez^{(k)} \sim \eta$\;
+			$\vey^{(k)} \leftarrow \science^*(\vez^{(k)}$\;
+			$T^{(k)} = T(\vez^{(k)}, \vey^{(k)})$\;
+		}
+		Compute Monte-Carlo approximation of $p$-value:
+		\begin{align*}
+			\widehat{pval} = \frac{1}{K} \sum \id{T^{(k)} \geq T^{obs}}
+		\end{align*}
+	\end{algorithm}
+	
+	\begin{theorem}
+		Under $H_0$, as $K \to \infty$, 
+		\begin{align}
+			P_\eta(\widehat{pval} \leq \alpha | H_0) \leq \alpha
+		\end{align}
+		Given confidence level $\alpha$, we reject $H_0$ if and only if $\hat{p} \leq \alpha$. The theorem says the chance of falsely rejecting $H_0$ (type I error) is less than $\alpha$.
+		This theorem suggests a rejection criterion based on the output of FRT is justifiable.
+	\end{theorem}
+	
+	\subsection{Power and Choice of Test Statistics}
+	\par A good test much control type I error and have high power to detect certain volition of the $H_0$. The power of a test is $H_1$-specific. Given an alternative hypothesis
+	\begin{align}
+		Power(H_1) = P_\eta(pval \leq \alpha | H_1)
+	\end{align}
+	If $H_1$ is true, we wish to reject $H_0$ as often as possible by choosing a larger $\alpha$, which leads to increase chance of type I error.
 \end{document}
 
 

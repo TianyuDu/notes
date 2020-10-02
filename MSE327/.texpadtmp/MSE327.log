@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.5.8)  1 OCT 2020 10:40
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.5.8)  1 OCT 2020 22:24
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -619,35 +619,82 @@ Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
 \Gm@layouthoffset=\dimen267
 \Gm@layoutvoffset=\dimen268
 \Gm@dimlist=\toks49
+) (/usr/local/texlive/2019/texmf-dist/tex/latex/algorithm2e/algorithm2e.sty
+Package: algorithm2e 2017/07/18 v5.2 algorithms environments
+\c@AlgoLine=\count305
+\algocf@hangindent=\skip60
+ (/usr/local/texlive/2019/texmf-dist/tex/latex/ifoddpage/ifoddpage.sty
+Package: ifoddpage 2016/04/23 v1.1 Conditionals for odd/even page detection
+\c@checkoddpage=\count306
+) (/usr/local/texlive/2019/texmf-dist/tex/latex/tools/xspace.sty
+Package: xspace 2014/10/28 v1.13 Space after command names (DPC,MH)
+) (/usr/local/texlive/2019/texmf-dist/tex/latex/relsize/relsize.sty
+Package: relsize 2013/03/29 ver 4.1
+)
+\skiptotal=\skip61
+\skiplinenumber=\skip62
+\skiprule=\skip63
+\skiphlne=\skip64
+\skiptext=\skip65
+\skiplength=\skip66
+\algomargin=\skip67
+\skipalgocfslide=\skip68
+\algowidth=\dimen269
+\inoutsize=\dimen270
+\inoutindent=\dimen271
+\interspacetitleruled=\dimen272
+\interspacealgoruled=\dimen273
+\interspacetitleboxruled=\dimen274
+\algocf@ruledwidth=\skip69
+\algocf@inoutbox=\box59
+\algocf@inputbox=\box60
+\AlCapSkip=\skip70
+\AlCapHSkip=\skip71
+\algoskipindent=\skip72
+\algocf@nlbox=\box61
+\algocf@hangingbox=\box62
+\algocf@untilbox=\box63
+\algocf@skipuntil=\skip73
+\algocf@capbox=\box64
+\algocf@lcaptionbox=\skip74
+\algoheightruledefault=\skip75
+\algoheightrule=\skip76
+\algotitleheightruledefault=\skip77
+\algotitleheightrule=\skip78
+\c@algocfline=\count307
+\c@algocfproc=\count308
+\c@algocf=\count309
+\algocf@algoframe=\box65
+\algocf@algobox=\box66
 ) (/usr/local/texlive/2019/texmf-dist/tex/latex/setspace/setspace.sty
 Package: setspace 2011/12/19 v6.7a set line spacing
 ) (/Users/tianyudu/Documents/Stanford/Stanford Notes/MSE327/.texpadtmp/MSE327.aux)
 \openout1 = `MSE327.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 19.
+LaTeX Font Info:    ... okay on input line 19.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 19.
+LaTeX Font Info:    ... okay on input line 19.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 19.
+LaTeX Font Info:    ... okay on input line 19.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 19.
+LaTeX Font Info:    ... okay on input line 19.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 19.
+LaTeX Font Info:    ... okay on input line 19.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 19.
+LaTeX Font Info:    ... okay on input line 19.
  (/usr/local/texlive/2019/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count305
-\scratchdimen=\dimen269
-\scratchbox=\box59
-\nofMPsegments=\count306
-\nofMParguments=\count307
+\scratchcounter=\count310
+\scratchdimen=\dimen275
+\scratchbox=\box67
+\nofMPsegments=\count311
+\nofMParguments=\count312
 \everyMPshowfont=\toks50
-\MPscratchCnt=\count308
-\MPscratchDim=\dimen270
-\MPnumerator=\count309
-\makeMPintoPDFobject=\count310
+\MPscratchCnt=\count313
+\MPscratchDim=\dimen276
+\MPnumerator=\count314
+\makeMPintoPDFobject=\count315
 \everyMPtoPDFconversion=\toks51
 ) (/usr/local/texlive/2019/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2016/05/15 v2.6 Base part for package epstopdf
@@ -716,28 +763,28 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-LaTeX Font Info:    Try loading font information for U+msa on input line 18.
+LaTeX Font Info:    Try loading font information for U+msa on input line 20.
 (/usr/local/texlive/2019/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 18.
+LaTeX Font Info:    Try loading font information for U+msb on input line 20.
  (/usr/local/texlive/2019/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 23.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 25.
  (/usr/local/texlive/2019/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 23.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 25.
  [1
 
 {/usr/local/texlive/2019/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2]
-LaTeX Font Info:    Try loading font information for U+dsrom on input line 101.
+LaTeX Font Info:    Try loading font information for U+dsrom on input line 103.
  (/usr/local/texlive/2019/texmf-dist/tex/latex/doublestroke/Udsrom.fd
 File: Udsrom.fd 1995/08/01 v0.1 Double stroke roman font definitions
 )
-Overfull \hbox (32.14998pt too wide) in paragraph at lines 101--102
+Overfull \hbox (32.14998pt too wide) in paragraph at lines 103--104
 []\OT1/cmr/m/n/10.95 Conditional av-er-age treat-ment ef-fect: let $\OML/cmm/m/it/10.95 X[]$ \OT1/cmr/m/n/10.95 be the con-trolled co-variate, $\OML/cmm/m/it/10.95 ^^\[] \OT1/cmr/m/n/10.95 := [] [][] \U/dsrom/m/n/10.95 1\OMS/cmsy/m/n/10.95 f[]g\OML/cmm/m/it/10.95 ^^\[]$\OT1/cmr/m/n/10.95 . 
  []
 
@@ -745,22 +792,22 @@ Overfull \hbox (32.14998pt too wide) in paragraph at lines 101--102
 
 Package amsmath Warning: Foreign command \atopwithdelims;
 (amsmath)                \frac or \genfrac should be used instead
-(amsmath)                 on input line 154.
+(amsmath)                 on input line 156.
 
-[4] [5] [6] [7] (/Users/tianyudu/Documents/Stanford/Stanford Notes/MSE327/.texpadtmp/MSE327.aux) ) 
+[4] [5] [6] [7] [8] (/Users/tianyudu/Documents/Stanford/Stanford Notes/MSE327/.texpadtmp/MSE327.aux) ) 
 Here is how much of TeX's memory you used:
- 24997 strings out of 492616
- 488749 string characters out of 6129482
- 615393 words of memory out of 5000000
- 28526 multiletter control sequences out of 15000+600000
+ 25939 strings out of 492616
+ 504139 string characters out of 6129482
+ 640433 words of memory out of 5000000
+ 29454 multiletter control sequences out of 15000+600000
  542404 words of font info for 63 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 69i,16n,83p,437b,317s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 69i,16n,83p,437b,417s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/doublestroke/dsrom10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on "/Users/tianyudu/Documents/Stanford/Stanford Notes/MSE327/.texpadtmp/MSE327.pdf" (7 pages, 213971 bytes).
+Output written on "/Users/tianyudu/Documents/Stanford/Stanford Notes/MSE327/.texpadtmp/MSE327.pdf" (8 pages, 224910 bytes).
 PDF statistics:
- 131 PDF objects out of 1000 (max. 8388607)
- 86 compressed objects within 1 object stream
+ 134 PDF objects out of 1000 (max. 8388607)
+ 88 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  109 words of extra memory for PDF output out of 10000 (max. 10000000)
 
