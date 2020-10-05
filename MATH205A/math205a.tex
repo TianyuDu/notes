@@ -810,10 +810,17 @@
  					0 &\tx{ otherwise}	
 				\end{cases}
 			\end{align}
-			By construction, $g_n \leq f_n$ and $\int g_n\ d\mu \leq \int f_n\ d\mu$.
+			In order to show $\int f\ d\mu \leq \lim \int f_n\ d\mu$, we are constructing this $g_n$ satisfying 
 			\begin{align}
-				\lim \int f_n\ d\mu &\geq \lim g_n\ d\mu \\
-				&= \lim \sum_{i=1}^K (1-\varepsilon) a_i \mu(A_{n,i}) \\
+				(1-\varepsilon) \int f\ d\mu \leq \lim \int g_n\ d\mu \leq \lim \int f_n\ d\mu \leq \int f\ d\mu
+			\end{align}
+			where the last equality has been shown above. The equality can then be shown by taking $\varepsilon \to 0$ and using Squeeze theorem. Note that $(1-\varepsilon) \int f\ d\mu \centernot \leq \int g_n\ d\mu$, only the limit does.
+			
+			By construction, $g_n \leq f_n$ and $\int g_n\ d\mu \leq \int f_n\ d\mu$ as a result.
+			\begin{align}
+				\lim_n \int f_n\ d\mu &\geq \lim_n g_n\ d\mu \\
+				&= \lim_n \sum_{i=1}^K (1-\varepsilon) a_i \mu(A_{n,i}) \\
+				&= \sum_{i=1}^K (1-\varepsilon) a_i \lim_n \mu(A_{n,i}) \\
 				&= \sum_{i=1}^K (1-\varepsilon) a_i \mu(A_i) \tx{ Since for all $i$, $A_{n,i} \uparrow A_i$ as $n \to \infty$.}\\
 				&= (1-\varepsilon) \int f\ d\mu
 			\end{align}
@@ -870,6 +877,185 @@
 			Therefore, the supremum of integrals of functions from a larger collection is larger.
 		\end{proof}
 	\end{proposition}
+	
+	\subsection{Linearity of Lebesgue Integral for Arbitrary Integrable Functions}
+	\begin{theorem}[Vector Space Property of Integral Functions]
+		Let $(X, \mc{A}, \mu)$ be a measure space, let $f, g: X \to \R^*$ be integrable functions, let $\alpha \in \R$. Then, $f+g$ and $\alpha f$ are integrable, and
+		\begin{align}
+			\int f + g d\mu &= \int f d\mu + \int g d\mu \\
+			\int \alpha f d\mu &= \alpha \int f d\mu
+		\end{align}
+		\begin{proof}
+			It's easy to check that $(f+g)^+ \leq f^+ + g^+$ and $(f+g)^- \leq f^- + g^-$. By monotonicity, $\int (f+g)^+ d\mu, \int (f+g)^- d\mu < \infty$. Therefore, $f+g$ is integrable.
+			
+			Moreover, $f+g = f^+ - f^- + g^+ - g^- \iff f + g + f^- + g^- = f^+ + g^+$. We can apply the linearity of non-negative integrable functions to derive the result.
+			
+			When $\alpha \geq 0$, $(\alpha f)^+ = \alpha f^+$ and $(\alpha f)^- = \alpha f^-$. The proof for cases with $\alpha < 0$ is similar.
+		\end{proof}
+	\end{theorem}
+	
+	\begin{corollary}
+		Let $f, g$ be integrable functions such that $f \geq g$, then $\int f\ d\mu \geq \int g\ d\mu$.
+		\begin{proof}
+			Let $h = f - g = f + (-1)g \geq 0$, which is integrable by the previous theorem. And $\int h\ d\mu \geq 0$ since its the supremum of integrals for simple functions less than $h$, which includes the zero function (has zero integral).
+		\end{proof}
+	\end{corollary}
+	
+	\begin{lemma}
+		A function $f$ is integrable \ul{if and only if} $|f|$ is integrable.
+		\begin{proof}
+			Note that $|f| = f^+ + f^-$, and $\int f^+ + f^-\ d\mu < \infty$ by the integrability of $f$. Therefore, $|f|$ is integrable.
+			
+			Moreover, $|f|^+ = f^+ + f^-$, therefore, the integrability of $|f|$ implies both $\int f^+\ d\mu$ and $\int f^-\ d\mu$ are finite.
+		\end{proof}
+	\end{lemma}
+	
+	\begin{proposition}
+		All integrable function $f$ satisfies the triangle inequality
+		\begin{align}
+			\abs{\int f\ d\mu} \leq \int \abs{f}\ d\mu
+		\end{align}
+		
+		\begin{proof}
+			\begin{align}
+				\abs{\int f\ d\mu} &= \abs{\int f^+ - f^-\ d\mu}\\
+				&= \abs{\int f^+\ d\mu - \int f^-\ d\mu}\\
+				&\leq \abs{\int f^+\ d\mu} + \abs{\int f^-\ d\mu} \\
+				&= \int f^+\ d\mu + \int f^-\ d\mu \\
+				&= \int \abs{f}\ d\mu
+			\end{align}
+		\end{proof}
+	\end{proposition}
+	
+	\section{Limit Theorems (i.e., when we can exchange limits and integrals)}
+	\begin{theorem}[Monotone Convergence Theorem]
+		Let $(X, \mc{A}, \mu)$ be a measure space, let $f_n: X \to [0, \infty]$ be a \ul{non-decreasing} sequence of measurable functions converge to $f$. Then,
+		\begin{align}
+			\int f\ d\mu = \lim_{n\to\infty} \int f_n\ d\mu
+		\end{align}
+		\begin{proof}
+			$f$ measurable since $f = \lim_n f_n = \liminf_n f_n$. Moreover, $\int f_n\ d\mu$ is a non-decreasing sequence to the limit $\int f\ d\mu$, therefore $\int f\ d\mu \geq \lim_n \int f_n\ d\mu$.
+
+			For each $n \in \N$, there exists a non-decreasing sequence of non-negative simple functions $g_{n,k}$ converges to $f_n$. Define
+			\begin{align}
+				h_n = \max\{g_{1,n}, g_{2,n}, \dots, g_{n,n}\}
+			\end{align}
+			Note that $h_n$ is a non-decreasing sequence since
+			\begin{align}
+				h_{n+1} &= \max\{g_{1,n+1}, g_{2,n+1}, \dots, g_{n+1,n+1}\} \\
+				&\geq \max\{g_{1,n+1}, g_{2,n+1}, \dots, g_{n,n+1}\} \\
+				&\geq \max\{g_{1,n}, g_{2,n}, \dots, g_{n,n}\} = h_n
+			\end{align}
+			Moreover, for any $m \in \N$, for any $n \geq m$,
+			\begin{align}
+				h_n(x) &=  \max\{g_{1,n}, g_{2,n}, \dots, g_{n,n}\}
+				\geq g_{m,n}
+			\end{align}
+			Therefore, by taking the limit $n \to \infty$,
+			\begin{align}
+				\lim_{n \to \infty} h_n(x) \geq \lim_{n \to \infty} g_{m, n} = f_m
+			\end{align}
+			Taking limit $m \to \infty$ on both sides
+			\begin{align}
+				\lim_n h_n(x) = \lim_m \lim_n h_n(x) \geq \lim_m f_m = f \\
+				\implies \int \lim_n h_n(x)\ d\mu \geq \int f\ d\mu
+			\end{align}
+			Note that, by construction,
+			\begin{align}
+				h_n =  \max\{g_{1,n}, g_{2,n}, \dots, g_{n,n}\} \leq \max\{f_1, \dots, f_n\} = f_n
+			\end{align}
+			Therefore,
+			\begin{align}
+				\int \lim_{n\to\infty} f_n(x)\ d\mu \geq \int f\ d\mu
+			\end{align}
+		\end{proof}
+	\end{theorem}
+	
+	\begin{corollary}
+		Let $(f_n)$ be a sequence (not necessarily increasing) non-negative measurable functions, then
+		\begin{align}
+			\int \sum_{n=1}^\infty f_n\ d\mu = \sum_{n=1}^\infty \int f_n\ d\mu
+		\end{align}
+	\end{corollary}
+	
+	\begin{theorem}[Fatou's Lemma]
+		Let $f_n$ be a sequence of \ul{non-negative} measurable functions, then
+		\begin{align}
+			\int \liminf_{n\to\infty} f_n\ d\mu \leq \liminf_{n\to\infty} \int f_n\ d\mu
+		\end{align}
+		\begin{proof}
+			Define $g_n = \inf_{k \geq n} f_k$, then $g_n$ is an increasing sequence of non-negative functions. By construction, $\int g_n\ d\mu \leq \inf_{k \geq n}\int f_k\ d\mu$.
+			By MCT,
+			\begin{align}
+				\int \liminf_{n \to \infty} f\ d\mu &= \int \lim_{n\to\infty} g_n\ d\mu \\
+				&= \lim_{n\to\infty} \int g_n\ d\mu \\
+				&\leq \lim_{n\to\infty} \inf_{k \geq n}\int f_k\ d\mu \\
+				&= \liminf_{n\to\infty} \int f_n\ d\mu
+			\end{align}
+		\end{proof}
+	\end{theorem}
+	
+	\begin{theorem}[Lebesgue's Dominated Convergence Theorem]
+		Let $(X, \mc{A}, \mu)$ be a measure space, let $f$ and $f_n$ be $\R^*$-valued measurable functions on $X$ such that $f_n \to f$ point-wise. If there exists a non-negative \ul{integrable} function $g$ such that $|f_n| \leq g$ for all $n$, then, all $f$ and $f_n$ are integrable, moreover,
+		\begin{align}
+			\int f\ d\mu = \lim_{n\to\infty} \int f_n\ d\mu
+		\end{align}
+		\begin{proof}
+			Since $|f_n| \leq g$, all $f_n$ are integrable. The limit $f$ also satisfies $|f| \leq g$ and is integrable.
+			
+			\emph{For now, assume $f_n$ are $\R$-valued instead of $\R^*$-valued.}
+			
+			Note that $f + g = \lim_{n\to\infty} f_n + g$ is non-negative (because of the dominance) and integrable, by Fatou's lemma
+			\begin{align}
+				\int f + g\ d\mu &= \int \liminf f + g\ d\mu \leq \liminf \int f_n + g\ d\mu \\
+				&= \liminf \int f_n\ d\mu + \int g\ d\mu \\
+				\implies \int f\ d\mu &\leq \liminf \int f_n\ d\mu
+			\end{align}
+			Similarly, $g - f = \lim_{n\to\infty} g - f_n$ is non-negative and integrable as well, by Fatou's lemma
+			\begin{align}
+				\int g - f\ d\mu &= \int \liminf g - f_n\ d\mu \leq \liminf \int g - f_n\ d\mu \\
+				\implies - \int f\ d\mu &\leq - \liminf \int f_n\ d\mu \\
+				\implies \int f\ d\mu &\geq \limsup \int f_n \ d\mu
+			\end{align}
+			Also, $\liminf \int f_n\ d\mu \leq \limsup \int f_n\ d\mu$, therefore,
+			\begin{align}
+				\liminf \int f_n\ d\mu \geq \int f\ d\mu &\geq \limsup \int f_n \ d\mu \geq \liminf \int f_n\ d\mu  \\
+				\implies \int f\ d\mu &= \lim \int f_n\ d\mu
+			\end{align}
+		\end{proof}
+	\end{theorem}
+	
+	\begin{proposition}[A Stronger Result]
+		Given assumptions of the dominated convergence theorem, $f_n$ $L^1$-converges to $f$.
+		\begin{align}
+			\lim_{n\to\infty} \int \abs{f_n - f}\ d\mu = 0
+		\end{align}
+		\begin{proof}
+			Note that $\abs{f_n - f} \to 0$ point-wise, and $\abs{f_n - f} \leq 2 g$. The dominated convergence theorem suggests $\lim_{n\to\infty} \int \abs{f_n - f}\ d\mu = \int 0\ d\mu = 0$.
+		\end{proof}
+	\end{proposition}
+	
+	\subsection{The Notion of Almost Everywhere}
+	\begin{definition}
+		Let $(X, \mc{A}, \mu)$ be a measure space, a set $N \subseteq X$ (not necessarily measurable) is called "\textbf{negligible} w.r.t. $\mu$" if $N \subseteq A$ for some $A \in \mc{A}$ with $\mu(A)=0$.
+		
+		A property is said to hold \textbf{almost everywhere} w.r.t. $\mu$ (denoted as $\mu$-a.e.) if the set on which this property fails is negligible.
+	\end{definition}
+	
+	\begin{proposition}
+		Let $f: X \to [0, \infty]$ be an integrable function, then $f$ is finite $\mu$-a.e.
+		\begin{proof}
+			Let $A := f^{-1}(\infty)$, define $h_n(x) := n \id{x \in A}$. Clearly, $h_n$ is a simple function $\leq f$ for every $n$, by monotonicity, $\int f\ d\mu \leq \int h_n\ d\mu = n \mu(A)$. Taking $n\to\infty$ leads to a contradiction.
+		\end{proof}
+	\end{proposition}
+	
+	\begin{corollary}
+		If $f: X \to \R^*$ is integrable w.r.t. $\mu$, then $|f| < \infty$ $\mu$-a.e.
+		\begin{proof}
+			$f$ is integrable implies $\int f^+\ d\mu, \int f^-\ d\mu < \infty$. Then,
+			by the previous proposition, $f^+ < \infty$ except for a negligible set $A$, and $f^- < \infty$ expect for a negligible set $B$. Therefore, $|f| = \infty$ on set $A \cup B$, which is negligible as well.
+		\end{proof}
+	\end{corollary}
 \end{document}
 
 
