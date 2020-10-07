@@ -11,6 +11,9 @@
 
 \author{Tianyu Du}
 
+\newcommand{\dmu}[0]{\ d\mu}
+\newcommand{\dlambda}[0]{\ d\lambda}
+
 \begin{document}
 	\maketitle
 	\section{Measures}
@@ -1056,6 +1059,184 @@
 			by the previous proposition, $f^+ < \infty$ except for a negligible set $A$, and $f^- < \infty$ expect for a negligible set $B$. Therefore, $|f| = \infty$ on set $A \cup B$, which is negligible as well.
 		\end{proof}
 	\end{corollary}
+	
+	\begin{proposition}
+		Let $f: X \to [0, \infty]$ be measurable, then
+		\begin{align}
+			\int f\ d\mu = 0 \iff f = 0\ \mu-a.e.
+		\end{align}
+		\begin{proof}
+			($\implies$) Suppose $f = 0$ a.e., for every simple function $g \leq f$, let $(a_i, A_i)$ be the representation of $g$, then $\int g\ d\mu = 0$ by definition. Suppose $a_i > 0$ for some $A_i$, then $f(x) \geq a_i > 0$ for all $x \in A_i$, since $f = 0$ a.e., $\mu(A_i) = 0$. Therefore, $\int g\ d\mu = 0$, so is the integral of $f$.
+			
+			($\impliedby$), suppose $\int f\ d\mu = 0$, note that
+			\begin{align}
+				\{x: f(x) > 0\} = \bigcup_{n=1}^\infty \{x: f(x) > 1/n\}
+			\end{align}
+			Define $A_n = \{x: f(x) > 1/n\}$, then $A_n$ is an increasing sequence of sets, therefore, suppose there exists some $A_n$ with $\mu(A_n) > 0$, define $g(x) = \frac{1}{n} \id{x \in A_n}$. $f \geq g$ by construction, so that $\int f\ d\mu \geq \int g\ d\mu = \frac{1}{n} \mu(A_n) > 0$. This leads to a contradiction, so all $\mu(A_n) = 0$, and $\mu(\{x: f(x) > 0\}) = \lim_n \mu(A_n) = 0$.
+		\end{proof}
+	\end{proposition}
+	
+	\begin{corollary}
+		Let $f: X \to \R^*$ be a measurable function, 
+		\begin{align}
+			f = 0\ \mu-a.e. \implies \int f\ d\mu = 0
+		\end{align}
+		\begin{proof}
+			$f=0$ a.e. implies $f^+, f^- = 0$ a.e., apply the previous proposition, $\int f^+\ d\mu = \int f^-\ d\mu = 0$, so is $\int f\ d\mu$.
+			
+			Note the converse is not true, it is possible that $f^+\ d\mu = \int f^-\ d\mu \neq 0$ such that $\int f\ d\mu = 0$.
+		\end{proof}
+	\end{corollary}
+	
+	\begin{corollary}
+		Let $f, g: X \to \R^*$ be integrable functions, then
+		\begin{align}
+			f = 0\ \mu-a.e. \implies \int f\ d\mu = \int g\ d\mu 
+		\end{align}
+		\begin{proof}
+			Let $\tilde{f} = f(x) \id{x \in \R}$ and $\tilde{g} = g(x) \id{x \in \R}$, we are doing this to avoid subtracting infinity from infinity. $|\tilde{f}|$ and $|\tilde{g}|$ are bounded by $|f|$ and $|g|$ and are integrable. Moreover, $f = \tilde{f} = g = \tilde{g}$ a.e. by construction. Lastly, since $|\tilde{f}|, |\tilde{g}| < \infty$, we can write
+			\begin{align}
+				\int \tilde{f} - \tilde{g}\ d\mu &= \int \tilde{f}\ d\mu - \int \tilde{g}\ d\mu = 0 \\
+				\implies \int f\ d\mu &= \int \tilde{f}\ d\mu = \int g\dmu = \int \tilde{g}\dmu
+			\end{align}
+		\end{proof}
+	\end{corollary}
+	
+	\begin{proposition}
+		Monotone convergence theorem and dominated convergence theorem holds even if $f_n \to f$ a.e. In DCT, we can also have $|f_n| \leq g$ a.e.
+		\begin{proof}[Proof for MCT]
+			Suppose $f_n \geq 0$ a.e.
+			\begin{align}
+				A = \{x: f_n(x) \geq 0\ \forall n \land \lim_{n\to\infty} f_n(x) = f(x)\}
+			\end{align}
+			Therefore, $A^c = \bigcup_{n} \{x:f_n(x) < 0\} \cup \{x: \lim_{n\to\infty} f_n(x) \neq f(x)\}$, which is a countable union of measure zero sets, hence $\mu(A^c) = 0$.
+			
+			Define $\tilde{f}_n = \mathds{1}_A f_n$ and $\tilde{f} = \mathds{1}_A f$, apply the original version of MCT on $\tilde{f}_n$ and $f$, then exert the fact that $\int \tilde{f}_n\dmu = \int f_n\dmu$ and $\int \tilde{f}\dmu = \int f\dmu$.
+		\end{proof}
+	\end{proposition}
+	
+	\section{Integral of Complex-Valued Functions}
+	\begin{definition}
+		A function $f: X \to \C$ is called \textbf{measurable} if both $\Re(f)$ and $\Im(f)$ (both are real-valued functions) are measurable. Similarly, $f$ is \textbf{integrable} if both its real and imaginary parts are integrable. 
+		
+		Define
+		\begin{align}
+			\int f\dmu = \int \Re(f)\dmu + i \int \Im(f)\dmu
+		\end{align}
+	\end{definition}
+	
+	\begin{proposition}
+		Let $f, g$ be integrable complex-valued functions, then
+		\begin{enumerate}
+			\item $\int (f+g)\dmu = \int f\dmu + \int g\dmu$.
+			\item for all $\alpha \in \C$, $\int (\alpha f)\dmu = \alpha \int f\dmu$.
+		\end{enumerate}
+	\end{proposition}
+	
+	\begin{proposition}[Triangle Inequality]
+		Let $f: X \to \C$ be an integrable function, then
+		\begin{align}
+			\abs{\int f\dmu} \leq \int \abs{f}\dmu
+		\end{align}
+		\begin{proof}
+			Note that there exists $\alpha \in \C$ with $\abs{\alpha}=1$ such that
+			\begin{align}
+				\abs{\int f\dmu} = \alpha \int f\dmu
+			\end{align}
+			To see this point, let $z = r e^{i \theta} \in \C$ so that $|z| = r$, let $\alpha = e^{-i\theta}$, which satisfies $\alpha z = r = |z|$.
+			
+			Therefore,
+			\begin{align}
+				\abs{\int f\dmu} &= \alpha \int f\dmu \\
+				&= \int (\alpha f)\dmu \\
+				&= \int \Re(\alpha f)\dmu + i \int \Im(\alpha f)\dmu \\
+				\implies &\int \Im(\alpha f)\dmu = 0
+			\end{align}
+			Therefore,
+			\begin{align}
+				\abs{\int f\dmu} = \int \Re(\alpha f)\dmu \leq \int \abs{\alpha f}\dmu = \int \abs{f}\dmu
+			\end{align}
+			where the last step holds because $\abs{\alpha}=1$.
+		\end{proof}
+	\end{proposition}
+	
+	\section{Convergence of Measurable Functions}
+	\begin{definition}
+		Let $(X, \mc{A}, \mu)$ be a measure space, let $\{f_n\}_n$ be a sequence of real-valued measurable functions on $X$, let $f: X \to \R$ be a measurable function.
+		
+		Then \textbf{$f_n \to f$ in measure} if for every $\varepsilon > 0$,
+		\begin{align}
+			\lim_{n\to\infty} \mu(\{x: \abs{f_n(x) - f(x)} > \varepsilon \}) = 0
+		\end{align}
+	\end{definition}
+	
+	\begin{remark}
+		Convergence almost everywhere does not imply convergence in measure.
+		\begin{proof}[Counter-example]
+			
+		\end{proof}
+	\end{remark}
+	
+	\begin{remark}
+		Convergence in measure does not imply convergence almost everywhere (even if we are considering a finite measure).
+		\begin{proof}[Counter-example]
+			
+		\end{proof}
+	\end{remark}
+	
+	\begin{proposition}
+		Let $\mu$ be a finite measure, then convergence a.e. implies convergence in measure.
+		\begin{proof}
+			Suppose $f \to f_n$ a.e. Let $\varepsilon > 0$. Note that if there exists $x$ such that $|f_n - f(x)| \geq \varepsilon$ for infinitely many $n$, then $f_n \centernot{\to} f$ at $x$.
+			Therefore,
+			\begin{align}
+				\mu(\{x: \abs{f_n(x) - f(x)} > \varepsilon \tx{ for infinitely many $n$}\}) \leq \mu(\{x: f_n(x) \centernot{\to} f(x)\}) = 0
+			\end{align}
+			Further, note that
+			\begin{align}
+				\{x: \abs{f_n(x) - f(x)} > \varepsilon \tx{ for infinitely many $n$}\}
+				&= \bigcap_{n=1}^\infty 
+				\underbrace{\bigcup_{k=n}^\infty \{x : \abs{f_k(x) - f(x)} > \varepsilon\}}_{B_n}
+			\end{align}
+			\emph{Where $x \in B_n$ indicates there exists a $k \geq n$ such that $\abs{f_k(x) - f(x)} > \varepsilon$. If we take the intersection of all $B_n$, it means for all $n \in \N$, there exists $k \geq n$ such that $\abs{f_k(x) - f(x)} > \varepsilon$, which is equivalent to saying there are infinitely many $k$ such that $\abs{f_k(x) - f(x)} > \varepsilon$.}
+			
+			Clearly $B_1 \supseteq B_2 \supseteq \dots$, there must exist some $B_i$ such that $\mu(B_i)$ since $\mu$ is a finite measure.
+			
+			Therefore,
+			\begin{align}
+				0 = \mu(\{x: \abs{f_n(x) - f(x)} > \varepsilon \tx{ for infinitely many $n$}\}) = \lim_{n\to\infty} \mu(B_n)
+			\end{align}
+			Hence, $\lim_{n \to \infty} \mu(B_n) = 0$.
+			However, $B_n \supseteq \{x : \abs{f_n(x) - f(x)} > \varepsilon\}$, therefore,
+			\begin{align}
+				\lim_{n \to \infty} \{x : \abs{f_n(x) - f(x)} > \varepsilon\} = 0
+			\end{align}
+		\end{proof}
+	\end{proposition}
+	
+	\begin{proposition}
+		Let $f_n$ be a sequence of measurable real-valued functions converge to a measurable $f$ in measure, then there exists a \ul{subsequence} of $f_n$ converges to $f$ a.e.
+		\begin{proof}
+			Suppose $f_n \to f$ in measure, take $\varepsilon = 1$, there exists infinitely many $n_1$ such that
+			\begin{align}
+				\mu(\{x : \abs{f_{n_1} - f(x)} > 1 \}) < 2^{-1}
+			\end{align}
+			Then for every $k$, we can choose $n_k > n_{k-1}$ such that
+			\begin{align}
+				\mu(\underbrace{\{x : \abs{f_{n_k} - f(x)} > \frac{1}{k} \}}_{A_k}) < 2^{-k}
+			\end{align}
+			Let $B = \bigcap_{j=1}^\infty \bigcup_{k=j}^\infty A_k$, define $B_j = \bigcup_{k=j}^\infty A_k$.
+			Note that for all $j$, $B \subseteq B_j$, therefore,
+			\begin{align}
+				\mu(B) \leq \mu(B_j) = \mu(\bigcup_{k=j}^\infty A_k) \leq \sum_{k=j}^\infty \mu(A_k) < \sum_{k=j}^\infty 2^{-j+1}
+			\end{align}
+			Take $j \to \infty$, $\mu(B) = 0$. If $x \notin B$, $x \in B^c = \bigcup_{j=1}^\infty \bigcap_{k=j}^\infty A_k^c$, which means $\exists j$ such that $x \in A_k^c$ for all $k \geq j$. That is
+			\begin{align}
+				\exists j\ s.t.\ \forall k \geq j\ \abs{f_{n_k} - f(x)} \leq \frac{1}{k}
+			\end{align}
+			Therefore, this subsequence $n_k$ converges t	o $f(x)$ a.e.
+		\end{proof}
+	\end{proposition}
 \end{document}
 
 
