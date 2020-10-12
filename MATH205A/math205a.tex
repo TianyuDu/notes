@@ -3,6 +3,7 @@
 \usepackage{spikey}
 \usepackage{amssymb}
 \usepackage[margin=1in]{geometry}
+\usepackage{float}
 
 \usepackage{setspace}
 \linespread{1.15}
@@ -1342,6 +1343,13 @@
 			\item $f_n \overset{\mu}{\to} f \centernot \implies f_n \overset{a.e.}{\to} f$.
 		\end{enumerate}
 	\end{remark}
+	
+	\begin{figure}[H]
+		\caption{Modes of Convergences}
+		\medbreak
+		\centering
+		\includegraphics[width=0.7\linewidth]{mode_of_convergence.png}
+	\end{figure}
 	
 	\begin{proposition}[Dominated Convergence Theorem II]
 		Suppose $f_n \overset{\mu}{\to} f$, and $\exists$ integrable $g$ such that $\abs{f_n} \leq g$ a.e. for all $n$. Then, $f_n \overset{L^1}{\to} f$, in particular, $\int f_n\ d\mu \to \int f\ d\mu$.
