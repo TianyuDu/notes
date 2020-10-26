@@ -991,7 +991,7 @@
 			Define $g_n = \inf_{k \geq n} f_k$, then $g_n$ is an increasing sequence of non-negative functions. By construction, $\int g_n\ d\mu \leq \inf_{k \geq n}\int f_k\ d\mu$.
 			By MCT,
 			\begin{align}
-				\int \liminf_{n \to \infty} f\ d\mu &= \int \lim_{n\to\infty} g_n\ d\mu \\
+				\int \liminf_{n \to \infty} f_n\ d\mu &= \int \lim_{n\to\infty} g_n\ d\mu \\
 				&= \lim_{n\to\infty} \int g_n\ d\mu \\
 				&\leq \lim_{n\to\infty} \inf_{k \geq n}\int f_k\ d\mu \\
 				&= \liminf_{n\to\infty} \int f_n\ d\mu
@@ -1442,6 +1442,529 @@
 			The sequence of $f_n$ is Cauchy but converges to $f = \id{x \geq 0} \notin C[a,b]$.
 		\end{proof}
 	\end{example}
+	
+	\begin{proposition}
+		$C[a, b]$ under sup-norm is complete.
+		\begin{proof}
+			Suppose $f_n$ is a Cauchy sequence in $C[a, b]$ under supremum norm. For all $x \in [a, b]$,
+			\begin{align}
+				f_n(x) - f_m(x) \leq \norm{f_n - f_m}_\infty \to 0
+			\end{align}
+			since $f_n$ is Cauchy. Therefore, $f_n(x)$ is a Cauchy sequence in $\R$ and $\lim_{n\to\infty} f_n(x)$ exists. Define $f$ to be the point-wise limit of $f_n$.
+			
+			Claim: $f \in C[a, b]$ and $f_n \to f$ in sup-norm.
+			
+			For all $\varepsilon > 0$, there exists $N$, such that for all $m, n \geq N$,
+			\begin{align}
+				\norm{f_m - f_n}_\infty < \varepsilon
+			\end{align}
+			Therefore, for all $x \in [a, b]$, $\abs{f_n(x) - f_m(x)} < \norm{f_m - f_n}_\infty < \varepsilon$.
+			
+			Fixing $n$, take $m \to \infty$, this shows for all $n \geq N$, for all $x \in [a, b]$
+			\begin{align}
+				\abs{f(x) - f_n(x)} = \lim_{m\to\infty} \abs{f_m(x) - f_n(x)} \leq \varepsilon
+			\end{align}
+			Therefore, for all $n \geq N$, $\norm{f - f_n}_\infty \leq \varepsilon$. Hence $f \to f_n$ in sup-norm.
+			
+			Now show the continuity of $f$: take $x_0 \in [a, b]$, given $\varepsilon > 0$, since $f_n \to f$ in sup-norm, there exists $N$ such that for all $n \geq N$,
+			\begin{align}
+				\norm{f - f_n}_\infty \leq \frac{\varepsilon}{3}
+			\end{align}
+			In particular, $\norm{f - f_N}_\infty \leq \frac{\varepsilon}{3}$.
+			
+			Moreover, since $f_N$ is continuous, $\exists \delta > 0$ such that $\abs{x - x_0} < \delta \implies \abs{f_N(x) - f_N(x)} < \varepsilon / 3$ for every $x$. Take any $x \in \mc{B}_\delta(x_0)$, by triangle inequality,
+			\begin{align}
+				\abs{f(x) - f(x_0)} &\leq \abs{f(x) - f_N(x)} + \abs{f_N(x) - f_N(x_0)} + \abs{f_N(x_0) - f(x_0)} \\
+				&\leq \frac{\varepsilon}{3} + \frac{\varepsilon}{3} + \frac{\varepsilon}{3} = \varepsilon
+			\end{align}
+			Hence, $f \in C[a, b]$. 
+		\end{proof}
+	\end{proposition}
+	
+	\section{Functional Analysis: $L^p$ Spaces}
+	\emph{We will firstly define $\mc{L}^p$ spaces, which is a little simpler than $L^p$ spaces.}
+	\begin{definition}
+		Let $(X, \mc{A}, \mu)$ be a measure space, for every $1 \leq p < \infty$, the $\mc{L}^p(X, \mc{A}, \mu, \R)$ space is the collection of all measurable functions $f: X \to \R$ such that
+		\begin{align}
+			\int \abs{f}^p\ d\mu < \infty
+		\end{align}
+		Similarly, $\mc{L}^p(X, \mc{A}, \mu, \C)$ denotes the collection of all measurable functions $f: X \to \C$ such that $\int \abs{f}^p\ d\mu < \infty$.
+	\end{definition}
+	\emph{Thought out this notes, we use $\mc{L}^p$ to denote $\mc{L}^p(X, \mc{A}, \mu, \R)$ or $\mc{L}^p(X, \mc{A}, \mu, \C)$.}
+	\begin{proposition}[$\mc{L}^p$ space is a vector space]
+		Note that $0 \in \mc{L}^p$, and if $f \in \mc{L}^p$ and $\alpha \in \R/\C$, then
+		\begin{align}
+			\int \abs{\alpha f}^p\ d\mu = \abs{\alpha}^p \int \abs{f}^p\ d\mu < \infty
+		\end{align}
+		Therefore, $\alpha f \in \mc{L}^p$.
+		
+		For all $x \in X$,
+		\begin{align}
+			\abs{f(x) + g(x)}^p &\leq (\abs{f(x)} + \abs{g(x)})^p \\
+			&\leq (2 \max\{\abs{f(x)}, \abs{g(x)}\})^2 \\
+			&\leq 2^p \max\{\abs{f(x)}^p, \abs{g(x)}^p\} \\
+			&\leq 2^p (\abs{f(x)}^p + \abs{g(x)}^p) \\
+			\implies \int \abs{f+g}^p\ d\mu &< \infty \\
+			\implies f + g &\in \mc{L}^p
+		\end{align}
+		Hence, $\mc{L}^p$ is a vector space.
+	\end{proposition}
+	
+	\begin{definition}
+		Let $\mc{L}^\infty(X, \mc{A}, \mu, \R/\C)$ be the set of all \ul{bounded} measurable $f: X \to \R/\C$.
+	\end{definition}
+	
+	\begin{definition}
+		For $f \in \mc{L}^p$ with $p < \infty$, define
+		\begin{align}
+			\norm{f}_p = \left(\int \abs{f}^p\ d\mu \right)^{\frac{1}{p}}
+		\end{align}
+		for $p = \infty$, $\norm{f}_\infty$'s definition is a little bit more complicated, for continuous functions, it collides with the sup-norm. However, it's not the same as sup-norm for discontinuous functions.
+	\end{definition}
+	
+	\begin{definition}
+		Given a measure space $(X, \mc{A}, \mu)$, a set $B$ is called \textbf{$\mu$-null/negligible} if $B \subseteq A$ for some $A \in \mc{A}$ with $\mu(A) = 0$.
+		
+		A subset $N \subseteq X$ is called \textbf{locally $\mu$-null} if $\forall A \in \mc{A}$ with $\mu(A) < \infty$, $A \cap N$ is $\mu$-null.
+		
+		A property of elements of $X$ is said to hold \textbf{locally a.e.} if the set on which it fails is locally $\mu$-null.
+	\end{definition}
+	\emph{We use this notion of locally null to circumvent non-sigma finite cases.}
+	
+	\begin{definition}
+		For $f \in \mc{L}^\infty$, define
+		\begin{align}
+			\norm{f}_\infty = \inf \left\{
+			M \geq 0 : \tx{the set of all $x$ with $\abs{f(x)} > M$ is locally $\mu$-null.}
+			\right\}
+		\end{align}
+		this is called the \textbf{essential supremum} of $\abs{f}$. Equivalently, $\norm{f}_\infty$ is the infimum of $M$ such that $\abs{f(x)} \leq M$ locally a.e.
+		
+		Note that $\norm{f}_\infty$ is only a semi-norm, we may modify a function on a measure-zero set without changing the value of $\norm{f}_\infty$.
+		
+		Our previous definitions of semi-norms on $\mc{L}^p$ spaces satisfy
+		\begin{align}
+			\norm{f}_p = 0 \iff \int \abs{f}^p\ d\mu = 0 \iff \abs{f}^p = 0\ a.e. \iff f = 0\ a.e.
+		\end{align}
+		This definition of semi-norm on $\mc{L}^\infty$ ensures $\norm{f}_\infty = 0 \iff f = 0\ a.e.$.
+	\end{definition}
+	
+	\begin{example}
+		Take $X = [0, 1]$ and $\mu = \lambda$,
+		\begin{align}
+			f(x) = \begin{cases}
+				x &\tx{ if } x \neq \frac{1}{2} \\
+				2 &\tx{ otherwise}
+			\end{cases}
+		\end{align}
+		Then $\norm{f}_\infty=1$ but $\sup f = 2$. To see this, note that $\{x : \abs{f(x)} > 1\} = \{1/2\}$ has zero measure. However, for any $M < 1$, the same has non-zero Lebesgue measure.
+	\end{example}
+	
+	\begin{proposition}
+		\begin{align}
+			&\mu\left(\{
+			x : \abs{f(x)} > \norm{f}_\infty
+			\}\right) \tx{ is locally $\mu$-null.} \\
+			&\mu\left(\{
+			x : \abs{f(x)} > c
+			\}\right) \tx{ is not locally $\mu$-null } \forall c < \norm{f}_\infty
+		\end{align}
+	\end{proposition}
+	
+	\begin{lemma}
+		Countable union of locally $\mu$-null sets is locally $\mu$-null.
+	\end{lemma}
+	
+	\begin{proposition}
+		$\norm{f}_p$ and $\norm{f}_\infty$ are semi-norms.
+	\end{proposition}
+	
+	\begin{definition}
+		Given $p \in (1, \infty)$, the \textbf{conjugate exponent} $q$ is defined as
+		\begin{align}
+			\frac{1}{p} + \frac{1}{q} = 1
+		\end{align}
+		That is,
+		\begin{align}
+			q = \frac{p}{p-1}
+		\end{align}
+		For $p = \infty$, $q=1$.
+	\end{definition}
+	
+	\begin{lemma}[Young's Inequality]
+		Take $p \in (1, \infty)$, let $q$ be the conjugate exponent of $p$, then for all $x, y \geq 0$,
+		\begin{align}
+			x y \leq \frac{x^p}{p} + \frac{y^q}{q}
+		\end{align}
+		\begin{proof}
+			
+		\end{proof}
+	\end{lemma}
+	
+	\begin{theorem}[H\"older's Inequality]
+		Let $(X, \mc{A}, \mu)$ be a measure space, take $1 \leq p \leq \infty$, and $q$ be it's conjugate exponent. Take $f \in \mc{L}^p$, $g \in \mc{L}^q$, then
+		\begin{align}
+			fg \in \mc{L}^1
+		\end{align}
+		and
+		\begin{align}
+			\norm{fg}_1 \leq \norm{f}_p \norm{g}_q
+		\end{align}
+	\end{theorem}
+	
+	\begin{example}
+		Take $X = \{x_1,\cdots, x_n\}$ and $\mu$ to be the counting measure on $X$. Let $p = q = 2$ and $f, g \in \mc{L}^2$. Define $v = (f(x_1), \dots, f(x_n)) \in \R^n$ and $u = (g(x_1),\dots,g(x_n)) \in \R^n$.
+		\begin{align}
+			\norm{fg}_1 = \sum_{i=1}^n \mu(\{x_i\}) \abs{f(x_i) g(x_i)} = \sum_{i=1}^n \abs{f(x_i) g(x_i)}
+		\end{align}
+		Therefore,
+		\begin{align}
+			\abs{\inner{v}{u}} = \abs{\sum_{i=1}^n f(x_i) g(x_i)} \leq \norm{fg}_1
+		\end{align}
+		In this finite dimensional case with counting measure,
+		\begin{align}
+			\norm{f}_2 = \sqrt{\sum_{i=1}^n \mu(\{x_i\}) f(x_i)^2} = \sqrt{\sum_{i=1}^n f(x_i)^2} = \norm{v}_2
+		\end{align}
+		The same holds for $g$, in this case H\"older's inequality reduces to cauchy-Switchz inequality.
+	\end{example}
+	
+	\begin{proof}
+		
+	\end{proof}
+	
+	\begin{theorem}[Minkowski's Inequality]
+		Let $(X, \mc{A}, \mu)$ be a measure space. Take $1 \leq p \leq \infty$. If $f, g \in \mc{L}^p(X, \mc{A}, \mu)$, then $f + g \in \mc{L}^p$ and $\norm{f+g}_p \leq \norm{f}_p + \norm{g}_p$.
+		\begin{proof}
+			First, suppose that $p \in (1, \infty)$. Let $q$ be the conjugate exponent of $p$. We have already shown that $\mc{L}^p$ is a vector space, so $f + g \in \mc{L}^p$.
+			
+			Note that
+			\begin{align}
+				1/p + 1/q = 1 \implies (p+q)/(pq) = 1 \implies p + q = pq \implies p = (p-1)q
+			\end{align}
+			Therefore,
+			\begin{align}
+				\int (\abs{f+g}^{p-1})^q\dmu = \int \abs{f+g}^p\dmu < \infty
+			\end{align}
+			Therefore, $\abs{f+g}^{p-1} \in \mc{L}^q$. By H\"older's inequality,
+			\begin{align}
+				\int \abs{f+g}^p\dmu &= \int \abs{f+g} \abs{f+g}^{p-1}\dmu \\
+				&\leq \int \abs{f}\abs{f+g}^{p-1}\dmu + \int \abs{g}\abs{f+g}^{p-1}\dmu \\
+				&\leq \norm{f}_p \norm{\abs{f+g}^{p-1}}_q  + \norm{g}_p \norm{\abs{f+g}^{p-1}}_q
+			\end{align}
+			where
+			\begin{align}
+				\norm{\abs{f+g}^{p-1}}_q &= \left(\int (\abs{f+g}^{p-1})^q \right)^{1/q} = \left(\int \abs{f+g}^p \right)^{1/q}
+			\end{align}
+			If $\norm{f+g}_p = 0$, we are done. Suppose not, divide $(\int \abs{f+g}^p\dmu)^{1/q}$ on both sides,
+			\begin{align}
+				\frac{\int \abs{f+g}^p\dmu}{(\int \abs{f+g}^p\dmu)^{1/q}} &\leq \norm{f}_p + \norm{g}_p \\
+				\implies (\int \abs{f+g}^p\dmu)^{1-1/q} &= (\int \abs{f+g}^p\dmu)^{1/p} = \norm{f+g}_p \leq \norm{f}_p + \norm{g}_p 
+			\end{align}
+			When $p = 1$,
+			\begin{align}
+				\norm{f+g}_1 = \int \abs{f+g}\dmu \leq \int (\abs{f}+\abs{g})\dmu = \norm{f}_1 + \norm{g}_1
+			\end{align}
+			When $p = \infty$, define
+			\begin{align}
+				N_1 = \{x: \abs{f(x)} > \norm{f}_\infty\} \\
+				N_2 = \{x: \abs{g(x)} > \norm{g}_\infty\}
+			\end{align}
+			Then $N_1$ and $N_2$ are locally $\mu$-null, so is $N_1 \cup N_2$. For $x \notin N_1 \cup N_2$,
+			\begin{align}
+				\abs{f(x) + g(x)} \leq \abs{f(x)} + \abs{g(x)} \leq \norm{f}_\infty + \norm{g}_\infty
+			\end{align}
+		\end{proof}
+	\end{theorem}
+	\emph{Note that $\norm{\cdot}_p$ is a \textbf{semi-norm} on $\mc{L}^p$, to make it a norm, we introduce the $L^p$ space.}
+	\begin{definition}
+		For $1 \leq p < \infty$, define the class of zero vectors
+		\begin{align}
+			\mc{N}^p := \{f \in \mc{L}^p : f \tx{ is measurable and } f = 0\ a.e.\}
+		\end{align}
+		which is a subspace of $\mc{L}^p$. Define $L^p$ to be the quotient space:
+		\begin{align}
+			L^p(X, \mc{A}, \mu) := \mc{L}^p(X, \mc{A}, \mu) / \mc{N}^p(X, \mc{A}, \mu)
+		\end{align}
+		That is, an element $[f] \in L^p$ (an equivalent class) is the collection of all $g \in \mc{L}^p$ such that $f - g = 0$ almost everywhere:
+		\begin{align}
+			L^p \ni [f] := \{g \in \mc{L}^p : f - g \in \mc{N}^p\}
+		\end{align}
+		Then $L^p$ is a vector space over $\R$ or $\C$, and $\norm{\cdot}_p$ is well-defined: for any $f$, for all $g \in [f]$, $\norm{f}_p = \norm{g}_p$ since $f = g$ almost everywhere so their integrals are the same. Most importantly, $\norm{\cdot}_p$ is a norm on $L^p$.
+		
+		For $p = \infty$, we define
+		\begin{align}
+			\mc{N}^\infty := \{f : f \tx{ is bounded, measure and } f = 0\ a.e.\}
+		\end{align}
+		Then $L^\infty := \mc{L}^p / \mc{N}^p$.
+	\end{definition}
+	\emph{Note that $L^p$ for $1 \leq p \leq \infty$ is also a vector space with equivalence relations. In general, we treat $L^p$ as a space of functions instead of a space of classes of functions.}
+	\begin{proposition}
+		Convergence in $L^p$ ($1 \leq p < \infty$) implies convergence in measure.
+		\begin{proof}
+			By Markov's inequality,
+			\begin{align}
+				\mu(\{x : \abs{f_n(x) - f(x)} > \varepsilon \}) &= \mu(\{x : \abs{f_n(x) - f(x)}^p > \varepsilon^p \}) \\
+				&\leq \frac{\int \abs{f_n - f}^p\dmu}{\varepsilon^p} \to 0 \tx{ as } n \to \infty
+			\end{align}
+		\end{proof}
+	\end{proposition}
+	
+	\begin{corollary}
+		Let $f_n \to f$ in $L^p$ with $1 \leq p < \infty$, then there exists a subsequence $f_{n_k} \to f$ a.e.
+		\begin{proof}
+			As convergence in $L^p$ implies convergence in measure, which further implies existence of a.e. converging subsequences.
+		\end{proof}
+	\end{corollary}
+	
+	\begin{theorem}
+		For any $1 \leq p \leq \infty$, the $\norm{\cdot}_p$ norm on $L^p$ is complete.
+		\begin{proof}
+			For $1 \leq p < \infty$, let $(f_n)$ be a Cauchy sequence in $L^p$.
+			
+			\emph{Step 1: Find a subsequence $(f_{n_k})$ such that $\norm{f_{n_k} - f_{n_{k+1}}}_p \leq 2^{-k}$ for all $k$.} By Cauchy property, we may find $n_1$ such that $\norm{f_{n_1} - f_n} \leq 2^{-1}$ for all $n \geq n_1$. Also, find a $n_2 \geq n_1$ such that $\norm{f_{n_2} - f_n} \leq 2^{-2}$ for all $n \geq n_2$, etc.
+			
+			\emph{Step 2: construct the limit} Define
+			\begin{align}
+				A_k := \{x: |f_{n_k}(x) - f_{n_{k+1}}(x)| > 2^{-k/2}\}
+			\end{align}
+			Then, by Markov's inequality,
+			\begin{align}
+				\mu(A_k) &\leq \frac{\int |f_{n_k} - f_{n_{k+1}}|^p \dmu}{(2^{-k/2})^p} \\
+				&\leq \frac{2^{-kp}}{(2^{-k/2})^p} = 2^{-kp/2}
+			\end{align}
+			Thus, $\sum_{k=1}^\infty \mu(A_k) < \infty$. Define
+			\begin{align}
+				B := \{x : x \in \tx{ infinitely many} A_k\} = \bigcap_{k=1}^\infty \bigcup_{j=k}^\infty A_j
+			\end{align}
+			By Borel-Cantelli lemma, $\mu(B) = 0$. Take any $x \notin B$, then for sufficiently large $k$,
+			\begin{align}
+				\abs{f_{n_k}(x) - f_{n_{k+1}}} \leq 2^{-k/2}
+			\end{align}
+			This shows for all $x \notin B$, the constructed $(f_{n_k}(x))$ is a Cauchy sequence in $\R$, therefore, it's convergent.
+			
+			Define the almost point-wise limit
+			\begin{align}
+				f(x) := \begin{cases}
+					\lim_{k \to \infty} f_{n_k}(x) &\tx{ if } x \notin B \\
+					0 &\tx{ if } x \in B
+				\end{cases}
+			\end{align}
+			\emph{Step 3: Show $f_n \to f$ in $L^p$.} Note that $f_{n_k} \to f$ almost everywhere, so that $|f|^p \to |f_{n_k}|^p$. By Fatou's lemma,
+			\begin{align}
+				\int \abs{f}^p\dmu \leq \liminf_{k\to\infty} \int \abs{f_{n_k}}^p\dmu
+			\end{align}
+			But the Cauchy property of $f_n$ implies that $\sup_n \norm{f_n}_p < \infty$ (find $n$ such that $\norm{f_n - f_m}_p \leq 1$ for all $m \geq n$. Thus, $\forall m \geq n$, $\norm{f_m}_p \leq \norm{f_n - f_m}_p + \norm{f_n}_p \leq 1 + \norm{f_n}_p$.
+			Therefore, $\norm{f}_p < \infty$.
+			
+			For any $\varepsilon > 0$, we can find $N$ so large that $\norm{f_n - f_m}_p < \varepsilon$ for all $n, m \geq N$ since $f_n$ is Cauchy.
+			By Fatou's lemma, for all $n \geq N$,
+			\begin{align}
+				\int \abs{f_n - f}^p\dmu \leq \liminf_{n \to \infty} \int \abs{f_n - f}^p\dmu
+			\end{align}
+			But when $k$ is so large that $n_K \geq N$, we have
+			\begin{align}
+				\int \abs{f_n - f_{n_k}}^p\dmu = \norm{f_n - f_{n_k}}_p^p \leq \varepsilon^p
+			\end{align}
+			Thus, fo all $n \geq N$, $\norm{f - f_n}_p \leq \varepsilon$.
+		\end{proof}
+		\begin{proof}[Proof. for $p = \infty$ case]
+			Let $f_n$ be Cauchy in $L^\infty$, as before, find a subsequence $f_{n_k}$ such that
+			\begin{align}
+				\norm{f_{n_k} - f_{n_{k+1}}}_\infty \leq 2^{-k}\quad \forall k
+			\end{align}
+			Then for all $k$, there exists a locally $\mu$-null set $N_k$ such that for all $x \notin N_k$.
+			\begin{align}
+				\abs{f_{n_k}(x) - f_{n_{k+1}}(x)} \leq 2^{-k}
+			\end{align}
+			Let $N = \bigcup_{k=1}^\infty N_k$, so that $N$ is locally $\mu$-null as well.
+			Then for all $x \notin N$, $f_{n_k}(x)$ is a Cauchy sequence of real numbers, define $f(x) = \lim_k f_{n_k}(x)$ outside $N$ and $f(x) = 0$ on $N$.
+			
+			Claim: $f_n \to f$ in $L^\infty$. Note that for all $x \notin N$, for all $k$,
+			\begin{align}
+				\abs{f(x) - f_{n_k}(x)} \leq \sum_{j=k}^\infty \abs{f_{n_j}(x) - f_{n_{j+1}}(x)} \leq \sum_{j=k}^\infty 2^{-j} = 2^{-k+1}
+			\end{align}
+			Thus, $\norm{f - f_{n_k}}_\infty \leq 2^{-k+1}$.
+			
+			Take any $\varepsilon > 0$, find $N$ so large that $\forall m, n \geq N$, $\norm{f_m - f_n}_\infty \leq \varepsilon$. Then find $k$ so large that $n_k \geq N$ and $2^{-k+1} \leq \varepsilon$. Then for all $n \geq N$,
+			\begin{align}
+				\norm{f - f_n}_\infty \leq \norm{f - f_{n_k}}_\infty + + \norm{f_{n_k} - f_n} \leq 2 \varepsilon
+			\end{align}
+			Taking $\varepsilon' = \varepsilon/2$ concludes $f_n \to f$ in $L^\infty$.
+		\end{proof}
+	\end{theorem}
+	
+	\section{Signed and Complex Measures}
+	\begin{definition}
+		The \textbf{variation} of a complex measure $\mu$ is defined as 
+		\begin{align}
+			|\mu|(A) := \sup \left\{
+			\sum_{i=1}^n |\mu(A_i)| : A_1,\dots,A_n \in \mc{A} \tx{ disjoint s.t. } \bigcup_{i=1}^n A_i = A
+			\right\}
+		\end{align}
+		Note that the supremum is taken over all \emph{finite partitions of $A$}. It is easy to check that if $\mu$ is a finite signed measure, this definition of variation is the same as the previous one.
+	\end{definition}
+	
+	\begin{lemma}
+		Suppose $\mu: \mc{A} \to [0, \infty]$ is a function such that (i) $\mu(\varnothing) = 0$ and (ii) is finite additivity (that is, $\mu(A \cup B) = \mu(A) + \mu(B)$ for all disjoint $A$ and $B$). Moreover, if $\lim_{n \to \infty} \mu(A_n) = 0$ for all $A_n \searrow \varnothing$, then $\mu$ is a measure.
+		
+		\begin{proof}
+			It suffices to check the countable additivity of $\mu$, let $B_1, B_2, \dots$ be a disjoint sequence of sets in $\mc{A}$.
+			
+			Let $B = \bigcup_i B_i$ and define $A_n := B \backslash \bigcup_{i=1}^{n-1}B_i$. Easy to check $A_n \searrow \varnothing$. Therefore, by finite additivity of $\mu$: $\mu(A_n) = \mu(B) - \sum_{i=1}^{n-1} \mu(B_i) \to 0$. Taking $n \to \infty$ implies $\mu(B) = \sum_{i=1}^\infty \mu(B_i)$.
+		\end{proof}
+	\end{lemma}
+	
+	\begin{proposition}
+		Let $\mu$ be a complex measure, then $|\mu|$ is a measure.
+		\begin{proof}
+			Obviously, $|\mu|(\varnothing) = 0$.
+			
+			Take any disjoint $A, B \in \mc{A}$.
+			Now show the finite additivity of $|\mu|$: let $C_1, \dots, C_n$ be a measurable disjoint partition of $A \cup B$, so $(C_i \cap A)$ and $(C_i \cap B)$ are partitions of $A$ and $B$ respectively.
+			\begin{align}
+				|\mu|(A)  + |\mu|(B) &\geq \sum |\mu(C_i \cap A)| + \sum |\mu(C_i \cap B)| \\
+				&\geq \sum |\mu(C_i \cap A)+\mu(C_i \cap B)| \\
+				&=\sum |\mu(C_i)| \because C_i \subseteq A \cup B \\
+				&\geq |\mu| (A \cup B)
+			\end{align}
+			Conversely, let $C_1, \dots, C_n$ be a partition of $A$ and $D_1, \dots, D_m$ be a partition of $B$, then $C_1, \dots, C_n, D_1, \dots, D_m$ is a partition of $A \cup B$.
+			\begin{align}
+				|\mu|(A\cup B) &\geq \sum_{i=1}^n |\mu(C_i)| + \sum_{i=1}^m |\mu(D_i)|
+			\end{align}
+			Taking supremum of partitions $(C_i)$ for $A$ and $(D_i)$ for $B$,
+			\begin{align}
+				|\mu|(A \cup B) \geq |\mu|(A) + |\mu|(B)
+			\end{align}
+			Therefore, $|\mu|$ is finitely additive.
+			
+			Now take a $A_n \searrow \varnothing$ in $\mc{A}$, using the Jordan decomposition: $\mu = \mu_1 - \mu_2 + i \mu_3 - i \mu_4$ where $\mu_i$ are measures.
+			By triangle inequality in $\C$,
+			\begin{align}
+				|\mu(A)| \leq \sum_{i=1}^4 \mu_i(A)
+			\end{align}
+			then for all measurable partitions $A_1, \dots, A_n$ of $A$,
+			\begin{align}
+				\sum_{j=1}^n |\mu(A_j)| &\leq \sum_{i=1}^4 \sum_{j=1}^n \mu_i(A_j) = \sum_{i=1}^4 \mu_i(A)
+			\end{align}
+			Taking supremum of all such partitions,
+			\begin{align}
+				|\mu|(A) \leq \sum_{i=1}^4 \mu_i(A)
+			\end{align}
+			Since $A_n \searrow \varnothing)$ implies $\mu_i(A_n) \to 0$ as $\mu_i$'s are finite measures (there is no $\infty$ in $\C$), $|\mu|(A_n) \to 0$.
+			By Previous lemma, $|\mu|$ is a measure.
+		\end{proof}
+	\end{proposition}
+
+	\begin{proposition}[Completeness of Total Variation]
+		The total variation is a norm on the space of finite signed/complex measures.
+		\begin{proof}
+			Obviously, $\norm{\mu}$ is a norm. Now show the completeness.
+			
+			Let $\{\mu_n\}$ be a Cauchy (in total variation) sequence of measures, for all $A \in \mc{A}$, $|\mu(A)| \leq |\mu|(A)$ since $A$ is a trivial partition of $A$.
+			
+			For any $m, n \in \N, A \in \mc{A}$, $\mu_m - \mu_n$ is a signed measure,
+			\begin{align}
+				\abs{\mu_m(A) - \mu_n(A)} &\leq |\mu_m - \mu_n|(A) \\
+				&\leq \norm{\mu_m - \mu_n} \label{eq:1}
+			\end{align}
+			Therefore, $\{\mu_n(A)\}$ is a Cauchy sequence in $\R$ for all $A \in \mc{A}$. Define $\mu$ as the "set-wise" limit of $\mu_n$:
+			\begin{align}
+				\mu(A) := \lim_{n\to\infty}\mu_n(A)
+			\end{align}
+			Now show $\mu$ is a measure: observe that $\mu_n \to \mu(A)$ uniformly over all $A \in \mc{A}$ by Equation (\ref{eq:1}).
+			The finite additivity of $\mu$ follows its definition.
+			
+			Fix arbitrary $A_n \searrow \varnothing$, show that $\mu(A_n) \to 0$. Take any $\varepsilon > 0$, find $N$ so large that $|\mu_N(A) - \mu(A)| < \varepsilon$ for all $A$ by uniform convergence.
+			
+			Find $j_0$ so large such that for all $j \geq j_0$, $|\mu_N(A_j)| < \varepsilon / 2$. For all $j \geq j_0$,
+			\begin{align}
+				|\mu(A_j)| \leq |\mu(A_j) - \mu_N(A_j)| + |\mu_N(A_j)| < \varepsilon
+			\end{align}
+			Lastly, we show $\norm{\mu_n - \mu} \to 0$. Take any partition $A_n, \dots, A_k$ of $X$, take any $\varepsilon > 0$, the Cauchy property of $\{\mu_n\}$ provides a $N$ so large that for all $m, n \geq N$, $\norm{\mu_m - \mu_n} < \varepsilon$.
+			\begin{align}
+				\sum_{j=1}^k |\mu_m (A_j) - \mu_n(A_j)| \leq \norm{\mu_m - \mu_n} < \varepsilon
+			\end{align}
+			Take $m \to \infty$,
+			\begin{align}
+				\sum_{j=1}^k |\mu (A_j) - \mu_n(A_j)| \leq \varepsilon
+			\end{align}
+			Since above inequality holds for all partitions of $X$, $\norm{\mu - \mu_m} < \varepsilon$.
+		\end{proof}
+	\end{proposition}
+	
+	
+	\subsection{Integration w.r.t. Signed and Complex Measures}
+	\begin{definition}
+		Let $\mu = \mu^+ - \mu^-$ be a signed measure and its corresponding Jordan decomposition, define
+		\begin{align}
+			\int f\dmu = \int f\ d(\mu^+ - \mu^-) = \int f\dmu^+ - \int f\dmu^-
+		\end{align}
+		Easy to check that $f \mapsto \int f\dmu$ and $\mu \mapsto \int f\dmu$ are linear maps.
+		
+		When $\mu$ is a complex measure: $\mu = \mu' + i \mu''$, define
+		\begin{align}
+			\int f\dmu = \int f\dmu' + i \int f\dmu''
+		\end{align}
+	\end{definition}
+
+	\section{Radon-Nikodym Theorem}
+	
+	\begin{definition}
+		Let $(X, \mc{A})$ be a measurable space, let $\mu, \nu$ be two measures on this space, $\nu$ is \textbf{absolutely continuous} w.r.t. $\mu$ if for every $A \in \mc{A}$:
+		\begin{align}
+			\mu(A) = 0 \implies \nu(A) = 0
+		\end{align}
+		denoted as $\nu \ll \mu$.
+	\end{definition}
+
+	\begin{theorem}[Radon-Nikodym]
+		Let $(X, \mc{A})$ be a measurable space, let \ul{$\mu$, $\nu$ be two $\sigma$-finite measures}. Suppose $\nu$ is absolutely continuous w.r.t. $\mu$, then there exists a measurable map $g: X \to [0, \infty)$ such that
+		\begin{align}
+			\nu(A) = \int_A g\dmu
+		\end{align}
+		for every $A \in \mc{A}$.
+	\end{theorem}
+	\paragraph{Interpretations} Let $\chi_A$ denote the indicator function of set $A$, recall that $\int_A f\dmu \equiv \int f\chi_A\dmu$. Then, $\nu(A) = \int_A 1\ d\nu = \int \chi_A\ d\nu = \int g \chi_A\dmu$ for all $A$. Moreover, for any integrable $f$,
+	\begin{align}
+		\int f\ d\nu = \int fg\dmu
+	\end{align}
+	This allows us to denote $g$ as $\frac{d\nu}{d\mu}$.
+	
+	\begin{example}
+		Suppose $(X, \mc{A})$ is a \ul{metric} space (take $(\R, \mc{B}(\R))$ here), suppose $g$ is continuous w.r.t. the metric, let $A = B(x, \varepsilon)$ be the $\varepsilon$-open ball around $x \in X$, then for sufficiently small $\varepsilon$:
+		\begin{align}
+			\nu(A) &= \nu(B(x, \varepsilon)) \\
+			\int_A g\dmu &\approx g(x) \int_A \dmu = g(x) \mu(B(x, \varepsilon))
+		\end{align}
+		That is,
+		\begin{align}
+			\frac{d\nu}{d\mu} = g(x) \approx \frac{\nu(B(x, \varepsilon))}{\mu(B(x, \varepsilon))}
+		\end{align}
+		Actually,
+		\begin{align}
+			g(x) = \lim_{\varepsilon \to 0} \frac{\nu(B(x, \varepsilon))}{\mu(B(x, \varepsilon))}
+		\end{align}
+		Therefore, the Radon-Nikodym derivative $\frac{d\nu}{d\mu}$ captures the relative growth rate of $\nu$ to $\mu$ when we initially apply them on a small ball and expand the radius of this ball.
+	\end{example}
+	
+	\begin{lemma}
+		Let $(X, \mc{A})$ be a measurable space, let $\nu$ be a measure on it, let $\nu$ be a \ul{finite} measure. Then, $\nu \ll \mu$ \ul{if and only if}
+		\begin{align}
+			\forall \varepsilon > 0,\ \exists \delta > 0\ s.t.\ \mu(A) < \delta \implies \nu(A) < \varepsilon\ \forall A \in \mc{A}
+		\end{align}
+		\emph{Recall the definition of uniform continuity and $\frac{df(x)}{dx}$.}
+		\begin{proof}
+			($\impliedby$) Suppose $\mu(A) = 0$, $\nu(A) < \varepsilon$ for all $\varepsilon > 0$, it must be $\nu(A) = 0$.
+		
+			($\implies$) Suppose $\nu \ll \mu$, suppose the condition fails, $\exists \varepsilon > 0$ such that $\forall \delta > 0$, $\exists A$ with $\mu(A) < \delta$ but $\nu(A) \geq \varepsilon$.
+
+			We can find a sequence $A_1, A_2, \dots$ such that $\mu(A_j) < \delta_j = 2^{-j}$ for all $j$ and $\nu(A_j) \geq \varepsilon$. It follows $\sum \mu(A_j) < \infty$. By Borel-Cantelli lemma,
+			\begin{align}
+				\mu\left(\bigcap_{j=1}^\infty \bigcup_{k=j}^\infty A_k\right) = 0
+			\end{align}
+			Define $B_j = \bigcup_{k=j}^\infty A_k$ and $B = \bigcap_{j=1}^\infty B_j$. Since $B_j \searrow B$ and $\nu$ is a finite measure, $\nu(B) = \lim_j \nu(B_j)$. But for any $j$, $\nu(B_j) \geq \nu(A_j) \geq \varepsilon$. Therefore, $\nu(B) \geq \varepsilon$, which contradicts $\nu \ll \mu$.
+		\end{proof}
+	\end{lemma}
 \end{document}
 
 
