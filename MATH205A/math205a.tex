@@ -4,6 +4,7 @@
 \usepackage{amssymb}
 \usepackage[margin=1in]{geometry}
 \usepackage{float}
+\usepackage{tcolorbox}
 
 \usepackage{setspace}
 \linespread{1.15}
@@ -1965,6 +1966,117 @@
 			Define $B_j = \bigcup_{k=j}^\infty A_k$ and $B = \bigcap_{j=1}^\infty B_j$. Since $B_j \searrow B$ and $\nu$ is a finite measure, $\nu(B) = \lim_j \nu(B_j)$. But for any $j$, $\nu(B_j) \geq \nu(A_j) \geq \varepsilon$. Therefore, $\nu(B) \geq \varepsilon$, which contradicts $\nu \ll \mu$.
 		\end{proof}
 	\end{lemma}
+	
+	\begin{proof}[Proof of Radon-Nikodym Theorem]
+		Let $\nu, \mu$ be finite measures, let
+		\begin{align}
+			\mc{F} := \left\{f: X \to [0, \infty] : f \tx{ measurable and } \int_A f\dmu \leq \nu(A)\ \forall A \in \mc{A}\right\}
+		\end{align}
+		\emph{We are choosing the largest $g \in \mc{F}$ as $\frac{d\nu}{d\mu}$.}
+		
+		Claim: $f, g \in \mc{F} \implies f \lor g \equiv \max\{f,g\} \in \mc{F}$.
+		\begin{tcolorbox}
+			\begin{proof}
+				Let $B := \{x : f(x) \geq g(x)\}$, for any $A \in \mc{A}$,
+				\begin{align}
+					\int_A f \lor g\dmu &= \int_{A \cap B} f\lor g\dmu + \int_{A \cap B^c} f\lor g\dmu \\
+					&= \int_{A \cap B} f\dmu + \int_{A \cap B^c} g\dmu \leq \nu(A \cap B) + \nu(A \cap B^c) = \nu(A)
+				\end{align}
+			\end{proof}	
+		\end{tcolorbox}
+
+		Let $(f_n) \in \mc{F}$ be a sequence such that
+		\begin{align}
+			\lim_{n\to\infty} \int f_n\dmu = \sup\{\int f\dmu : f \in \mc{F}\}
+		\end{align}
+		For every $n \in \N$, take $g_n(x) = \max_{j \leq n} f_j(x)$, $g_n \in \mc{F}$ by previous claim. Moreover, $g_n(x) \uparrow$ for all $x \in X$.
+		\begin{align}
+			\int f_n\dmu \leq \int g_n\dmu \leq \sup\{\int f\dmu : f \in \mc{F}\}
+		\end{align}
+		By squeeze theorem, $\lim_{n\to\infty} \int g_n\dmu = \sup\{\int f\dmu : f \in \mc{F}\}$.
+		
+		Define $g(x) = \lim_{n\to\infty}g_n(x)$, which alway exists but is potentially infinity.
+		By MCT,
+		\begin{align}
+			\int g\dmu = \lim_{n\to\infty} \int g_n\dmu = \sup\{\int f\dmu : f \in \mc{F}\}
+		\end{align}
+		Note that $\forall A \in \mc{A}$,
+		\begin{align}
+			\int_A g\dmu = \lim_{n\to\infty} \int_A g_n\dmu \leq \nu(A)
+		\end{align}
+		So $g \in \mc{F}$ and attains the supremum, in terms of integral, over $\mc{F}$.
+		
+		Claim: $\forall A \in \mc{A}$, $\int_A g\dmu = \nu(A)$.
+		\begin{tcolorbox}
+			\begin{proof}
+				Define $\nu_0(A) = \nu(A) - \int_A g\dmu$. Since $\nu$ is a measure and $A \mapsto \int_A g\dmu$ is also a finite measure. Therefore, $\nu_0$ is a finite signed measure. Moreover, since $g \in \mc{F}$, $\nu_0(A) \geq 0$ for all $A \in \mc{A}$.
+				
+				Suppose, for contradiction, $\nu_0(A) > 0$ for some $A \in \mc{A}$. It must be $\nu_0(X) > 0$. But $\mu(X) < \infty$, there exists $\varepsilon > 0$ such that $\nu_0(X) > \varepsilon \mu(X)$.
+				Note that $\nu_0 - \varepsilon\mu$ is a finite signed measure, let $(P, N)$ be the Hahn decomposition of $\nu_0 - \varepsilon\mu$.
+				Then for any $A \in \mc{A}$,
+				\begin{align}
+					\nu(A) &= \int_A g\dmu + \nu_0(A) \\
+					&\geq \int_A g\dmu + \nu_0(A\cap P) \\
+					&= \int_A g\dmu + \underbrace{\nu_0(A\cap P) - \varepsilon \mu(A \cap P)}_{\geq 0} + \varepsilon \mu(A \cap P) \\
+					&\geq \int_A g\dmu + \varepsilon \mu(A \cap P) \\
+					&=\int_A g + \varepsilon \chi_{A \cap P}\dmu
+				\end{align}
+				Therefore, $g + \varepsilon \chi_{A \cap P} \in \mc{F}$. Take $A = X$:
+				\begin{align}
+					\int g + \varepsilon \chi_{A \cap P}\dmu = \int g\dmu + \varepsilon \mu(P \cap A) \geq \int g\dmu 
+				\end{align}
+				Suppose, for contradiction, $\mu(P) \leq 0$, it must be $\mu(P) = 0$, by absolute continuity, $\nu \ll \mu$, $\nu(P) = 0$ as well.
+				Then, since $\int_P g\dmu$ is bounded on a measure zero set, it must be zero,
+				\begin{align}
+					\nu_0(P) = \nu(P) - \int_P g\dmu = 0
+				\end{align}
+				Thus
+				\begin{align}
+					(\nu_0 - \varepsilon \mu)(P) &= 0 \\
+					\implies (\nu_0 - \varepsilon \mu)(X) &= (\nu_0 - \varepsilon \mu)(P) + (\nu_0 - \varepsilon \mu)(N) \leq 0
+				\end{align}
+				Contradicts $\nu_0(X) \geq \varepsilon \mu(X)$, therefore, $\mu(P) > 0$.
+				
+				This leads to a contradiction since $g + \varepsilon \chi_{A \cap P}$ has strictly larger integral than $g$. Therefore, $\nu_0 = 0$.
+			\end{proof}
+		\end{tcolorbox}
+		Suppose $\mu$ and $\nu$ are $\sigma$-finite. Let $B_1, B_2, \dots \in \mc{A}$ be a partition pf $X$ such that $\mu(B_n), \nu(B_n)$ are finite. Moreover, define $\mu_n(A) := \mu(A\cap B_n)$ and $\nu_n(A) := \nu(A \cap B_n)$, both of $\mu_n$ and $\nu_n$ are finite on $X$ (in particular, on $B_n$) and $\nu_n \ll \mu_n$.
+		
+		For every $n \in \N$, there exists measurable $g_n: X \to [0,\infty]$ such that
+		\begin{align}
+			\nu_n(A) = \int_A g_n\dmu
+		\end{align}
+		Therefore,
+		\begin{align}
+			 \nu(A \cap B_n) &= \int g_n \chi_{A \cap B_n}\dmu \\
+			 &= \int g_n \chi_{B_n} \chi_A\dmu \\
+			 &= \int_A g_n \chi_{B_n}\dmu
+		\end{align}
+		Let $g = \sum_{n=1}^\infty g_n \chi_{B_n}$, then
+		\begin{align}
+			\nu(A) &= \sum_{n=1}^\infty \nu(A \cap B_n) \\
+			&=\sum_{n=1}^\infty \int g_n \chi_{B_n} \chi_A\dmu \\
+			&=\sum_{n=1}^\infty \chi_A \int g_n \chi_{B_n} \dmu \\
+			&=\int \chi_A \sum_{n=1}^\infty g_n \chi_{B_n} \dmu \\
+			&=\int_A g \dmu \\
+		\end{align}
+		Since $g_n < \infty$ everywhere for all $n$, so is $g$.
+	\end{proof}
+	
+	\begin{remark}[Uniqueness of Radon-Nikodym Derivative]
+		Let $g$ and $h$ be two Radon-Nikodym derivatives of $\nu$ w.r.t. $\mu$.
+
+		\textbf{Case 1}: suppose $\nu(X) < \infty$, then for all $A \in \mc{A}$, by definitoin,
+		\begin{align}
+			\int_A g\dmu = \nu(A) = \int_A h\dmu
+		\end{align}
+		Let $B := \{x, g(x) > h(x)\}$, $(g-h) \chi_A \geq 0$ and $(g-h) \chi_A = 0$ a.e. on $A$.
+		Similarly, $(h-g) \chi_{A^c} \geq 0$ and $(h-g)\chi_{A^c} = 0$ a.e. on $A^c$.
+		Add them together, $g - h = 0$ a.e. on $X$.
+		
+		\textbf{Case 2}: suppose $\nu$ is $\sigma$-finite, let $B_1, B_2, \dots$ be disjoint measurable sets such that $\nu(B_n) < \infty$ and $\cup_n B_n = X$.
+		Since $g = h$ a.e. on every $B_n$ as shown before, $g = h$ a.e. on $X$.
+	\end{remark}
 \end{document}
 
 
