@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.5.8)  28 OCT 2020 13:45
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.5.8)  1 NOV 2020 01:19
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -775,25 +775,25 @@ File: mode_of_convergence.png Graphic file (type png)
 <use mode_of_convergence.png>
 Package pdftex.def Info: mode_of_convergence.png  used on input line 1352.
 (pdftex.def)             Requested size: 328.82707pt x 229.7664pt.
- [28] [29 <./mode_of_convergence.png>] [30] [31] [32] [33] [34] [35] [36] [37]
-Overfull \hbox (46.03346pt too wide) in paragraph at lines 1830--1832
+ [28] [29 <./mode_of_convergence.png>] [30] [31] [32] [33] [34] [35] [36] [37] [38] [39] [40] [41]
+Overfull \hbox (46.03346pt too wide) in paragraph at lines 1994--1996
 \OT1/cmr/m/n/10.95 Conversely, let $\OML/cmm/m/it/10.95 C[]; [] ; C[]$ \OT1/cmr/m/n/10.95 be a par-ti-tion of $\OML/cmm/m/it/10.95 A$ \OT1/cmr/m/n/10.95 and $\OML/cmm/m/it/10.95 D[]; [] ; D[]$ \OT1/cmr/m/n/10.95 be a par-ti-tion of $\OML/cmm/m/it/10.95 B$\OT1/cmr/m/n/10.95 , then $\OML/cmm/m/it/10.95 C[]; [] ; C[]; D[]; [] ; D[]$
  []
 
-[38] [39] [40] [41] [42] [43] [44] (/Users/tianyudu/Documents/Stanford/Stanford Notes/MATH205A/.texpadtmp/math205a.aux) ) 
+[42] [43] [44] [45] [46] [47] [48] (/Users/tianyudu/Documents/Stanford/Stanford Notes/MATH205A/.texpadtmp/math205a.aux) ) 
 Here is how much of TeX's memory you used:
- 27058 strings out of 492616
- 536816 string characters out of 6129482
- 663541 words of memory out of 5000000
- 30565 multiletter control sequences out of 15000+600000
+ 27060 strings out of 492616
+ 536850 string characters out of 6129482
+ 663540 words of memory out of 5000000
+ 30567 multiletter control sequences out of 15000+600000
  545376 words of font info for 78 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 69i,20n,83p,811b,523s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 69i,20n,83p,811b,576s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/doublestroke/dsrom10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on "/Users/tianyudu/Documents/Stanford/Stanford Notes/MATH205A/.texpadtmp/math205a.pdf" (44 pages, 440003 bytes).
+Output written on "/Users/tianyudu/Documents/Stanford/Stanford Notes/MATH205A/.texpadtmp/math205a.pdf" (48 pages, 453002 bytes).
 PDF statistics:
- 258 PDF objects out of 1000 (max. 8388607)
- 172 compressed objects within 2 object streams
+ 270 PDF objects out of 1000 (max. 8388607)
+ 180 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  114 words of extra memory for PDF output out of 10000 (max. 10000000)
 

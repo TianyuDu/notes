@@ -1796,6 +1796,170 @@
 	
 	\section{Signed and Complex Measures}
 	\begin{definition}
+		Let $(X, \mc{A})$ be a measurable space, let $\mu: \mc{A} \to [-\infty, \infty]$ be a function. We say that $\mu$ is a \textbf{signed measure} if
+		\begin{enumerate}
+			\item $\mu(\varnothing) = 0$,
+			\item and $\mu$ is countable additive: for all disjoint $A_1, A_2, \dots \in \mc{A}$, $\mu(\cup_{i=1}^\infty A_i) = \sum_{i=1}^\infty \mu(A_i)$.
+		\end{enumerate}
+	\end{definition}
+	\emph{From now on, we use \textbf{measure} to denote the conventional notion of measure, that is, $\mu: \mc{A} \to [0, \infty]$ with $\mu(\varnothing) = 0$ and countable additivity. The term \textbf{signed measure} denotes functions $\mu: \mc{A} \to [-\infty, \infty]$ with above properties.}
+	\begin{remark}
+		Note that the countable additivity does not change if we permute $A_i$'s, thus, implies $\sum_{i=1}^\infty \mu(A_i)$ should now change under any rearrangement of the terms. This implies that if $\mu(\cup_{i=1}^\infty A_i)$ is finite, $\sum_{i=1}^\infty |\mu(A_i)| < \infty$.
+	\end{remark}
+	
+	\begin{proposition}
+		If $\mu$ is a signed measure, then $\mu$ cannot be both $\infty$ and $-\infty$.
+		\begin{proof}
+			\textbf{Case 1}: if $\mu(X) \in \R$, then for any $A$, $\mu(X) = \mu(A) + \mu(A^c)$, both of $\mu(A)$ and $\mu(A^c)$ must be finite. 
+			
+			\textbf{Case 2}: if $\mu(X) = \infty$, then $\mu(A) + \mu(A^c) = \mu(X) = \infty$, none of $\mu(A)$ or $\mu(A^c)$ can be $-\infty$.
+			
+			\textbf{Case 3}: if $\mu(X) = - \infty$, then $\mu(A) + \mu(A^c) = \mu(X) = - \infty$, none of $\mu(A)$ or $\mu(A^c)$ can be $\infty$. 
+		\end{proof}
+	\end{proposition}
+	
+	\begin{proposition}
+		If $\mu(A)$ is finite (i.e., in $\R$), then $\mu(B) \in \R$ for any $B \subseteq A$, $B \in \mc{A}$.
+		\begin{proof}
+			$\mu(A) = \mu(B) + \mu(A \backslash B) \in \R$, both $\mu(B)$ and $\mu(A \backslash B)$ must be finite.
+		\end{proof}
+	\end{proposition}
+
+	\begin{definition}
+		A signed measure is called \textbf{finite} if $\mu(A) \in \R$ for all $A \in \mc{A}$.
+	\end{definition}
+	
+	\subsection{Construction of Signed Measures}
+
+	\begin{example}[Relationship between integrable function and measure]
+		Let $(X, \mc{A}, \mu)$ be a measure space, let $f \in L^1$, define $\nu(A) = \int_A f\dmu$, then $\nu$ is a signed measure.
+	\end{example}
+
+	\begin{example}[Construction of signed measure]
+		If $\nu_1$ and $\nu_2$ are measures and a least one of them if finite, then $\nu_1 - \nu_2$ is a signed measure.
+	\end{example}
+	
+	\subsection{Hahn Decomposition Theorem}
+	\par Let $(X, \mc{A})$ be a measurable space and let $\mu$ be a signed measure on $(X, \mc{A})$.
+	\begin{definition}
+		A set $A \in \mc{A}$ is called a \textbf{positive set for $\mu$} if $\mu(B) \geq 0$ for all $B \subseteq A, B \in \mc{A}$.
+		Similarly, a set $A \in \mc{A}$ is called a \textbf{negative set for $\mu$} if $\mu(B) \leq 0$ for all $B \subseteq A, B \in \mc{A}$.
+	\end{definition}
+	
+	\begin{lemma}
+		If $A \in \mc{A}$ satisfies $- \infty < \mu(A) < 0$, then there exists a negative set $B \subseteq A$ such that $\mu(B) \leq \mu(A)$.
+		\begin{proof}
+			Let $\delta_1 = \sup\{\mu(E) : E \in \mc{A}, E \subseteq A\}$, note that $\delta_1 \geq 0$ since $\mu(\varnothing) = 0$.
+			
+			By the definition of $\delta_1$ we can find $A_1 \subseteq A$ such that $\mu(A_1) \geq \delta_1 / 2$ if $\delta_1 < \infty$, or $\mu(A_1) \geq 1$ if $\delta_1 = \infty$. Thus, $\mu(A_1) \geq \min\{\delta_1/2, 1\}$.
+			
+			Let $\delta_2 = \sup\{\mu(E) : E \in \mc{A}, E \subseteq A \backslash A_1 \}$, similarly, we can choose $A_2 \subseteq A \backslash A_1$ and $A_2 \in \mc{A}$ such that $\mu(A_2) \geq \min\{\delta_2/2, 1\}$.
+			
+			Similarly, choose $A_n \in \mc{A}$, $A_n \subseteq A \backslash (A_1 \cup \dots A_{n-1})$, such that $\mu(A_n) \geq \min\{\delta_n/2, 1\}$.
+			Then by definition, $A_1, A_2, \dots$ are disjoint, they are all contained in $A$.
+			
+			Let $B = A \backslash (\bigcup_{i=1}^\infty A_i)$.
+			
+			Claim: this $B$ is a negative set such that $\mu(B) \leq \mu(A)$.
+			\begin{tcolorbox}
+				Note that $\mu(A) \in \R \implies \mu(B) \in \R$. Thus, $\mu(\bigcup_{i=1}^\infty A_i) = \mu(A) - \mu(B) \in \R$.
+				
+				But $\mu(\bigcup_{i=1}^\infty A_i) = \sum_{i=1}^\infty \mu(A_i)$ since $A_n's$ are disjoint. Therefore, $\mu(A_i) \to 0$ as $i \to \infty$.
+				However, $\mu(A_i) \geq \min\{\delta_i/2, 1\} \geq 0$.
+				It must be $\delta_i \to 0$ as $i \to 0$.
+				
+				Take any $E \subseteq B$ such that $E \in \mc{A}$. Then $E \subseteq B \subseteq A \backslash (A_1 \cup \dots A_{n-1})$ for all $n \in \N$. So by definition of $\delta_n$, we have $\mu(E) \leq \delta_n$, thus $\mu(E) \leq 0$ as we take $n \to \infty$. Hence $B$ is a negative set.
+				
+				Finally, since $\mu(A_i) \to 0$, $\mu(B) = \mu(A) - \sum_{i=1}^\infty \mu(A_i) \leq \mu(A)$.
+			\end{tcolorbox}
+		\end{proof}
+	\end{lemma}
+	
+	\begin{theorem}[Hahn Decomposition Theorem]
+		Let $(X, \mc{A})$ be a measurable space and $\mu$ a \ul{signed measure} on $(X, \mc{A})$. Then, there exists \ul{disjoint} $P \cup N$ in $\mc{A}$ such that $X = P \cup N$ such that $P$ is a positive set for $\mu$ and $N$ is a negative set for $\mu$.
+		\begin{proof}
+			
+		\end{proof}
+	\end{theorem}
+	
+	\begin{theorem}[Jordan Decomposition Theorem]
+		Every signed measure is the difference of two measures, at least one of which is finite.
+		\begin{align}
+			\mu = \mu^+ - \mu^-
+		\end{align}
+		\begin{proof}
+			Let $\mu$ be a signed measure, let $(N, P)$ be a Hahn decomposition of $X$.
+			
+			For every $A \in \mc{A}$, define
+			\begin{align}
+				\mu^+(A) &= \mu(A \cap P) \\
+				\mu^-(A) &= - \mu(A \cap N)
+			\end{align}
+			Since $P$ is a positive set, $\mu^+(A) \geq 0$, similarly, since $N$ is negative, $\mu^-(A) \geq 0$ as well.
+			
+			Let $A_1, A_2, \dots$ be disjoint sets in $\mc{A}$, then
+			\begin{align}
+				\mu^+(\cup_i A_i) &= \mu(P \cap (\cup_i A_i)) \\
+				&= \mu(\cup_i (P \cap A_i)) \\
+				&= \sum_i \mu(P \cap A_i) \\
+				&= \sum_i \mu^+(A_i)
+			\end{align}
+			So $\mu^+$ is a measure. Similarly, $\mu^-$ is a measure as well.
+			\begin{align}
+				\mu^+(A) - \mu^-(A) = \mu(A \cap P) + \mu(A \cap N) = \mu(A)
+			\end{align}
+			Therefore, $\mu = \mu^+ - \mu^-$. Lastly, note that $\mu(X) = \mu(P) + \mu(N) = \mu^+(P) - \mu^-(N)$, we need at least one of them to be finish in order to avoid subtracting infinity from infinity.
+		\end{proof}
+	\end{theorem}
+	
+	\begin{proposition}
+		Let $(\mu^+, \mu^-)$ be the decomposition of a signed measure from Hahn decomposition $(P, N)$, that is, $\mu^+(A) = \mu(A \cap P)$ and $\mu^-(A) = - \mu(A \cap N)$ for any $A \in \mc{A}$. Then,
+		\begin{align}
+			\mu^+(A) &= \sup\{\mu(B) : B \subseteq A, B \in \mc{A}\} \\
+			\mu^-(A) &= \sup\{-\mu(B) : B \subseteq A, B \in \mc{A}\}
+		\end{align}
+		\begin{proof}
+			Take any $A \in \mc{A}$, take any $B \subseteq A$ such that $B \in \mc{A}$. Then
+			\begin{align}
+				\mu(B) &= \mu^+(B) - \mu^-(B) \\
+				&\leq \mu^+(B) \because \mu^-(B) \geq 0 \\
+				&\leq \mu^+(A) \because \mu^+ \tx{ is a measure}
+			\end{align}
+			Therefore, $\mu^+(A) \geq \sup\{\mu(B) : B \subseteq A, B \in \mc{A}\}$.
+			
+			On the other hand, $\mu^+(A) = \mu(A \cap P)$ by definition, take $B = A \cap P \subseteq A$, which satisfies $A \cap P \in \mc{A}$. Then $\mu^+(A) \leq \sup\{\mu(B) : B \subseteq A, B \in \mc{A}\}$.
+			
+			The similar logic works for $\mu^-$.
+		\end{proof}
+	\end{proposition}
+	
+	\begin{definition}
+		The pair of $(\mu^+, \mu^-)$ defined above is called the \textbf{Jordan decomposition} of the signed measure $\mu$, where $\mu^+$ and $\mu^-$ are called the \textbf{positive and negative parts of $\mu$}.
+		The \textbf{variation} of $\mu$ is defined to be the \ul{measure} $|\mu| = \mu^+ + \mu^-$. The \textbf{total variation} of $\mu$ is the \ul{number} $\norm{\mu} = |\mu|(X)$.
+	\end{definition}
+	
+	\subsection{Complex Measures}
+	\begin{definition}
+		Let $(X, \mc{A})$ be a measurable space, $\mu: \mc{A} \to \C$ is called a \textbf{complex measure} if for all disjoint $A_1, A_2, \dots \in \mc{A}$, $\mu(\cup_{i=1}^\infty) = \sum_{i=1}^\infty \mu(A_i)$ and $\mu(\varnothing) = 0$.
+		In particular, this implies the sum is absolutely converged.
+		
+		Any complex measure $\mu$ can be written uniquely as
+		\begin{align}
+			\mu = \mu' + i \mu''
+		\end{align}
+		where
+		\begin{align}
+			\mu'(A) &= \Re(\mu(A)) \\
+			\mu''(A) &= \Im(\mu(A))
+		\end{align}
+		Let $\mu' = \mu_1 - \mu_2$ and $\mu'' = \mu_3 - \mu_4$ be Jordan compositions of $\mu'$ and $\mu''$ respectively. Then
+		\begin{align}
+			\mu = \mu_1 - \mu_2 + i\mu_3 - i \mu_4
+		\end{align}
+		is called the \textbf{Jordan decomposition} of complex measure $\mu$.
+	\end{definition}
+	
+	\begin{definition}
 		The \textbf{variation} of a complex measure $\mu$ is defined as 
 		\begin{align}
 			|\mu|(A) := \sup \left\{
