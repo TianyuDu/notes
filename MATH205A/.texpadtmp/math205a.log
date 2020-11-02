@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.5.8)  1 NOV 2020 16:10
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.5.8)  2 NOV 2020 15:02
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -780,20 +780,20 @@ Overfull \hbox (46.03346pt too wide) in paragraph at lines 2044--2046
 \OT1/cmr/m/n/10.95 Conversely, let $\OML/cmm/m/it/10.95 C[]; [] ; C[]$ \OT1/cmr/m/n/10.95 be a par-ti-tion of $\OML/cmm/m/it/10.95 A$ \OT1/cmr/m/n/10.95 and $\OML/cmm/m/it/10.95 D[]; [] ; D[]$ \OT1/cmr/m/n/10.95 be a par-ti-tion of $\OML/cmm/m/it/10.95 B$\OT1/cmr/m/n/10.95 , then $\OML/cmm/m/it/10.95 C[]; [] ; C[]; D[]; [] ; D[]$
  []
 
-[43] [44] [45] [46] [47] [48] [49] (/Users/tianyudu/Documents/Stanford/Stanford Notes/MATH205A/.texpadtmp/math205a.aux) ) 
+[43] [44] [45] [46] [47] [48] [49] [50] [51] [52] [53] (/Users/tianyudu/Documents/Stanford/Stanford Notes/MATH205A/.texpadtmp/math205a.aux) ) 
 Here is how much of TeX's memory you used:
- 27064 strings out of 492616
- 536914 string characters out of 6129482
+ 27072 strings out of 492616
+ 537057 string characters out of 6129482
  663541 words of memory out of 5000000
- 30571 multiletter control sequences out of 15000+600000
- 545376 words of font info for 78 fonts, out of 8000000 for 9000
+ 30579 multiletter control sequences out of 15000+600000
+ 545472 words of font info for 79 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 69i,20n,83p,811b,587s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 69i,20n,83p,811b,591s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/doublestroke/dsrom10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on "/Users/tianyudu/Documents/Stanford/Stanford Notes/MATH205A/.texpadtmp/math205a.pdf" (49 pages, 456505 bytes).
+Output written on "/Users/tianyudu/Documents/Stanford/Stanford Notes/MATH205A/.texpadtmp/math205a.pdf" (53 pages, 469076 bytes).
 PDF statistics:
- 274 PDF objects out of 1000 (max. 8388607)
- 183 compressed objects within 2 object streams
+ 286 PDF objects out of 1000 (max. 8388607)
+ 191 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  114 words of extra memory for PDF output out of 10000 (max. 10000000)
 

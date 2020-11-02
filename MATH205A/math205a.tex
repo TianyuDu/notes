@@ -2291,6 +2291,205 @@
 		\textbf{Case 2}: suppose $\nu$ is $\sigma$-finite, let $B_1, B_2, \dots$ be disjoint measurable sets such that $\nu(B_n) < \infty$ and $\cup_n B_n = X$.
 		Since $g = h$ a.e. on every $B_n$ as shown before, $g = h$ a.e. on $X$.
 	\end{remark}
+	
+	\begin{theorem}[Radon-Nikodym Theorem for Complex Measures]
+		\hl{TODO}
+		\begin{proof}
+			
+		\end{proof}
+	\end{theorem}
+	
+	\subsection{Lebesgue Decomposition Theorem}
+	\begin{definition}
+		Let $(X, \mc{A})$ be a measurable space, let $\mu$ be a measure on $(X, \mc{A})$, then $\mu$ is \textbf{concentrated} on a set $E \in \mc{A}$ if $\mu(E^c) = 0$.
+		
+		We say that a signed complex measure $\mu$ is concentrated on $E$ if $|\mu|$ is concentrated on $E$.
+	\end{definition}
+	
+	\begin{definition}
+		Two measures / signed measures / complex measures $\mu$ and $\nu$ on measurable space $(X, \mc{A})$ are \textbf{mutually singular} if $\exists E \in \mc{A}$ such that $\mu$ is concentrated on $E$ and $\nu$ is concentrated on $E^c$.
+		\begin{align}
+			\mu \perp \nu
+		\end{align}
+	\end{definition}
+	
+	\begin{example}
+		Any measure on $\R$ that is concentrated on $\Z$ is mutually singular to the Lebesgue measure, which is concentrated on $\Z^c$.
+	\end{example}
+	
+	\begin{theorem}[Lebesgue Decomposition]
+		Let $(X, \mc{A})$ be a measurable space, let $\mu$ be a \ul{measure} (the reference measure) on it. Let $\nu$ be a finite signed, complex measure, or $\sigma$-finite measure on $(X, \mc{A})$, then there is a \ul{unique} decomposition
+		\begin{align}
+			\nu = \nu_a + \nu_s
+		\end{align}
+		such that
+		\begin{align}
+			\nu_a \ll \mu \\
+			\nu_s \perp \mu
+		\end{align}
+		\begin{proof}
+			\textbf{Case 1: suppose $\nu$ is a finite measure.}
+			Define $\mc{N}$ to be the collection of $\mu$-negligible sets:
+			\begin{align}
+				\mc{N} := \{B \in \mc{A} : \mu(B) = 0\}
+			\end{align}
+			Let
+			\begin{align}
+				S := \sup\{\nu(B) : B \in \mc{N}\} < \infty \tx{ since $\nu$ is finite.}
+			\end{align}
+			Then there exists a sequence of sets $B_n \in \mc{N}$ such that $S = \lim_{n\to\infty} \nu(B_n)$, define
+			\begin{align}
+				N = \bigcup_{n=1}^\infty B_n
+			\end{align}
+			Easy to verify that $\mu(N) \leq \sum_{n=1}^\infty \mu(B_n) = 0$, so $N \in \mc{N}$.
+			Obviously, $\nu(N) \leq S$ since $N \in \mc{N}$. Moreover, since $\nu(N) \geq \nu(B_n)$ for every $n \in \N$, $\nu(N) \geq \lim_n \nu(B_n) = S$. 
+			Thus, $\nu(N) = S$, so that $N$ is the $\nu$-maximal set in $\mc{N}$.
+			
+			For every $A \in \mc{A}$, define
+			\begin{align}
+				\nu_a(A) &= \nu(A \cap N^c) \\
+				\nu_s(A) &= \nu(A \cap N)
+			\end{align}
+			So that $\nu = \nu_a + \nu_s$.
+			\begin{tcolorbox}
+				\textbf{Claim}: $\nu_s \perp \mu$.
+				
+				Easy to verify that $\mu(N) = 0$ and $\nu_s(N^c) = \nu(N^c \cap N) = 0$.
+			\end{tcolorbox}
+			\begin{tcolorbox}
+				\textbf{Claim}: $\nu_a \ll \mu$.
+				
+				Take any $B \in \mc{A}$ such that $\mu(B)$.
+				Suppose, for contradiction, $\nu_a(B) \neq 0$, that is, $\nu(B \cap N^c) \neq 0$.
+				Since we assumed $\nu$ is a finite measure (not signed), $\nu(B \cap N^c) > 0$.
+				Thus,
+				\begin{align}
+					\nu(N \cup B) = \nu(N) + \nu(B \cap N^c) > \nu(N) = S
+				\end{align}
+				but $N \cup B \in \mc{N}$, this leads to a contradiction. 
+			\end{tcolorbox}
+			\textbf{Case 2: suppose $\nu$ is a finite signed or complex measure}, we can find $N$ as above for $|\nu|$ and define $\nu_a(A) = \nu(A \cap N^c)$ and $\nu_s(A) = \nu(A \cap N)$.
+			
+			\textbf{Case 3: if $\nu$ is a $\sigma$-finite measure}, we can firstly express $X$ as a disjoint union $D_1, D_2, \dots$  with finite $\nu$ measure, and then find $N_i \subseteq D_i$ as the $\nu$-maximal element among all $\mu$-zero subsets of $D_i$.
+			Lastly, define $N = \bigcup_{i=1}^\infty N_i$ and follow the construction before.
+			
+			\textbf{Uniqueness}: suppose
+			\begin{align}
+				\nu = \nu_a + \nu_s = \nu_a' + \nu_s'
+			\end{align}
+			Assume $\nu$ is a finite / finite signed / complex measure, then
+			\begin{align}
+				\nu_a - \nu_a' = \nu_s' - \nu_s
+			\end{align}
+			The left hand side is absolutely continuous and the right hand side is singular to $\mu$ by the following lemma, hence, they must be both zero.
+			\begin{tcolorbox}
+			\begin{lemma}
+				The notion of absolute continuity and singularity are closed under linear combinations.
+			\end{lemma}
+			\begin{proof}
+				\hl{TODO}
+			\end{proof}
+			\end{tcolorbox}
+			\begin{tcolorbox}
+			\begin{lemma}
+				If a measure is both absolutely continuous and singular with respect to $\mu$, then it must be zero.
+			\end{lemma}
+			\begin{proof}
+				\hl{TODO}
+			\end{proof}
+			\end{tcolorbox}
+		\end{proof}
+	\end{theorem}
+	
+	\section{Product Measure and Fubini's Theorem}
+	\subsection{Dynkin's $\pi$-$\lambda$ System}
+	\begin{definition}
+		Let $X$ be a set, a collection $\mc{P}$ of subsets of $X$ is called a \textbf{$\pi$-system} if $A, B \in \mc{P} \implies A \cap B \in \mc{P}$.
+	\end{definition}
+	
+	\begin{definition}
+		Let $X$ be a set, a collection $\mc{D}$ of subsets of $X$ is called a \textbf{$\lambda$-system / Dynkin class} if 
+		\begin{enumerate}
+			\item $X \in \mc{D}$,
+			\item $A, B \in \mc{D}$, $A \subseteq B \implies B \backslash A \in \mc{D}$,
+			\item if $A_1 \subseteq A_2 \subseteq \dots \in \mc{D}$, then $\bigcup_{n=1}^\infty A_n \in \mc{D}$.
+		\end{enumerate}
+	\end{definition}
+	
+	\begin{remark}[An equivalent definiton]
+		The third requirement of $\lambda$-system may be replaced by closure under countable disjoint union.
+		\begin{proof}
+			\hl{TODO}
+		\end{proof}
+	\end{remark}
+	
+	\begin{remark}
+		A $\sigma$-algebra is always a $\lambda$-system but not converse.
+	\end{remark}
+	
+	\begin{example}
+		Take any two probability measures $\mu$ and $\nu$ on $\R$, let
+		\begin{align}
+			\mc{D} = \{A \in \mc{B}(\R) : \mu(A) = \nu(A)\}	
+		\end{align}
+		Then $\mc{D}$ is always a $\lambda$-system but not necessarily a $\sigma$-algebra.
+	\end{example}
+	
+	\begin{theorem}[Dynkin's $\pi$-$\lambda$ theorem]
+		Let $X$ be a set, let $\mc{P}$ be a $\pi$-system and $\mc{D}$ be a $\lambda$-system. Then
+		\begin{align}
+			\mc{P} \subseteq \mc{D} \implies \sigma(\mc{P}) \subseteq \mc{D}
+		\end{align}
+		\begin{proof}
+			Note that an arbitrary intersection of $\lambda$-system is a $\lambda$-system.
+			Let $\mc{D}$ be \ul{the smallest} $\lambda$-system contains $\mc{P}$.
+			Define
+			\begin{align}
+				\mc{D}_1 = \{\mc{A} \in \mc{D} : A \cap B \in \mc{D}\quad \forall B \in \mc{P}\}
+			\end{align}
+			Since $\mc{P}$ is a $\pi$-system, $A \cap B \in \mc{P} \subseteq \mc{D}$ for all $A, B \in \mc{P} \subseteq \mc{D}$, thus, $\mc{P} \subseteq \mc{D}_1$.
+			Note that
+			\begin{enumerate}
+				\item $A \cap B = B \in \mc{D}$ for all $B \in \mc{P}$, therefore, $X \in \mc{D}_1$.
+				\item Let $A, B \in \mc{D}_1$, for every $C \in \mc{P}$, $A \cap B, B \cap C \in \mc{D}$. Therefore,
+				\begin{align}
+					(B \cap C) \backslash (A \cap C) = (B \backslash A) \cap C \in \mc{D}
+				\end{align}
+				Hence, $B \backslash A \in \mc{D}_1$.
+				\item If $A_1 \subseteq A_2 \subseteq \dots \in \mc{D}_1$, then for all $B \in \mc{P}$,
+				\begin{align}
+					(\bigcup A_i) \cap B = \bigcup (A_i \cap B) \in \mc{D}
+				\end{align}
+				Therefore, $\bigcup A_i \in \mc{D}_1$, so $\mc{D}_1$ is a $\lambda$-system.
+			\end{enumerate}
+			Since $\mc{D}_1$ is a $\lambda$-system contains $\mc{P}$, hence $\mc{D} \subseteq \mc{D}_1$. Therefore, $\mc{D}_1 = \mc{D}$. This shows $\forall A \in \mc{D} = \mc{D}_1, B \in \mc{P}$, $A \cap B \in \mc{D}$.
+			
+			Define
+			\begin{align}
+				\mc{D}_2 = \{\mc{A} \in \mc{D} : A \cap B \in \mc{D}\quad \forall B \in \red{\mc{D}}\}
+			\end{align}
+			By the previous result, $\mc{P} \subseteq \mc{D}_2$. Also, $\mc{D}_2$ is a $\lambda$-system, so $\mc{D}_2 = \mc{D}$.
+			
+			Moreover, for all $A, B \in \mc{D}$, $A \cap B \in \mc{D}$, so that $\mc{D}$ is also a $\pi$-system.
+			\begin{tcolorbox}
+				\begin{lemma}
+					A collection of sets is both $\pi$ and $\lambda$ if and only if its a $\sigma$-algebra.
+				\end{lemma}
+				\begin{proof}
+					For a $\lambda$-system $\mc{D}$, it contains $X^c = \varnothing$ and is closed under complement (take one of two sets to be $X$).
+					
+					Let $A_1, A_2, \dots \in \mc{D}$, we may define $B_n = A_1 \cup \dots \cup A_n$, so that $\bigcup A_n = \bigcup B_n$ and $B_n$ is an increasing sequence. In particular, since $\mc{D}$ is closed under complement (as a $\lambda$-system) and finite intersection (as a $\pi$-system), $B_n \in \mc{D}$ as well.
+					By definition of $\lambda$-system, $\bigcup A_n \in \mc{D}$.
+				\end{proof}
+			\end{tcolorbox}
+			Therefore, $\mc{D}$ is a $\sigma$-algebra containing $\mc{P}$, it follows $\sigma(\mc{P}) \subseteq \mc{D}$.
+		\end{proof}
+	\end{theorem}
+	
+	\begin{corollary}
+		Let $\mu$ and $\nu$ be \ul{$\sigma$-finite} measures on a measurable space $(X, \mc{A})$. If $\mu$ and $\nu$ agree on a $\pi$-system $\mc{P}$ that generate $\mc{A}$, then $\mu = \nu$ on $\mc{A}$.
+	\end{corollary}
+	
 \end{document}
 
 
