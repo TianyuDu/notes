@@ -1847,7 +1847,7 @@
 	\end{definition}
 	
 	\begin{lemma}
-		If $A \in \mc{A}$ satisfies $- \infty < \mu(A) < 0$, then there exists a negative set $B \subseteq A$ such that $\mu(B) \leq \mu(A)$.
+		If $A \in \mc{A}$ satisfies $- \infty < \mu(A) < 0$, then there exists a negative set $B \subseteq A$ such that $\mu(B) \leq \mu(A) (<0)$.
 		\begin{proof}
 			Let $\delta_1 = \sup\{\mu(E) : E \in \mc{A}, E \subseteq A\}$, note that $\delta_1 \geq 0$ since $\mu(\varnothing) = 0$.
 			
@@ -1878,7 +1878,57 @@
 	\begin{theorem}[Hahn Decomposition Theorem]
 		Let $(X, \mc{A})$ be a measurable space and $\mu$ a \ul{signed measure} on $(X, \mc{A})$. Then, there exists \ul{disjoint} $P \cup N$ in $\mc{A}$ such that $X = P \cup N$ such that $P$ is a positive set for $\mu$ and $N$ is a negative set for $\mu$.
 		\begin{proof}
+			Since $\mu$ is a signed measure, we know that it cannot take value at both $\infty$ and $-\infty$. WLOG, suppose $\mu$ never takes value $-\infty$.
+			Let
+			\begin{align}
+				L = \inf\{\mu(A) : A \in \mc{A}\ s.t.\ A \tx{ is negative}\}
+			\end{align}
+			Then there exists a sequence of negative sets $A_n$ such that $\mu(A_n) \to L$. Define $B = \cup_{n=1}^\infty A_n$. For sure, $B \in \mc{A}$.
+			\begin{tcolorbox}
+				\textbf{Claim}: $B$ is a negative set.
+				
+				Take and $E \subseteq B$ such that $E \in \mc{A}$, then
+				\begin{align}
+					E = E \cap B = \bigcup_{i=1}^\infty E \cap A_i = \bigcup_{i=1}^\infty E \cap (A_i \backslash (A_1 \cup \dots \cup A_{i-1}))
+				\end{align}
+				where the last step holds because we only consider the net incremental at each step. Moreover, $\{E \cap (A_i \backslash (A_1 \cup \dots \cup A_{i-1}))\}_i$ are disjoint.
+				
+				Thus, 
+				\begin{align}
+					\mu(E) = \sum_{i=1}^\infty \mu(\underbrace{E \cap (A_i \backslash (A_1 \cup \dots \cup A_{i-1}))}_{\subseteq A_i})
+				\end{align}
+				Since $A_i$'s are all negative sets, we must have $\mu(E) \leq 0$ and $B$ is a negative set.
+			\end{tcolorbox}
+			\begin{tcolorbox}
+				\textbf{Claim}: $\mu(B) = L$.
+				
+				Since $A_n \subseteq B$,
+				\begin{align}
+					\mu(B) = \mu(A_n) + \mu(B \backslash A_n)
+				\end{align}
+				But $B$ is a negative set, so $\mu(B \backslash A_n)\leq 0$. Thus,
+				\begin{align}
+					\mu(B) \leq \mu(A_n)\quad \forall n \in \N
+				\end{align}
+				Thus, $\mu(B) \leq \lim_n \mu(A_n) = L$. But $B$ itself is a negative set, and $L$ is the infimum, so $L \leq \mu(B)$.
+			\end{tcolorbox}
+			In particular, we've shown that $L > -\infty$ since $\mu$ never takes value at $-\infty$.
 			
+			Let $N = B$ and $P = N^c$. Since $B \in \mc{A}$, both $N, P \in \mc{A}$.
+			\begin{tcolorbox}
+				Claim: $P$ is a positive set.
+				
+				Suppose not, then $\exists A \subseteq P$ such that $A \in \mc{A}$ and $-\infty < \mu(A) < 0$.
+				
+				By the lemma, there exists a negative set $D \subseteq A$ and $\mu(D) \leq \mu(A) < 0$. Note that $D \subseteq A \subseteq P$, but then $N \cup D$ is a negative set as a union of negative sets.
+				Then,
+				\begin{align}
+					\mu(N \cup D) = \mu(N) + \mu(D)
+					= L + \mu(D) < L
+				\end{align}
+				which leads to a contradiction.
+			\end{tcolorbox}
+			Consequently, this $X = N \cup P$ is a Hahn decomposition.
 		\end{proof}
 	\end{theorem}
 	
