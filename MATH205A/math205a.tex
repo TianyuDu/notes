@@ -2881,6 +2881,140 @@
 				\int_{X \times Y} f\ d(\mu \times \nu) = \int_X I_f\dmu = \int_Y J_f\ d\nu
 			\end{align}
 		\end{enumerate}
+		
+		\begin{proof}
+			\hl{TODO}.
+		\end{proof}
+	\end{theorem}
+	
+	\section{Riesz Representation Theorem}
+	\subsection{Locally Compact Hausdorff Spaces}
+	\begin{definition}
+		A \textbf{Hausdorff space} is a topological space where for any two distinct points in it, there exists neighbourhoods of each which are disjoint.
+		
+		\emph{Distinct points are separated.}
+	\end{definition}
+	
+	\begin{definition}
+		A Hausdorff space is called \textbf{locally compact} if every point has an \ul{open} neighbourhood whose closure is \ul{compact}.
+	\end{definition}
+	
+	\begin{lemma}
+		Let $X$ be a Hausdorff space, let $K$ and $L$ be \ul{disjoint compact} subsets of $X$.
+		Then, there exists \ul{disjoint open} sets $U, V$ such that $K \subseteq U$ and $L \subseteq V$.
+		
+		\emph{Disjoint compact sets are separated by open sets.}
+		\begin{proof}
+			\hl{This proof needs revising!}
+			WLOG, assume $K, L \neq \varnothing$, suppose $K$ consists of single a single point $x$.
+			
+			$\forall y \in L$, $\exists$ disjoint open sets, $U_x \ni x$ and $V_y \ni y$ since $K \cap L = \varnothing$ and $X$ is Hausdorff. Then $\{V_y\}_{y \in L}$ is an open cover for $L$. By compactness of $L$, there exists a finite sub-cover $V_{y_1}, V_{y_2}, \dots, V_{y_n}$.
+			
+			Let 
+			\begin{align}
+				U &= \bigcap_{i=1}^n U_{y_i} \\
+				V &= \bigcup_{i=1}^n V_{y_i}
+			\end{align}
+			Then $U$ and $V$ are open disjoint and $x \in U$, $L \subseteq V$.
+			Le $K$ be an arbitrary compact set. $\forall y \in L$, $\exists$ disjoint open sets $U_y \supseteq K$ and $V_y \ni y$.
+			
+			Again, $\{V_y\}_{y \in K}$ is an open cover for $L$, there exists a finite sub-cover, and take $U = \bigcap_{i=1}^n U_{y_i}$ and $V = \bigcup_{i=1}^n V_{y_i}$.
+		\end{proof}
+	\end{lemma}
+	
+	\begin{lemma}
+		Let $X$ be a locally compact Hausdorff space, take $x \in X$ and an open neighbourhood $U$ of $x$. Then, there exists open set $V$ such that $x \in V \subseteq \overline{V} \subseteq U$, and $\overline{V}$ is compact.
+		
+		\emph{$U$ is locally compact as well.}
+		\begin{proof}
+			The local compactness implies there exists open $W \ni x$ such that $\overline{W}$ is compact. Let
+			\begin{align}
+				W_1 = W \cap U
+			\end{align}
+			then
+			$W_1$ is open and $x \in W_1$. Also $\overline{W_1}$ is a closed subset of compact set is also compact thus $\overline{W_1}$ is compact.
+			
+			Let $K = \overline{W_1} \backslash W_1 = \overline{W_1} \cap W_1^c$. $K$ (the boundary) is a closed set contained in compact $\overline{W_1}$. So $K$ is compact.
+			So by Lemma 1, there exists disjoint open sets $V_1, V_2$ such that $K \subseteq V_1$ and $x \in V_2$.
+			
+			Let $V = V_2 \cap W$, note that
+			\begin{enumerate}
+				\item $x \in V$,
+				\item $V$ is open,
+				\item $V \subseteq U$,
+				\item $\overline{V}$ is a closed subset of the compact set $\overline{W_1}$.
+				\item $\overline{V} \subseteq U$: $V \subseteq W$ and $V$ is separated from the boundary of $W_1$ by an open set. From this, it is not hard to see that $\overline{V} \subseteq W_1$ thus $\overline{V} \subseteq U$.
+			\end{enumerate}
+		\end{proof}
+	\end{lemma}
+	
+	\begin{lemma}
+		Let $X$ be a locally compact Hausdorff space, let $K$ be a compact subset of $X$, suppose there exists an open $U$ such that $K \subseteq U$.
+		Then, there exists open $V$ such that $K \subseteq V \subseteq \overline{V} \subseteq U$, moreover, $\overline{V}$ is compact.
+		\begin{proof}
+			For each $x \in K$, find an open set $V_x$ such that
+			\begin{align}
+				x \in V_x \subseteq \overline{V_x} \subseteq U
+			\end{align}
+			and $\overline{V_x}$ is compact. $\{V_x\}_{x \in K}$ is an open cover for $K$, thus take a finite sub-cover of it: $V_{x_1}, V_{x_2}, \dots, V_{x_n}$. Let $V = \bigcup_{i=1}^n V_{x_i}$, then $V$ is open, contains $K$ and $\overline{V} \subseteq U$.
+			$\overline{V}$ being a closed subset of compact set $\bigcup \overline{V_x}$ is also compact.
+		\end{proof}
+	\end{lemma}
+	
+	\begin{definition}
+		A topological space is called \textbf{normal} if it is Hausdorff and any pair of \ul{disjoint closed} sets can be separated by \ul{disjoint open} sets.
+	\end{definition}
+	
+	\begin{lemma}
+		Any compact Hausdorff space is normal.
+	\end{lemma}
+	
+	\begin{theorem}[Urysohn's Lemma]
+		Let $X$ be a normal topological space, let $E$ and $F$ be \ul{disjoint} closed subsets of $X$.
+		Then, $\exists$ a \ul{continuous} function $f: X \to [0, 1]$ such that $f = 0$ on $E$ and $f=1$ on $F$.
+		\begin{proof}
+			Let $D$ be the set of Dyadic rationals in $(0, 1)$, i.e., all numbers of the form $\frac{k}{2^n}$.
+			We will individually construct a family of open sets $\{U_r\}_{r \in D}$.
+			First note that $E$ and $F$ being closed sets and $X$ normal, then there exists disjoint open sets $U \supseteq E$ and $V \supseteq F$ such that
+			\begin{align}
+				U \subseteq V^c
+			\end{align}
+			where $V^c$ is closed, $E \cap U^c = \varnothing$, and $\overline{U} \cap F = \varnothing$. Moreover, $ \subseteq U \subseteq \overline{U} \subseteq F^c$. 
+			
+			Let $U_{1/2} = U$, applying the same argument on $(E, U^c)$ and get $U_{1/4} \subseteq U = U_{1/2}$.
+			Same for $\overline{U}, F)$, get $U_{3/4}$ such that 
+			\begin{align}
+				U = U_{1/2} \subseteq U_{3/4} \subseteq \overline{U_{3/4}} \subseteq F^c
+			\end{align}
+			Continuous by induction, we find $\{U_r\}_{r \in D}$ such that
+			\begin{enumerate}
+				\item $E \subseteq U_r$, $\overline{U_r} \subseteq F^c$ for all $r \in D$.
+				\item For all $r < s$, $\overline{U_r} \subseteq U_s$.
+			\end{enumerate}
+			Define
+			\begin{align}
+				f(x) = \begin{cases}
+					1 &\tx{ if } x \notin \bigcup_{r \in D} U_r \\
+					\inf\{r : x \in U_r\} &\tx{ otherwise}
+				\end{cases}
+			\end{align}
+			To show the continuity, since $f$ is real-valued, it suffices to show that $f^{-1}((r, s))$ is open for any Dyadic rational $(r, s)$ since all intervals of this form generates the Euclidean topology on the real line.
+			
+			First, suppose the $0 < r < s < 1$, $x \in f^{-1}((r, s))$ if and only if $r < f(x) < s$, then
+			\begin{enumerate}
+				\item $x \notin \overline{U_q}$ for some $q > r$: $f(x) > r$ if and only if $f(x) > q' > q > r$ for some $q', q \in D$ implies $f(x) \notin U_{q'}$, but $\overline{U_q} \subseteq U_{q'}$, so $f \notin \overline{U_q}$.
+				\item $x \in U_p$ for some $p < s$.
+			\end{enumerate}
+			if and only if
+			\begin{align}
+				x \in \left(
+				\bigcup_{q > r} \overline{U_q^c}
+				\right) \cap \left(
+				\bigcup_{p < s} U_p
+				\right)
+			\end{align}
+			So $f^{-1}((r, s))$ is open for all $r, s \in (0, 1)$. Similar arguments work for $r \leq 0 < s < 1$, $0 < r < 1 \leq s$ and other cases.
+		\end{proof}
 	\end{theorem}
 \end{document}
 
