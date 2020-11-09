@@ -1044,7 +1044,7 @@
 	
 	\subsection{The Notion of Almost Everywhere}
 	\begin{definition}
-		Let $(X, \mc{A}, \mu)$ be a measure space, a set $N \subseteq X$ (not necessarily measurable) is called "\textbf{negligible} w.r.t. $\mu$" if $N \subseteq A$ for some $A \in \mc{A}$ with $\mu(A)=0$.
+		Let $(X, \mc{A}, \mu)$ be a measure space, a set $N \subseteq X$ (not necessarily measurable) is called \textbf{negligible w.r.t. $\mu$} if $N \subseteq A$ for some $A \in \mc{A}$ with $\mu(A)=0$.
 		
 		A property is said to hold \textbf{almost everywhere} w.r.t. $\mu$ (denoted as $\mu$-a.e.) if the set on which this property fails is negligible.
 	\end{definition}
@@ -1052,14 +1052,20 @@
 	\begin{proposition}
 		Let $f: X \to [0, \infty]$ be an integrable function, then $f$ is finite $\mu$-a.e.
 		\begin{proof}
-			Let $A := f^{-1}(\infty)$, define $h_n(x) := n \id{x \in A}$. Clearly, $h_n$ is a simple function $\leq f$ for every $n$, by monotonicity, $\int f\ d\mu \leq \int h_n\ d\mu = n \mu(A)$. Taking $n\to\infty$ leads to a contradiction.
+			Let $A := f^{-1}(\infty)$, define $h_n(x) := n \id{x \in A}$. Clearly, $h_n$ is a simple function $\leq f$ for every $n$, by monotonicity, $\int f\ d\mu \leq \int h_n\ d\mu = n \mu(A)$. 
+			If $\mu(A) > 0$, taking $n\to\infty$ leads to a contradiction.
+		\end{proof}
+		
+		\begin{proof}[Alternative Proof]
+			Note: this intuitive proof is non-rigorous.
+			Since $f \geq 0$, let $A := f^{-1}(\infty)$, $\int f \dmu \geq \int_A f\dmu = \infty \mu(A)$, $\mu(A)$ must be zero.
 		\end{proof}
 	\end{proposition}
 	
 	\begin{corollary}
 		If $f: X \to \R^*$ is integrable w.r.t. $\mu$, then $|f| < \infty$ $\mu$-a.e.
 		\begin{proof}
-			$f$ is integrable implies $\int f^+\ d\mu, \int f^-\ d\mu < \infty$. Then,
+			$f$ is integrable implies both $\int f^+\ d\mu, \int f^-\ d\mu < \infty$. Then,
 			by the previous proposition, $f^+ < \infty$ except for a negligible set $A$, and $f^- < \infty$ expect for a negligible set $B$. Therefore, $|f| = \infty$ on set $A \cup B$, which is negligible as well.
 		\end{proof}
 	\end{corollary}
@@ -1070,35 +1076,42 @@
 			\int f\ d\mu = 0 \iff f = 0\ \mu-a.e.
 		\end{align}
 		\begin{proof}
-			($\implies$) Suppose $f = 0$ a.e., for every simple function $g \leq f$, let $(a_i, A_i)$ be the representation of $g$, then $\int g\ d\mu = 0$ by definition. Suppose $a_i > 0$ for some $A_i$, then $f(x) \geq a_i > 0$ for all $x \in A_i$, since $f = 0$ a.e., $\mu(A_i) = 0$. Therefore, $\int g\ d\mu = 0$, so is the integral of $f$.
+			($\impliedby$) Suppose $f = 0$ a.e., for every simple function $g \leq f$, let $(a_i, A_i)$ be the representation of $g$.
 			
-			($\impliedby$), suppose $\int f\ d\mu = 0$, note that
+			Suppose $a_i > 0$ for some $A_i$, then $f(x) \geq a_i > 0$ for all $x \in A_i$, since $f = 0$ a.e., $\mu(A_i) = 0$.
+			Therefore, $\int g\ d\mu = \sum_{i} a_i \mu(A_i) = 0$, so is the integral of $f$.
+			
+			($\implies$) Suppose $\int f\ d\mu = 0$, note that
 			\begin{align}
 				\{x: f(x) > 0\} = \bigcup_{n=1}^\infty \{x: f(x) > 1/n\}
 			\end{align}
-			Define $A_n = \{x: f(x) > 1/n\}$, then $A_n$ is an increasing sequence of sets, therefore, suppose there exists some $A_n$ with $\mu(A_n) > 0$, define $g(x) = \frac{1}{n} \id{x \in A_n}$. $f \geq g$ by construction, so that $\int f\ d\mu \geq \int g\ d\mu = \frac{1}{n} \mu(A_n) > 0$. This leads to a contradiction, so all $\mu(A_n) = 0$, and $\mu(\{x: f(x) > 0\}) = \lim_n \mu(A_n) = 0$.
+			Define $A_n = \{x: f(x) > 1/n\}$, then $A_n$ is an increasing sequence of sets.
+			
+			Suppose, for contradiction, there exists some $A_n$ with $\mu(A_n) > 0$, define $g(x) = \frac{1}{n} \id{x \in A_n}$. $f \geq g$ by construction, so that $\int f\ d\mu \geq \int g\ d\mu = \frac{1}{n} \mu(A_n) > 0$. This leads to a contradiction, so all $\mu(A_n) = 0$, and $\mu(\{x: f(x) > 0\}) = \lim_n \mu(A_n) = 0$.
 		\end{proof}
 	\end{proposition}
 	
 	\begin{corollary}
 		Let $f: X \to \R^*$ be a measurable function, 
 		\begin{align}
-			f = 0\ \mu-a.e. \implies \int f\ d\mu = 0
+			f = 0\ a.e. \implies \int f\ d\mu = 0
 		\end{align}
 		\begin{proof}
 			$f=0$ a.e. implies $f^+, f^- = 0$ a.e., apply the previous proposition, $\int f^+\ d\mu = \int f^-\ d\mu = 0$, so is $\int f\ d\mu$.
 			
-			Note the converse is not true, it is possible that $f^+\ d\mu = \int f^-\ d\mu \neq 0$ such that $\int f\ d\mu = 0$.
+			Note the converse is not true, obviously one may take $f^+ = f^-$ so that  $f^+\ d\mu = \int f^-\ d\mu \neq 0$ and $\int f\ d\mu = 0$.
 		\end{proof}
 	\end{corollary}
 	
 	\begin{corollary}
 		Let $f, g: X \to \R^*$ be integrable functions, then
 		\begin{align}
-			f = 0\ \mu-a.e. \implies \int f\ d\mu = \int g\ d\mu 
+			f = 0\ a.e. \implies \int f\ d\mu = \int g\ d\mu 
 		\end{align}
 		\begin{proof}
-			Let $\tilde{f} = f(x) \id{x \in \R}$ and $\tilde{g} = g(x) \id{x \in \R}$, we are doing this to avoid subtracting infinity from infinity. $|\tilde{f}|$ and $|\tilde{g}|$ are bounded by $|f|$ and $|g|$ and are integrable. Moreover, $f = \tilde{f} = g = \tilde{g}$ a.e. by construction. Lastly, since $|\tilde{f}|, |\tilde{g}| < \infty$, we can write
+			Let $\tilde{f} = f(x) \id{x \in \R}$ and $\tilde{g} = g(x) \id{x \in \R}$, we are doing this to avoid subtracting infinity from infinity.
+			
+			Both $|\tilde{f}|$ and $|\tilde{g}|$ are bounded by $|f|$ and $|g|$ and are integrable. Moreover, $f = \tilde{f} = g = \tilde{g}$ a.e. by construction. Lastly, since $|\tilde{f}|, |\tilde{g}| < \infty$, $\tilde{f} - \tilde{g}$ is integrable and we can write
 			\begin{align}
 				\int \tilde{f} - \tilde{g}\ d\mu &= \int \tilde{f}\ d\mu - \int \tilde{g}\ d\mu = 0 \\
 				\implies \int f\ d\mu &= \int \tilde{f}\ d\mu = \int g\dmu = \int \tilde{g}\dmu
@@ -1115,21 +1128,24 @@
 			\end{align}
 			Therefore, $A^c = \bigcup_{n} \{x:f_n(x) < 0\} \cup \{x: \lim_{n\to\infty} f_n(x) \neq f(x)\}$, which is a countable union of measure zero sets, hence $\mu(A^c) = 0$.
 			
-			Define $\tilde{f}_n = \mathds{1}_A f_n$ and $\tilde{f} = \mathds{1}_A f$, apply the original version of MCT on $\tilde{f}_n$ and $f$, then exert the fact that $\int \tilde{f}_n\dmu = \int f_n\dmu$ and $\int \tilde{f}\dmu = \int f\dmu$.
+			Define $\tilde{f}_n = \mathds{1}_A f_n$ and $\tilde{f} = \mathds{1}_A f$, apply the original version of MCT on $\tilde{f}_n$ and $f$, then use the fact that $\int \tilde{f}_n\dmu = \int f_n\dmu$ and $\int \tilde{f}\dmu = \int f\dmu$.
+		\end{proof}
+		\begin{proof}[Proof for DCT]
+			The proof is similar, we can construct sets on which the desired properties holds denoted as $A$. Define $\tilde{f}(x) := f(x) \id{x \in A}$ and apply the original DCT. Lastly, use the fact that modifying $f$ on a measure zero set $A^c$ does not change the value of integral.
 		\end{proof}
 	\end{proposition}
-	
+
+	\newpage
 	\section{Integral of Complex-Valued Functions}
 	\begin{definition}
-		A function $f: X \to \C$ is called \textbf{measurable} if both $\Re(f)$ and $\Im(f)$ (both are real-valued functions) are measurable. Similarly, $f$ is \textbf{integrable} if both its real and imaginary parts are integrable. 
-		
+		A function $f: X \to \C$ is called \textbf{measurable} if both $\Re(f)$ and $\Im(f)$ (both are $\R$-valued functions by construction of $\C$) are measurable. Similarly, $f$ is \textbf{integrable} if both its real and imaginary parts are integrable. 
 		Define
 		\begin{align}
-			\int f\dmu = \int \Re(f)\dmu + i \int \Im(f)\dmu
+			\int f\dmu = \int \Re(f)\dmu + \red{i} \int \Im(f)\dmu \in \C
 		\end{align}
 	\end{definition}
 	
-	\begin{proposition}
+	\begin{proposition}[Linearity of Integral of Complex-Valued Functions]
 		Let $f, g$ be integrable complex-valued functions, then
 		\begin{enumerate}
 			\item $\int (f+g)\dmu = \int f\dmu + \int g\dmu$.
@@ -1164,35 +1180,51 @@
 		\end{proof}
 	\end{proposition}
 	
+	\newpage
 	\section{Convergence of Measurable Functions}
 	\begin{definition}
-		Let $(X, \mc{A}, \mu)$ be a measure space, let $\{f_n\}_n$ be a sequence of real-valued measurable functions on $X$, let $f: X \to \R$ be a measurable function.
-		
-		Then \textbf{$f_n \to f$ in measure} if for every $\varepsilon > 0$,
+		Let $(X, \mc{A}, \mu)$ be a measure space, let $\{f_n\}_n$ be a sequence of \ul{real-valued measurable} functions on $X$, let $f: X \to \R$ be a measurable function.
+		Then, \textbf{$f_n \to f$ in measure} if for every $\varepsilon > 0$,
 		\begin{align}
 			\lim_{n\to\infty} \mu(\{x: \abs{f_n(x) - f(x)} > \varepsilon \}) = 0
 		\end{align}
+		\emph{Note: this definition is a generalization of convergence in probability.}
 	\end{definition}
 	
 	\begin{remark}
 		Convergence almost everywhere does not imply convergence in measure.
 		\begin{proof}[Counter-example]
-			
+			Take $\mu = \lambda$, and define $f_n(x) = \id{x \in [n, \infty)}$, then $f_n \to 0$ everywhere.
+			However, $\lambda(\{x : \abs{f_n(x)} > 1/2\}) = \lambda([n, \infty)) = \infty \centernot{\to} 0$.
 		\end{proof}
 	\end{remark}
 	
 	\begin{remark}
 		Convergence in measure does not imply convergence almost everywhere (even if we are considering a finite measure).
 		\begin{proof}[Counter-example]
-			
+			Define
+			\begin{align}
+				f_1(x) &= 1 \\
+				f_2(x) &= \id{x \in [0, 1/2]} \\
+				f_3(x) &= \id{x \in [1/2, 1]} \\
+				f_4(x) &= \id{x \in [0, 1/4]} \\
+				f_5(x) &= \id{x \in [1/4, 1/2]} \\
+				f_6(x) &= \id{x \in [1/2, 3/4]} \\
+				f_7(x) &= \id{x \in [3/4, 1]} \\
+				f_8(x) &= \id{x \in [1/8, 1/4]}
+			\end{align}
+			and so on. in general, $\{x : f_n(x) = 1\}$ shrinks exponentially as $n \to \infty$, hence $f_n \to 0$ in Lebesgue measure. However, for any fixed $x \in [0, 1]$, there are infinitely many $n$ such that $f_n(x) = 1$, therefore, $f_n$ does not converge to $0$ pointwise.
 		\end{proof}
 	\end{remark}
 	
 	\begin{proposition}
 		Let $\mu$ be a \ul{finite measure}, then convergence a.e. implies convergence in measure.
 		\begin{proof}
-			Suppose $f \to f_n$ a.e. Let $\varepsilon > 0$. Note that if there exists $x$ such that $|f_n - f(x)| \geq \varepsilon$ for infinitely many $n$, then $f_n \centernot{\to} f$ at $x$.
-			Therefore,
+			Suppose $f \to f_n$ a.e. Let $\varepsilon > 0$. Note that if there exists $x$ such that $|f_n - f(x)| \geq \varepsilon$ for infinitely many $n$, then $f_n \centernot{\to} f$ at $x$. That is,
+			\begin{align}
+				\{x: \abs{f_n(x) - f(x)} > \varepsilon \tx{ for infinitely many $n$}\} \subseteq \{x: f_n(x) \centernot{\to} f(x)\}
+			\end{align}
+			By monotonicity,
 			\begin{align}
 				\mu(\{x: \abs{f_n(x) - f(x)} > \varepsilon \tx{ for infinitely many $n$}\}) \leq \mu(\{x: f_n(x) \centernot{\to} f(x)\}) = 0
 			\end{align}
@@ -1205,7 +1237,6 @@
 			\emph{Where $x \in B_n$ indicates there exists a $k \geq n$ such that $\abs{f_k(x) - f(x)} > \varepsilon$. If we take the intersection of all $B_n$, it means for all $n \in \N$, there exists $k \geq n$ such that $\abs{f_k(x) - f(x)} > \varepsilon$, which is equivalent to saying there are infinitely many $k$ such that $\abs{f_k(x) - f(x)} > \varepsilon$.}
 			
 			Clearly $B_1 \supseteq B_2 \supseteq \dots$, there must exist some $B_i$ such that $\mu(B_i)$ since $\mu$ is a finite measure.
-			
 			Therefore,
 			\begin{align}
 				0 = \mu(\{x: \abs{f_n(x) - f(x)} > \varepsilon \tx{ for infinitely many $n$}\}) = \lim_{n\to\infty} \mu(B_n)
@@ -1276,6 +1307,7 @@
 			\item $\mu(B^c) < \varepsilon$,
 			\item and $f_n \to f$ \ul{uniformly} on $B$.
 		\end{enumerate}
+		\emph{On a finite measure space, convergence a.e. implies convergence uniformly on a slightly smaller set.}
 		\begin{proof}
 			Let $\varepsilon > 0$.
 			
@@ -1355,7 +1387,9 @@
 	\end{figure}
 	
 	\begin{proposition}[Dominated Convergence Theorem II]
-		Suppose $f_n \overset{\mu}{\to} f$, and $\exists$ integrable $g$ such that $\abs{f_n} \leq g$ a.e. for all $n$. Then, $f_n \overset{L^1}{\to} f$, in particular, $\int f_n\ d\mu \to \int f\ d\mu$.
+		Suppose $f_n \overset{\mu}{\to} f$, and $\exists$ integrable $g$ such that $\abs{f_n} \leq g$ a.e. for all $n$. Then, $f_n \overset{L^1}{\to} f$ (in particular, $\int f_n\ d\mu \to \int f\ d\mu$).
+		
+		\emph{The convergence in measure version of the dominated convergence theorem.}
 		\begin{proof}
 			Suppose, for contradiction, $f_n \centernot \to f$ in $L^1$. Equivalently, there exists $\varepsilon$ and a subsequence $f_{n_k}$ such that for all $k$:
 			\begin{align}
@@ -1367,33 +1401,40 @@
 		\end{proof}
 	\end{proposition}
 	
+	\newpage
 	\section{Normed Space}
 	\begin{definition}
-		Let $V$ be a vector space over $\R$ (over $\C$), a \textbf{norm} on $V$ is a function $\norm{\cdot}: V \to \R$ such that
+		Let $V$ be a vector space over $\R$ (over $\C$), a \textbf{norm} on $V$ is a map $\norm{\cdot}: V \to \R$ satisfies the following properties:
 		\begin{enumerate}
-			\item $\norm{x} \geq 0\ \forall x \in V$,
+			\item (Non-negativity) $\norm{x} \geq 0\ \forall x \in V$,
 			\item $\norm{x} = 0 \iff x = 0$,
-			\item $\norm{a x} = \abs{a} \norm{x}$ for all $a \in \R(\in \C)$,
+			\item (Linearity) $\norm{a x} = \abs{a} \norm{x}$ for all $a \in \R(\in \C)$,
 			\item (Triangle Inequality) $\norm{x + y} \leq \norm{x} + \norm{y}\ \forall x, y \in V$.
 		\end{enumerate}
 	\end{definition}
 	
 	\begin{example}
-		For $V = \R^n$, \ul{for every $p \geq 1$}, the $L^p$ norm is defined as
+		For $V = \R^n$, \ul{for every $p \geq 1$}, the \textbf{$\ell^p$ norm} is defined as
 		\begin{align}
 			\norm{x}_{L^p} = \left( \sum_{i=1}^n \abs{x_i}^p \right)^{1/p}
 		\end{align}
-		\emph{Note: for $p < 1$, the triangle inequality fails.}
+		\emph{Note: we only define $L^p$ norm for $p \geq 1$, since for $p < 1$, the triangle inequality fails.}
+
+		For $p = \infty$,
+		\begin{align}
+			\norm{x}_{\ell^\infty} = \max_{1 \leq i \leq n} |x_i|
+		\end{align}
 	\end{example}
 	
 	\begin{example}
-		Let $C[a, b]$ denote the collection of continuous functions from $[a, b]$ to $\R$, where $[a, b]$ is a compact interval.
-		
-		The sup norm is defined as
+		Let $C[a, b]$ denote the space of continuous functions map from $[a, b]$ to $\R$, where $[a, b]$ is a compact interval.
+		The \textbf{sup-norm} is defined as
 		\begin{align}
 			\norm{f}_\infty = \sup_{x \in [a, b]} \abs{f(x)}
 		\end{align}
-		The 1-norm is defined as
+		This supremum is finite since $|f|$ is continuous and $|f|([a,b])$ is compact.
+		
+		The \textbf{1-norm} is defined as
 		\begin{align}
 			\norm{f}_1 = \int_{[a, b]} \abs{f}\ d\lambda
 		\end{align}
@@ -1409,23 +1450,37 @@
 		\end{enumerate}
 	\end{definition}
 	
-	\begin{proposition}
-		A norm induces a metric: $d(x, y) := \norm{x - y}$.
-		
+	\begin{definition}
+		A norm on a vector induces a metric, the \textbf{metric $d$ induced by norm $\norm{\cdot}$} is defined as
+		\begin{align}
+			d(x, y) := \norm{x - y}
+		\end{align}
 		\emph{Note: the converse is false, i.e., there are metrics not induced by any norm. For example, $d(x, y) := \id{x = y}$ is in general not induced by any norm.}
-	\end{proposition}
+	\end{definition}
 	
 	\begin{definition}
-		Let $S$ be a set with a metric $d$, a sequence of points $x_n$ converges to $x \in S$ if
+		Let $S$ be a set with a metric $d$, a sequence of points $\{x_n\}_{n=1}^\infty$ \textbf{converges} to $x \in S$ if
 		\begin{align}
 			\lim_{n \to \infty} d(x_n, x) = 0
 		\end{align}
-		A sequence is \textbf{Cauchy} with respect to $d$ if $\forall \varepsilon > 0, \exists n_0 \in \N\ s.t.\ \forall m, n \geq n_0, d(x_m, x_n) < \varepsilon$.
+		A sequence is \textbf{Cauchy} with respect to $d$ if
+		\begin{align}
+			\forall \varepsilon > 0, \exists n_0 \in \N\ s.t.\ \forall m, n \geq n_0, d(x_m, x_n) < \varepsilon
+		\end{align}
 	\end{definition}
 	
 	\begin{definition}
 		A metric space w.r.t $d$ is \textbf{complete} if every Cauchy sequence w.r.t. $d$ converges to somewhere in the space.
 	\end{definition}
+
+	\begin{remark}
+		In order to show the completeness of a metric space, take an arbitrary Cauchy sequence in this space, and show
+		\begin{enumerate}
+			\item construct the limit, in cases of functional spaces, we usually define the limit $f$ as the point wise limit,
+			\item show this sequence converges to the proposed limit,
+			\item show the proposed limit is in the metric space.
+		\end{enumerate}
+	\end{remark}
 	
 	\begin{example}
 		$C[a, b]$ with the supremum norm is complete.
@@ -1483,38 +1538,51 @@
 			Hence, $f \in C[a, b]$. 
 		\end{proof}
 	\end{proposition}
-	
+
+	\newpage
 	\section{Functional Analysis: $L^p$ Spaces}
-	\emph{We will firstly define $\mc{L}^p$ spaces, which is a little simpler than $L^p$ spaces.}
+	\subsection{An Auxiliary Construction: the $\mc{L}^p$ Spaces}
+	We will firstly define $\mc{L}^p$ spaces, which is a little simpler than $L^p$ spaces. The main difference is $\mc{L}^p$ spaces are simply spaces of functions, while $L^p$ does not distinguish functions that are equal almost everywhere. In fact, $L^p$ spaces are spaces of equivalence classes of functions, an element $f \in L^p$ actually denote the set of all functions that equal $f$ almost everywhere.
 	\begin{definition}
 		Let $(X, \mc{A}, \mu)$ be a measure space, for every $1 \leq p < \infty$, the $\mc{L}^p(X, \mc{A}, \mu, \R)$ space is the collection of all measurable functions $f: X \to \R$ such that
 		\begin{align}
 			\int \abs{f}^p\ d\mu < \infty
 		\end{align}
-		Similarly, $\mc{L}^p(X, \mc{A}, \mu, \C)$ denotes the collection of all measurable functions $f: X \to \C$ such that $\int \abs{f}^p\ d\mu < \infty$.
+		Similarly, $\mc{L}^p(X, \mc{A}, \mu, \C)$ denotes the collection of all measurable functions $f: X \to \C$ such that
+		\begin{align}
+			\int \abs{f}^p\ d\mu < \infty
+		\end{align}
 	\end{definition}
-	\emph{Thought out this notes, we use $\mc{L}^p$ to denote $\mc{L}^p(X, \mc{A}, \mu, \R)$ or $\mc{L}^p(X, \mc{A}, \mu, \C)$.}
-	\begin{proposition}[$\mc{L}^p$ space is a vector space]
-		Note that $0 \in \mc{L}^p$, and if $f \in \mc{L}^p$ and $\alpha \in \R/\C$, then
+	Thought out this notes, we use $\mc{L}^p$ to denote $\mc{L}^p(X, \mc{A}, \mu, \R)$ or $\mc{L}^p(X, \mc{A}, \mu, \C)$, unless specified otherwise, statements about $\mc{L}^p$ hold for both spaces.
+	\begin{proposition}
+		$\mc{L}^p$ space is a vector space.
+		\begin{proof} \quad
+		\begin{enumerate}
+		\item Note that $0 \in \mc{L}^p$.
+		\item If $f \in \mc{L}^p$ and $\alpha \in \R$ or $\C$, then
 		\begin{align}
 			\int \abs{\alpha f}^p\ d\mu = \abs{\alpha}^p \int \abs{f}^p\ d\mu < \infty
 		\end{align}
 		Therefore, $\alpha f \in \mc{L}^p$.
-		
-		For all $x \in X$,
+		\item For all $x \in X$,
 		\begin{align}
 			\abs{f(x) + g(x)}^p &\leq (\abs{f(x)} + \abs{g(x)})^p \\
 			&\leq (2 \max\{\abs{f(x)}, \abs{g(x)}\})^2 \\
 			&\leq 2^p \max\{\abs{f(x)}^p, \abs{g(x)}^p\} \\
-			&\leq 2^p (\abs{f(x)}^p + \abs{g(x)}^p) \\
-			\implies \int \abs{f+g}^p\ d\mu &< \infty \\
+			&\leq 2^p (\abs{f(x)}^p + \abs{g(x)}^p)
+		\end{align}
+		Thus,
+		\begin{align}
+		\int \abs{f+g}^p\ d\mu &< \infty \\
 			\implies f + g &\in \mc{L}^p
 		\end{align}
+		\end{enumerate}
 		Hence, $\mc{L}^p$ is a vector space.
+		\end{proof}
 	\end{proposition}
 	
 	\begin{definition}
-		Let $\mc{L}^\infty(X, \mc{A}, \mu, \R/\C)$ be the set of all \ul{bounded} measurable $f: X \to \R/\C$.
+		$\mc{L}^\infty(X, \mc{A}, \mu, \R/\C)$ is defined to be the set of all \ul{bounded} measurable $f: X \to \R/\C$.
 	\end{definition}
 	
 	\begin{definition}
@@ -1526,9 +1594,9 @@
 	\end{definition}
 	
 	\begin{definition}
-		Given a measure space $(X, \mc{A}, \mu)$, a set $B$ is called \textbf{$\mu$-null/negligible} if $B \subseteq A$ for some $A \in \mc{A}$ with $\mu(A) = 0$.
+		Given a measure space $(X, \mc{A}, \mu)$, a set $B$ is called \textbf{$\mu$-null/negligible} if $B \subseteq A$ for some $A \in \mc{A}$ with $\mu(A) = 0$ (note that $B$ is not necessarily measurable).
 		
-		A subset $N \subseteq X$ is called \textbf{locally $\mu$-null} if $\forall A \in \mc{A}$ with $\mu(A) < \infty$, $A \cap N$ is $\mu$-null.
+		A subset $N \subseteq X$ is called \textbf{locally $\mu$-null} if $\forall A \in \mc{A}$ with $\mu(A) < \infty$, $A \cap N$ is $\mu$-null. \emph{A locally $\mu$-null set $N$ shrinks any measurable set to $\mu$-null set by taking intersection.}
 		
 		A property of elements of $X$ is said to hold \textbf{locally a.e.} if the set on which it fails is locally $\mu$-null.
 	\end{definition}
@@ -1538,10 +1606,11 @@
 		For $f \in \mc{L}^\infty$, define
 		\begin{align}
 			\norm{f}_\infty = \inf \left\{
-			M \geq 0 : \tx{the set of all $x$ with $\abs{f(x)} > M$ is locally $\mu$-null.}
+			M \geq 0 : \{x : \abs{f(x)} > M\} \tx{ is locally $\mu$-null.}
 			\right\}
 		\end{align}
-		this is called the \textbf{essential supremum} of $\abs{f}$. Equivalently, $\norm{f}_\infty$ is the infimum of $M$ such that $\abs{f(x)} \leq M$ locally a.e.
+		this is called the \textbf{essential supremum} of $\abs{f}$.
+		\emph{Equivalently, $\norm{f}_\infty$ is the least (locally a.e.) upper bound of $|f|$.}
 		
 		Note that $\norm{f}_\infty$ is only a semi-norm, we may modify a function on a measure-zero set without changing the value of $\norm{f}_\infty$.
 		
@@ -1562,7 +1631,17 @@
 		\end{align}
 		Then $\norm{f}_\infty=1$ but $\sup f = 2$. To see this, note that $\{x : \abs{f(x)} > 1\} = \{1/2\}$ has zero measure. However, for any $M < 1$, the same has non-zero Lebesgue measure.
 	\end{example}
-	
+
+	\begin{lemma}
+		Countable union of locally $\mu$-null sets is locally $\mu$-null.
+		\begin{proof}
+			Let $B_1, B_2 \dots$ be $\mu$-null, then for any $A \in \mc{A}$,
+			\begin{align}
+				\mu\left(A \cap \bigcup_{i=1}^\infty B_i\right) = \mu\left(\bigcup_{i=1}^\infty A \cap B_i \right) \leq \sum_{i=1}^\infty \mu(A\cap B_i) = 0
+			\end{align}
+		\end{proof}
+	\end{lemma}
+
 	\begin{proposition}
 		\begin{align}
 			&\mu\left(\{
@@ -1572,14 +1651,23 @@
 			x : \abs{f(x)} > c
 			\}\right) \tx{ is not locally $\mu$-null } \forall c < \norm{f}_\infty
 		\end{align}
+		\begin{proof}
+			First, note that by definition of $\norm{f}_\infty$, it follows that $\{x: |f(x)| > c\}$ is not locally $\mu$-null for any $c < \norm{f}_\infty$, which is the infimum.
+			Moreover,
+			\begin{align}
+				\{x : |f(x)| > \norm{f}_\infty\} = \bigcup_{n=1}^\infty \{x : |f(x)| > \norm{f}_\infty + 1/n\}
+			\end{align}
+			By the previous lemma, the result follows.
+		\end{proof}
 	\end{proposition}
-	
-	\begin{lemma}
-		Countable union of locally $\mu$-null sets is locally $\mu$-null.
-	\end{lemma}
 	
 	\begin{proposition}
 		$\norm{f}_p$ and $\norm{f}_\infty$ are semi-norms.
+		\begin{proof}
+			$\norm{f}_p$ or $\norm{f}_\infty = 0$ only implies $f = 0$ almost everywhere but not everywhere, this fact makes them semi-norms.
+			
+			Later in $L^p$ spaces, we will define the zero vector to be the collection of functions that are zero almost everywhere, this modification guarantees $\norm{\cdot}$ to be a norm on $L^p$.
+		\end{proof}
 	\end{proposition}
 	
 	\begin{definition}
@@ -1605,7 +1693,7 @@
 	\end{lemma}
 	
 	\begin{theorem}[H\"older's Inequality]
-		Let $(X, \mc{A}, \mu)$ be a measure space, take $1 \leq p \leq \infty$, and $q$ be it's conjugate exponent. Take $f \in \mc{L}^p$, $g \in \mc{L}^q$, then
+		Let $(X, \mc{A}, \mu)$ be a measure space, take \red{$1 \leq p \leq \infty$}, and $q$ be it's conjugate exponent. Take $f \in \mc{L}^p$, $g \in \mc{L}^q$, then the product
 		\begin{align}
 			fg \in \mc{L}^1
 		\end{align}
@@ -1613,6 +1701,54 @@
 		\begin{align}
 			\norm{fg}_1 \leq \norm{f}_p \norm{g}_q
 		\end{align}
+		\begin{proof}[Proof. $p \in (1, \infty)$]
+			For all $x$, and for any function $f$ and $g$, by Young's inequality,
+			\begin{align}
+				|f(x) g(x)| \leq \frac{|f(x)|^p}{p} + \frac{|g(x)|^q}{q}
+			\end{align}
+			Integrating both sides,
+			\begin{align}
+				\norm{f g}_1 \leq \frac{\norm{f}_p^p}{p} + \frac{\norm{g}_q^q}{q}
+			\end{align}
+			If $\norm{f}_p = \norm{g}_q = 1$, then
+			\begin{align}
+				\norm{fg}_1 \leq \frac{1}{p} + \frac{1}{q} = 1 \label{eq:2}
+			\end{align}
+			Now take arbitrary $f \in \mc{L}^p$ and $g \in \mc{L}^q$, if $\norm{f}_p = 0$ or $\norm{g}_q = 0$, then $fg = 0$ a.e. and there is nothing to prove.
+			
+			So assume $\norm{f}_p > 0$ and $\norm{g}_q > 0$, let
+			\begin{align}
+				\tilde{f} = \frac{f}{\norm{f}_p} \quad
+				\tilde{g} = \frac{g}{\norm{g}_q}
+			\end{align}
+			By construction, $\norm{\tilde{f}}_p = 1 = \norm{\tilde{g}}_q$.
+			By Equation (\ref{eq:2}) , $\norm{\tilde{f} \tilde{g}} \leq 1$, but $\norm{\tilde{f} \tilde{g}} = \frac{\norm{fg}_1}{\norm{f}_p \norm{g}_q}$. This proves the H\"older's inequality when $p \in (1, \infty)$.
+		\end{proof}
+		\begin{proof}[Proof. $p = 1$ and $q = \infty$]
+			Let $f \in \mc{L}^1$ and $g \in \mc{L}^\infty$. Claim:
+			\begin{align}
+				\{x : \abs{f(x) g(x)} > \norm{g}_\infty |f(x)|\}
+			\end{align}
+			is $\mu$-null.
+			\begin{tcolorbox}
+				\begin{proof}[Proof of the Claim]
+					Note that
+					\begin{align}
+						\{x : \abs{f(x) g(x)} > \norm{g}_\infty |f(x)|\} = \bigcup_{n=1}^\infty \left(\{x : |f(x)| > 1/n\} \cap \{x : |g(x)| > \norm{g}_\infty\}\right)
+					\end{align}
+					By Markov ineuqliaty,
+					\begin{align}
+						\mu(\{x : |f(x)| > 1/n\}) \leq \frac{\int |f|\dmu}{1/n} < \infty
+					\end{align}
+					The intersection of a locally $\mu$-null set with a set of finite measure is $\mu$-null, moreover, the countable union of $\mu$-null sets is $\mu$-null.
+				\end{proof}
+			\end{tcolorbox}
+			By the claimed property,
+			\begin{align}
+				\norm{fg}_1 = \int |fg|\dmu \leq \int \norm{g}_\infty |f|\dmu = \norm{g}_\infty \norm{f}_1
+			\end{align}
+			This shows the H\"older's inequality.
+		\end{proof}
 	\end{theorem}
 	
 	\begin{example}
@@ -1628,15 +1764,14 @@
 		\begin{align}
 			\norm{f}_2 = \sqrt{\sum_{i=1}^n \mu(\{x_i\}) f(x_i)^2} = \sqrt{\sum_{i=1}^n f(x_i)^2} = \norm{v}_2
 		\end{align}
-		The same holds for $g$, in this case H\"older's inequality reduces to cauchy-Switchz inequality.
+		The same holds for $g$, in this case H\"older's inequality induces the Cauchy-Switchz inequality.
 	\end{example}
-	
-	\begin{proof}
-		
-	\end{proof}
-	
+
 	\begin{theorem}[Minkowski's Inequality]
-		Let $(X, \mc{A}, \mu)$ be a measure space. Take $1 \leq p \leq \infty$. If $f, g \in \mc{L}^p(X, \mc{A}, \mu)$, then $f + g \in \mc{L}^p$ and $\norm{f+g}_p \leq \norm{f}_p + \norm{g}_p$.
+		Let $(X, \mc{A}, \mu)$ be a measure space. Take $1 \leq p \leq \infty$. If $f, g \in \mc{L}^p(X, \mc{A}, \mu)$, then $f + g \in \mc{L}^p$ and
+		\begin{align}
+			\norm{f+g}_p \leq \norm{f}_p + \norm{g}_p
+		\end{align}
 		\begin{proof}
 			First, suppose that $p \in (1, \infty)$. Let $q$ be the conjugate exponent of $p$. We have already shown that $\mc{L}^p$ is a vector space, so $f + g \in \mc{L}^p$.
 			
@@ -1678,7 +1813,16 @@
 			\end{align}
 		\end{proof}
 	\end{theorem}
-	\emph{Note that $\norm{\cdot}_p$ is a \textbf{semi-norm} on $\mc{L}^p$, to make it a norm, we introduce the $L^p$ space.}
+	Thus, we have shown $\norm{\cdot}_p$ on $\mc{L}^p$ satisfies
+	\begin{enumerate}
+		\item If $f = 0$, then $\norm{f}_p = 0$,
+		\item $\norm{\alpha f}_p = |\alpha|\norm{f}_p$ for any scalar $\alpha$,
+		\item $\norm{f + g}_p \leq \norm{f}_p + \norm{g}_p$.
+	\end{enumerate}
+	Thus $\norm{\cdot}_p$ satisfies all conditions of being a norm except that $\norm{f}_p = 0 \centernot \implies f = 0$, thus $\norm{\cdot}_p$ is a semi-norm on $\mc{L}^p$.
+	
+	\subsection{$L^p$ Spaces}
+	Note that $\norm{\cdot}_p$ is a \textbf{semi-norm} on $\mc{L}^p$, to make it a norm, we introduce the $L^p$ space.
 	\begin{definition}
 		For $1 \leq p < \infty$, define the class of zero vectors
 		\begin{align}
@@ -1688,19 +1832,19 @@
 		\begin{align}
 			L^p(X, \mc{A}, \mu) := \mc{L}^p(X, \mc{A}, \mu) / \mc{N}^p(X, \mc{A}, \mu)
 		\end{align}
-		That is, an element $[f] \in L^p$ (an equivalent class) is the collection of all $g \in \mc{L}^p$ such that $f - g = 0$ almost everywhere:
+		That is, an element $[f] \in L^p$ (an equivalence class) is the collection of all $g \in \mc{L}^p$ such that $f - g = 0$ almost everywhere:
 		\begin{align}
-			L^p \ni [f] := \{g \in \mc{L}^p : f - g \in \mc{N}^p\}
+			[f] := \{g \in \mc{L}^p : f - g \in \mc{N}^p\}
 		\end{align}
 		Then $L^p$ is a vector space over $\R$ or $\C$, and $\norm{\cdot}_p$ is well-defined: for any $f$, for all $g \in [f]$, $\norm{f}_p = \norm{g}_p$ since $f = g$ almost everywhere so their integrals are the same. Most importantly, $\norm{\cdot}_p$ is a norm on $L^p$.
-		
 		For $p = \infty$, we define
 		\begin{align}
 			\mc{N}^\infty := \{f : f \tx{ is bounded, measure and } f = 0\ a.e.\}
 		\end{align}
 		Then $L^\infty := \mc{L}^p / \mc{N}^p$.
 	\end{definition}
-	\emph{Note that $L^p$ for $1 \leq p \leq \infty$ is also a vector space with equivalence relations. In general, we treat $L^p$ as a space of functions instead of a space of classes of functions.}
+	Note that $L^p$ for $1 \leq p \leq \infty$ is also a vector space with equivalence relations. In general, we treat $L^p$ as a space of functions instead of a space of classes of functions.
+
 	\begin{proposition}
 		Convergence in $L^p$ ($1 \leq p < \infty$) implies convergence in measure.
 		\begin{proof}
@@ -1796,6 +1940,7 @@
 		\end{proof}
 	\end{theorem}
 	
+	\newpage
 	\section{Signed and Complex Measures}
 	\begin{definition}
 		Let $(X, \mc{A})$ be a measurable space, let $\mu: \mc{A} \to [-\infty, \infty]$ be a function. We say that $\mu$ is a \textbf{signed measure} if
@@ -1804,7 +1949,7 @@
 			\item and $\mu$ is countable additive: for all disjoint $A_1, A_2, \dots \in \mc{A}$, $\mu(\cup_{i=1}^\infty A_i) = \sum_{i=1}^\infty \mu(A_i)$.
 		\end{enumerate}
 	\end{definition}
-	\emph{From now on, we use \textbf{measure} to denote the conventional notion of measure, that is, $\mu: \mc{A} \to [0, \infty]$ with $\mu(\varnothing) = 0$ and countable additivity. The term \textbf{signed measure} denotes functions $\mu: \mc{A} \to [-\infty, \infty]$ with above properties.}
+	From now on, we use \textbf{measure} to denote the conventional notion of measure, that is, $\mu: \mc{A} \to [0, \infty]$ with $\mu(\varnothing) = 0$ and countable additivity. The term \textbf{signed measure} denotes functions $\mu: \mc{A} \to [-\infty, \infty]$ with above properties.
 	\begin{remark}
 		Note that the countable additivity does not change if we permute $A_i$'s, thus, implies $\sum_{i=1}^\infty \mu(A_i)$ should now change under any rearrangement of the terms. This implies that if $\mu(\cup_{i=1}^\infty A_i)$ is finite, $\sum_{i=1}^\infty |\mu(A_i)| < \infty$.
 	\end{remark}
@@ -1820,25 +1965,23 @@
 		\end{proof}
 	\end{proposition}
 	
-	\begin{proposition}
-		If $\mu(A)$ is finite (i.e., in $\R$), then $\mu(B) \in \R$ for any $B \subseteq A$, $B \in \mc{A}$.
+	\begin{proposition}[Weak Monotonicity]
+		If $\mu(A)$ is finite (i.e., in $\R$), then $\mu(B)$ is finite for any $B \subseteq A$, $B \in \mc{A}$.
 		\begin{proof}
 			$\mu(A) = \mu(B) + \mu(A \backslash B) \in \R$, both $\mu(B)$ and $\mu(A \backslash B)$ must be finite.
 		\end{proof}
 	\end{proposition}
 
 	\begin{definition}
-		A signed measure is called \textbf{finite} if $\mu(A) \in \R$ for all $A \in \mc{A}$.
+		A signed measure is called \textbf{finite} if $\mu(A)$ is finite for all $A \in \mc{A}$.
 	\end{definition}
-	
-	\subsection{Construction of Signed Measures}
 
 	\begin{example}[Relationship between integrable function and measure]
 		Let $(X, \mc{A}, \mu)$ be a measure space, let $f \in L^1$, define $\nu(A) = \int_A f\dmu$, then $\nu$ is a signed measure.
 	\end{example}
 
 	\begin{example}[Construction of signed measure]
-		If $\nu_1$ and $\nu_2$ are measures and a least one of them if finite, then $\nu_1 - \nu_2$ is a signed measure.
+		If $\nu_1$ and $\nu_2$ are measures and \ul{at least one of them if finite}, then $\nu_1 - \nu_2$ is a signed measure.
 	\end{example}
 	
 	\subsection{Hahn Decomposition Theorem}
@@ -1849,7 +1992,7 @@
 	\end{definition}
 	
 	\begin{lemma}
-		If $A \in \mc{A}$ satisfies $- \infty < \mu(A) < 0$, then there exists a negative set $B \subseteq A$ such that $\mu(B) \leq \mu(A) (<0)$.
+		If $A \in \mc{A}$ satisfies $- \infty < \mu(A) < 0$, then there exists a negative set $B \subseteq A$ such that $\mu(B) \leq \mu(A)$.
 		\begin{proof}
 			Let $\delta_1 = \sup\{\mu(E) : E \in \mc{A}, E \subseteq A\}$, note that $\delta_1 \geq 0$ since $\mu(\varnothing) = 0$.
 			
@@ -1944,8 +2087,8 @@
 			
 			For every $A \in \mc{A}$, define
 			\begin{align}
-				\mu^+(A) &= \mu(A \cap P) \\
-				\mu^-(A) &= - \mu(A \cap N)
+				\red{\mu^+(A)} &\red{= \mu(A \cap P)} \\
+				\red{\mu^-(A)} &\red{= - \mu(A \cap N)}
 			\end{align}
 			Since $P$ is a positive set, $\mu^+(A) \geq 0$, similarly, since $N$ is negative, $\mu^-(A) \geq 0$ as well.
 			
@@ -1987,6 +2130,8 @@
 	
 	\begin{definition}
 		The pair of $(\mu^+, \mu^-)$ defined above is called the \textbf{Jordan decomposition} of the signed measure $\mu$, where $\mu^+$ and $\mu^-$ are called the \textbf{positive and negative parts of $\mu$}.
+	\end{definition}
+	\begin{definition}
 		The \textbf{variation} of $\mu$ is defined to be the \ul{measure} $|\mu| = \mu^+ + \mu^-$. The \textbf{total variation} of $\mu$ is the \ul{number} $\norm{\mu} = |\mu|(X)$.
 	\end{definition}
 	
@@ -2140,6 +2285,8 @@
 			\nu(A) = \int_A g\dmu
 		\end{align}
 		for every $A \in \mc{A}$.
+		
+		The map $g$ is defined as the \textbf{Radon-Nikodym derivative}, denoted as $\frac{d\nu}{d\mu}$, $g$ is unique up to $\mu$-a.e. equivalence.
 	\end{theorem}
 	\paragraph{Interpretations} Let $\chi_A$ denote the indicator function of set $A$, recall that $\int_A f\dmu \equiv \int f\chi_A\dmu$. Then, $\nu(A) = \int_A 1\ d\nu = \int \chi_A\ d\nu = \int g \chi_A\dmu$ for all $A$. Moreover, for any integrable $f$,
 	\begin{align}
@@ -2294,18 +2441,24 @@
 		Since $g = h$ a.e. on every $B_n$ as shown before, $g = h$ a.e. on $X$.
 	\end{remark}
 	
-	\begin{theorem}[Radon-Nikodym Theorem for Complex Measures]
-		\hl{TODO}
+	\begin{theorem}[Radon-Nikodym Theorem for Finite Signed and Complex Measures]
+		Let $(X, \mc{A})$ be a measurable space, let $\mu$ be a \ul{$\sigma$-finite} measure on $X$. Let $\nu$ be a \ul{finite signed or complex} measure on $X$. Suppose that $|\nu| \ll \mu$ (in this case, we simply say $\nu \ll \mu$). Then there exists $g \in \mc{L}^1(X, \mc{A}, \mu, \R)$ or $\mc{L}^1(X, \mc{A}, \mu, \C)$ such that
+		\begin{align}
+			\nu(A) = \int_A g\dmu\quad \forall A \in \mc{A}
+		\end{align}
+		Moreover, $g$ is unique up to $\mu$-a.e. equivalence.
 		\begin{proof}
-			
+			$\nu = \nu_1 - \nu_2 + i \nu_3 - i \nu_4$ where $\nu_1, \nu_2, \nu_3, \nu_4$ are finite. $|\nu| \ll \mu \implies \nu_i \ll \mu$ for $i = 1,2,3,4$. Let $g_i = \frac{d\nu_i}{d\mu}$, then $g = g_1 - g_2 + i g_3 - i g_4$ is the Radon-Nikodym derivative of $\nu$ w.r.t. $\mu$.
+			\todo{Check}
 		\end{proof}
 	\end{theorem}
 	
-	\subsection{Lebesgue Decomposition Theorem}
+	\newpage
+	\section{Lebesgue Decomposition Theorem}
 	\begin{definition}
 		Let $(X, \mc{A})$ be a measurable space, let $\mu$ be a measure on $(X, \mc{A})$, then $\mu$ is \textbf{concentrated} on a set $E \in \mc{A}$ if $\mu(E^c) = 0$.
 		
-		We say that a signed complex measure $\mu$ is concentrated on $E$ if $|\mu|$ is concentrated on $E$.
+		We say that a signed or complex measure $\mu$ is concentrated on $E$ if the measure $|\mu|$ is concentrated on $E$.
 	\end{definition}
 	
 	\begin{definition}
@@ -2403,6 +2556,7 @@
 		\end{proof}
 	\end{theorem}
 	
+	\newpage
 	\section{Product Measure and Fubini's Theorem}
 	\subsection{Dynkin's $\pi$-$\lambda$ System}
 	\begin{definition}
@@ -2544,7 +2698,7 @@
 		Thus, $\mu = \nu$.
 	\end{proof}
 	
-	\section{Product Measures}
+	\subsection{Product Measures}
 	\begin{definition}
 		Let $(X, \mc{A}, \mu)$ and $(Y, \mc{B}, \nu)$ be two measure spaces, \ul{suppose $\mu$ and $\nu$ are $\sigma$-finite}.
 		Let $X \times Y$ be the Cartesian product of $X$ and $Y$
@@ -2676,7 +2830,7 @@
 		\end{align}
 	\end{definition}
 	
-	\section{Fubini's Theorem}
+	\subsection{Fubini's Theorem}
 	\begin{theorem}[Tonelli's Theorem]
 		Let $(X, \mc{A}, \mu)$ and $(Y, \mc{B}, \nu)$ be \ul{$\sigma$-finite} measure spaces, let $f: X \times Y \to \red{[0, \infty]}$ be a measurable function (not necessarily $(\mu \times \nu)$-integrable). Then,
 		\begin{enumerate}
@@ -2688,6 +2842,23 @@
 				&= \int_Y \left(\int_X f_y\dmu \right)d\nu
 			\end{align}
 		\end{enumerate}
+		\begin{proof}
+			If $f = \chi_E$ for some set $E \in \mc{A}$, then we have the first conclusion since
+			\begin{align}
+				\int_Y f_x\ d\nu = \int_Y (\chi_E)_x\ d\nu = \nu(E_x) \label{eq:3}
+			\end{align}
+			The same holds for $f_y$, we have shown this kind of maps are measurable.
+			
+			The second part follows from the construction of product measure:
+			\begin{align}
+				\int_{X \times Y} \chi_E\ d(\mu \times \nu) &= (\mu \times \nu)(E) \\
+				&= \int_X \nu(E_x)\dmu(x) \\
+				&= \int_X \int_Y f_x\ d\nu\dmu(x)
+			\end{align}
+			where the last equality holds because of Equation (\ref{eq:3}).
+			
+			So by linearity the theorem holds for any non-negative simple function $f$, and by MCT, for any non-negative measurable function $f$.
+		\end{proof}
 	\end{theorem}
 	
 	\begin{theorem}[Fubini's Theorem]
