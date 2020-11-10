@@ -2984,9 +2984,11 @@
 				\int_{X \times Y} f\ d(\mu \times \nu) = \int_X I_f\dmu = \int_Y J_f\ d\nu
 			\end{align}
 		\end{enumerate}
-		
+
 		\begin{proof}
-			Let $f = f^+ - f^-$ and $f$ integrable implies, by Tonelli's theorem,
+			Let $f = f^+ - f^-$ and $f$ is $(\mu\times\nu)$-integrable, both $f^+$ and $f^-$ are measurable.
+			\hl{Why?}
+			By Tonelli's theorem,
 			\begin{align}
 				\int_X \int_Y |f_x(y)|\ d\nu(y) \dmu(x) = \int_{X \times Y} f\ d(\mu \times \nu) < \infty \label{eq:4}
 			\end{align}
