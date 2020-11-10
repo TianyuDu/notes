@@ -2086,10 +2086,10 @@
 			Let $\mu$ be a signed measure, let $(N, P)$ be a Hahn decomposition of $X$.
 			
 			For every $A \in \mc{A}$, define
-			\begin{align}
-				\red{\mu^+(A)} &\red{= \mu(A \cap P)} \\
-				\red{\mu^-(A)} &\red{= - \mu(A \cap N)}
-			\end{align}
+			{\color{red}\begin{align}
+				\mu^+(A) &= \mu(A \cap P) \\
+				\mu^-(A) &= - \mu(A \cap N)
+			\end{align}}
 			Since $P$ is a positive set, $\mu^+(A) \geq 0$, similarly, since $N$ is negative, $\mu^-(A) \geq 0$ as well.
 			
 			Let $A_1, A_2, \dots$ be disjoint sets in $\mc{A}$, then
@@ -2559,16 +2559,20 @@
 	\newpage
 	\section{Product Measure and Fubini's Theorem}
 	\subsection{Dynkin's $\pi$-$\lambda$ System}
+	We firstly construct a relatively weaker notion than $\sigma$-algebras, namely the $\pi$-system and $\lambda$-system.
 	\begin{definition}
-		Let $X$ be a set, a collection $\mc{P}$ of subsets of $X$ is called a \textbf{$\pi$-system} if $A, B \in \mc{P} \implies A \cap B \in \mc{P}$.
+		Let $X$ be a set, a collection $\mc{P}$ of subsets of $X$ is called a \textbf{$\pi$-system} if it's closed under intersection:
+		\begin{align}
+			A, B \in \mc{P} \implies A \cap B \in \mc{P}
+		\end{align}
 	\end{definition}
 	
 	\begin{definition}
-		Let $X$ be a set, a collection $\mc{D}$ of subsets of $X$ is called a \textbf{$\lambda$-system / Dynkin class} if 
+		Let $X$ be a set, a collection $\mc{D}$ of subsets of $X$ is called a \textbf{$\lambda$-system} (or Dynkin class or a d-system) if 
 		\begin{enumerate}
-			\item $X \in \mc{D}$,
-			\item $A, B \in \mc{D}$, $A \subseteq B \implies B \backslash A \in \mc{D}$,
-			\item if $A_1 \subseteq A_2 \subseteq \dots \in \mc{D}$, then $\bigcup_{n=1}^\infty A_n \in \mc{D}$.
+			\item $X \in \mc{D}$;
+			\item (closure under set difference) $A, B \in \mc{D}$, $A \subseteq B \implies B \backslash A \in \mc{D}$;
+			\item (closure under ascending union) if $A_1 \subseteq A_2 \subseteq \dots \in \mc{D}$, then $\bigcup_{n=1}^\infty A_n \in \mc{D}$.
 		\end{enumerate}
 	\end{definition}
 	
@@ -2588,54 +2592,89 @@
 		\begin{align}
 			\mc{D} = \{A \in \mc{B}(\R) : \mu(A) = \nu(A)\}	
 		\end{align}
-		Then $\mc{D}$ is always a $\lambda$-system but not necessarily a $\sigma$-algebra.
+		Then $\mc{D}$ is always a $\lambda$-system but not necessarily a $\sigma$-algebra:
+		\begin{proof}
+			Let $\mu$ and $\nu$ be two probability measures, since $\mu(X) = \nu(X) = 1$, so $X \in \mc{D}$.
+			
+			Let $A, B \in \mc{D}$ such that $A \subseteq B$, since probability measures are finite, $\mu(B \backslash A) = \mu(B) - \mu(A) = \nu(B) - \nu(A) = \nu(B \backslash A)$.
+			
+			Let $A_n$ be an ascending sequence of sets in $\mc{D}$, $\mu(\bigcup_{n=1}^\infty A_n) = \lim_{n \to \infty} \mu(A_n) \leq 1$. Since $\nu(A_n) = \mu(A_n)$, given convergence, the limit must be the same.
+		\end{proof}
+		\begin{proof}[Counter-Example]
+			Consider $X = \{1,2,3,4\}$, define probability measures
+			\begin{align}
+				\mu(\{1\}) &= \mu(\{2\}) = \mu(\{3\}) = \mu(\{4\}) = \frac{1}{4} \\
+				\nu(\{1\}) &= \frac{1}{2}, \nu(\{2\}) = 0, \nu(\{3\}) = \frac{1}{2}, \nu(\{4\}) = 0
+			\end{align}
+			Take $A = \{1,2\}, B = \{2, 3\}$, both in $\mc{D}$, however, $A \cap B \notin \mc{D}$, thus $\mc{D}$ fails to be a $\sigma$-algebra.
+		\end{proof}
 	\end{example}
 	
 	\begin{theorem}[Dynkin's $\pi$-$\lambda$ theorem]
-		Let $X$ be a set, let $\mc{P}$ be a $\pi$-system and $\mc{D}$ be a $\lambda$-system. Then
+		Let $X$ be a set, let $\mc{P}$ be a $\pi$-system on $X$ and $\mc{D}$ be a $\lambda$-system on $X$. Then
 		\begin{align}
 			\mc{P} \subseteq \mc{D} \implies \sigma(\mc{P}) \subseteq \mc{D}
 		\end{align}
+		\emph{Usage: suppose we wish to check some property on $\mc{A}$, and we find some $\pi$-system $\mc{P}$ that generates $\mc{A}$, it suffices to check this property on any $\lambda$-system covers $\mc{P}$.}
 		\begin{proof}
 			Note that an arbitrary intersection of $\lambda$-system is a $\lambda$-system.
-			Let $\mc{D}$ be \ul{the smallest} $\lambda$-system contains $\mc{P}$.
-			Define
+			
+			Let $\mc{D}$ be \ul{the smallest} (i.e., the intersection) $\lambda$-system contains $\mc{P}$.
+			\todo{Why is it sufficient to show this holds on the smallest $\mc{D}$?}
+			\todo{Is this proof overshot?}
+			Suppose $\mc{P} \subseteq \mc{D}$,
+			define:
 			\begin{align}
-				\mc{D}_1 = \{\mc{A} \in \mc{D} : A \cap B \in \mc{D}\quad \forall B \in \mc{P}\}
+				\mc{D}_1 = \{A \in \mc{D} : A \cap B \in \mc{D}\quad \forall B \in \red{\mc{P}}\}
 			\end{align}
-			Since $\mc{P}$ is a $\pi$-system, $A \cap B \in \mc{P} \subseteq \mc{D}$ for all $A, B \in \mc{P} \subseteq \mc{D}$, thus, $\mc{P} \subseteq \mc{D}_1$.
+			Since $\mc{P}$ is a $\pi$-system, take any $A \in \mc{P}$, $A \cap B \in \mc{P}$ for any $B \in \mc{P}$, $A \in \mc{D}_1$, therefore, $\mc{P} \subseteq \mc{D}_1$.
+			
 			Note that
 			\begin{enumerate}
-				\item $A \cap B = B \in \mc{D}$ for all $B \in \mc{P}$, therefore, $X \in \mc{D}_1$.
-				\item Let $A, B \in \mc{D}_1$, for every $C \in \mc{P}$, $A \cap B, B \cap C \in \mc{D}$. Therefore,
+				\item Note that $X \in \mc{D}$. And, $\forall B \in \mc{P}$, $X \cap B = B \in \mc{P} \subseteq \mc{D}$, therefore, $X \in \mc{D}_1$.
+				\item Let $A, B \in \mc{D}_1$, such that $A \subseteq B$, $\forall C \in \mc{P}$, $A \cap C, B \cap C \in \mc{D}$.
+				But $\mc{D}$ is a $\lambda$-system, 
 				\begin{align}
 					(B \cap C) \backslash (A \cap C) = (B \backslash A) \cap C \in \mc{D}
 				\end{align}
 				Hence, $B \backslash A \in \mc{D}_1$.
-				\item If $A_1 \subseteq A_2 \subseteq \dots \in \mc{D}_1$, then for all $B \in \mc{P}$,
+				\item If $A_1 \subseteq A_2 \subseteq \dots \in \mc{D}_1$, then for all $B \in \mc{P}$, $A_i \cap B \in \mc{D}$ and
 				\begin{align}
-					(\bigcup A_i) \cap B = \bigcup (A_i \cap B) \in \mc{D}
+					\left(\bigcup_{i=1}^\infty A_i\right) \cap B = \bigcup_{i=1}^\infty (A_i \cap B) \in \mc{D} \label{eq:5}
 				\end{align}
 				Therefore, $\bigcup A_i \in \mc{D}_1$, so $\mc{D}_1$ is a $\lambda$-system.
 			\end{enumerate}
-			Since $\mc{D}_1$ is a $\lambda$-system contains $\mc{P}$, hence $\mc{D} \subseteq \mc{D}_1$. Therefore, $\mc{D}_1 = \mc{D}$. This shows $\forall A \in \mc{D} = \mc{D}_1, B \in \mc{P}$, $A \cap B \in \mc{D}$.
+			Since $\mc{D}_1$ is a $\lambda$-system contains $\mc{P}$, hence $\mc{D} \subseteq \mc{D}_1$. Therefore, $\mc{D}_1 = \mc{D}$.
+			
+			\ul{This shows $\forall A \in \mc{D}, \forall B \in \mc{P}$, $A \cap B \in \mc{D}$.} ($\dagger$)
 			
 			Define
 			\begin{align}
-				\mc{D}_2 = \{\mc{A} \in \mc{D} : A \cap B \in \mc{D}\quad \forall B \in \red{\mc{D}}\}
+				\mc{D}_2 = \{A \in \mc{D} : A \cap B \in \mc{D}\quad \forall B \in \red{\mc{D}}\}
 			\end{align}
-			By the previous result, $\mc{P} \subseteq \mc{D}_2$. Also, $\mc{D}_2$ is a $\lambda$-system, so $\mc{D}_2 = \mc{D}$.
+			By ($\dagger$), $\forall A \in \mc{P} \subseteq \mc{D}$, $\forall B \in \mc{D}$, $A \cap B \in \mc{D}$, therefore, $\mc{P} \subseteq \mc{D}_2$. Also, $\mc{D}_2$ is a $\lambda$-system:
+			\begin{enumerate}
+				\item $X \in \mc{D}_2$.
+				\item Let $A \subseteq B$ both in $\mc{D}_2$, take any $C \in \mc{D}$,
+				\begin{align}
+					(B \backslash A \cap C) = (B \cap C) \backslash (A \cap C) \in \mc{D}
+				\end{align}
+				\item Same as in Equation (\ref{eq:5}).
+			\end{enumerate}
+			Therefore, $\mc{D}_2$ is also a $\lambda$-system containing $\mc{P}$, this implies $\mc{D}_2 = \mc{D}$.
 			
 			Moreover, for all $A, B \in \mc{D}$, $A \cap B \in \mc{D}$, so that $\mc{D}$ is also a $\pi$-system.
 			\begin{tcolorbox}
-				\begin{lemma}
+				\begin{lemma}[Another Definition of $\sigma$-algebra]
 					A collection of sets is both $\pi$ and $\lambda$ if and only if its a $\sigma$-algebra.
 				\end{lemma}
 				\begin{proof}
 					For a $\lambda$-system $\mc{D}$, it contains $X^c = \varnothing$ and is closed under complement (take one of two sets to be $X$).
 					
-					Let $A_1, A_2, \dots \in \mc{D}$, we may define $B_n = A_1 \cup \dots \cup A_n$, so that $\bigcup A_n = \bigcup B_n$ and $B_n$ is an increasing sequence. In particular, since $\mc{D}$ is closed under complement (as a $\lambda$-system) and finite intersection (as a $\pi$-system), $B_n \in \mc{D}$ as well.
+					To show closure under countable union, let $A_1, A_2, \dots \in \mc{D}$, we may define $B_n = A_1 \cup \dots \cup A_n$, so that $\bigcup A_n = \bigcup B_n$ and $B_n$ is an increasing sequence. In particular, since $\mc{D}$ is closed under complement (as a $\lambda$-system) and finite intersection (as a $\pi$-system), $\mc{D}$ is closed under finite union, each $B_n \in \mc{D}$ as well.
 					By definition of $\lambda$-system, $\bigcup A_n \in \mc{D}$.
+					
+					The converse is trivial, every $\sigma$-algebra is both $\lambda$ and $\pi$.
 				\end{proof}
 			\end{tcolorbox}
 			Therefore, $\mc{D}$ is a $\sigma$-algebra containing $\mc{P}$, it follows $\sigma(\mc{P}) \subseteq \mc{D}$.
@@ -2644,6 +2683,9 @@
 	
 	\begin{corollary}
 		Let $\mu$ and $\nu$ be \ul{$\sigma$-finite} measures on a measurable space $(X, \mc{A})$. If $\mu$ and $\nu$ agree on a $\pi$-system $\mc{P}$ that generate $\mc{A}$, then $\mu = \nu$ on $\mc{A}$.
+		\begin{proof}
+			We know that $\mc{D} = \{A \in \mc{A} : \mu(A) = \nu(A)\}$ is a $\lambda$-system, $\mc{P} \subseteq \mc{D}$ implies $\sigma(\mc{P}) = \mc{A} \subseteq \mc{D}$.
+		\end{proof}
 	\end{corollary}
 	
 	\begin{corollary}
@@ -2651,23 +2693,23 @@
 		\begin{enumerate}
 			\item $\sigma(\mc{P}) = \mc{A}$,
 			\item $\forall A \in \mc{P}$, $\mu(A) = \nu(A) < \infty$,
-			\item $\exists$ a sequence $A_1 \subseteq A_2 \subseteq \dots \in \mc{P}$ such that $\bigcup A_i = X$ and $\mu(A_i) = \nu(A_i) < \infty$ for all $i$.
+			\item $\exists$ a sequence $A_1 \subseteq A_2 \subseteq \dots \in \mc{P}$ such that $\bigcup A_i = X$.
 		\end{enumerate}
 		Then $\mu = \nu$.
 		
 		\emph{Intuition: for a $\pi$-system that approximates the entire space $X$ via an ascending sequence and generates $\mc{A}$, then it suffices to show $\mu = \nu$ on the $\pi$-system in order to show $\mu = \nu$.}
 	\end{corollary}
 	\begin{proof}[Proof. Case 1: finite measures]
-		\todo{This proof needs to be revised.}
-		Suppose $\mu$ and $\nu$ are finite measures, let
+		Suppose $\mu$ and $\nu$ are finite measures, define
 		\begin{align}
 			\mc{D} = \{A \in \mc{A}: \mu(A) = \nu(A)\}
 		\end{align}
-		we are going to show $\mc{D} = \mc{A}$ indeed.
+		Clearly, $\mc{P} \subseteq \mc{D}$.
+		We are going to show $\mc{D} = \mc{A}$.
 		
 		Firstly, we show $\mc{D}$ is a $\lambda$-system.
 		
-		(1) Using the last assumption, we may construct a sequence in $\mc{P}$ increasing to $X$, taking the limit shows $\mu(X) = \nu(X)$ and $X \in \mc{D}$ as a result.
+		(1) Using property (3), we may construct a sequence in $\mc{P}$ increasing to $X$, taking the limit shows $\mu(X) = \nu(X)$ and $X \in \mc{D}$ as a result.
 		
 		(2) Let $A, B \in \mc{D}$ such that $A \subseteq B$, since $\mu$ and $\nu$ are finite on $\mc{P}$,
 		\begin{align}
@@ -2675,21 +2717,23 @@
 			&= \nu(B) - \nu(A) \\
 			&= \nu(B \backslash A)
 		\end{align}
+		Thus $B \backslash A \in \mc{D}$.
 		
 		(3) If $A_1 \subseteq A_2 \dots \in \mc{D}$, then
 		\begin{align}
 			\mu(\cup A_i) = \lim \mu(A_i) = \lim \nu(A_i) = \nu(\cup A_i)
 		\end{align}
-		Since $\mc{P} \subseteq \mc{D}$, the $\pi$-$\lambda$ theorem implies $\mc{A} = \sigma(\mc{P}) \subseteq \mc{D}$. Thus, $\mc{A} = \mc{D}$.
+		Therefore $\mc{D}$ is a $\lambda$-system.
+		Since $\mc{P} \subseteq \mc{D}$, the $\pi$-$\lambda$ theorem implies $\sigma(\mc{P}) \subseteq \mc{D}$. Thus, $\mc{A} = \mc{D}$.
 	\end{proof}
 	\begin{proof}[Proof. The general case]
 		There exists $A_1 \subseteq A_2 \subseteq \dots \in \mc{P}$ such that $\bigcup A_i = X$.
-		By assumption (3), $\mu(A_i) = \nu(A_i) < \infty$ for every $i$.
+		Moreover, $\mu(A_i) = \nu(A_i) < \infty$ for every $i$.
 		Define
 		\begin{align}
-			\mc{D}_i = \{\mc{B} \in \mc{A} : \mu(B \cap A_i) = \nu(B \cap A_i)\}
+			\mc{D}_i = \{B \in \mc{A} : \mu(B \cap A_i) = \nu(B \cap A_i)\}
 		\end{align}
-		$\mc{D}_i$ isa $\lambda$-system containing $\mc{P}$, so that $\mc{A} = \sigma(\mc{P}) \subseteq \mc{D}_i$. Hence, $\mc{D}_i = \mc{A}$.
+		$\mc{D}_i$ is a $\lambda$-system containing $\mc{P}$, so that $\mc{A} = \sigma(\mc{P}) \subseteq \mc{D}_i$. Hence, $\mc{D}_i = \mc{A}$.
 		
 		For every $B \in \mc{A}$, $\mu(B \cap A_i) = \nu(B \cap A_i)$ for all $i$. But
 		\begin{align}
@@ -2705,10 +2749,14 @@
 		\begin{align}
 			X \times Y := \{(x, y) : x \in X, y \in Y\}
 		\end{align}
-		The \textbf{product \salg}, $\mc{A} \times \mc{B}$, is the \salg generated by all sets of the form $A \times B$ such that $A \in \mc{A}$ and $B \in \mc{B}$, such sets are called \textbf{rectangles}.
+		The \textbf{product \salg}, denoted as $\mc{A} \times \mc{B}$, is the \salg generated by the following collection of sets:
+		\begin{align}
+			\{A \times B : A \in \mc{A} \tx{ and } B \in \mc{B}\}
+		\end{align}
+		sets in this collection are called \textbf{rectangles}.
 	\end{definition}
 	
-	\begin{theorem}
+	\begin{theorem}[Product Measure]
 		There exists a \ul{unique} measure $\mu \times \nu$ on $(X \times Y, \mc{A} \times \mc{B})$ that satisfies $\forall A \in \mc{A}, B \in \mc{B}$,
 		\begin{align}
 			\mu \times \nu(A \times B) = \mu(A) \nu(B)
@@ -2721,14 +2769,23 @@
 				&= \{(a, b) : a \in A \cap A', b \in B \cap B'\} \\
 				&= \underbrace{(A \cap A')}_{\in \mc{A}} \times \underbrace{(B \cap B')}_{\in \mc{B}}
 			\end{align}
-			Since $\mu$ and $\nu$ are $\sigma$-finite, there exists $A_1 \cup A_2 \cup \dots \in \mc{A}$ such that $\bigcup A_i = X$ and $\mu(A_i) < \infty$ for all $i$. Similarly, there is another such sequence such that $\nu(B_i) < \infty$.
+			Since $\mu$ and $\nu$ are $\sigma$-finite, there exists $A_1, A_2, \dots \in \mc{A}$ such that $\bigcup A_i = X$ and $\mu(A_i) < \infty$ for all $i \in \N$.
+			Similarly, there exists $B_1, B_2, \dots$ such that  $\bigcup B_i = X$ and $\nu(B_i) < \infty$ for all $i \in \N$.
 			Combing these two sequences,
 			\begin{align}
 				A_1 \times B_1 \subseteq A_2 \times B_2 \subseteq \dots
 			\end{align}
 			Such that $\mu \times \nu(A_i \times B_i) = \mu(A_i) \nu(B_i) < \infty$ for all $i$ and $\bigcup (A_i \times Y_i) = X \times Y$.
 			
-			If $\gamma_1$ and $\gamma_2$ are two candidates for $\mu \times \nu$, then there exists sequence of rectangles $R_1 \subseteq R_2 \subseteq \dots $ such that $\bigcup R_i = X \times Y$, where $\gamma_1(R_i) = \gamma_2(R_i)$ for all $i$. By the previous corollary, $\gamma_1 = \gamma_2$ on the entire $\mc{A}$.
+			If $\gamma_1$ and $\gamma_2$ are two candidates for $\mu \times \nu$. 
+			We have shown that there exists sequence of rectangles with the following properties:
+			\begin{enumerate}
+				\item $R_i = A_i \times B_i$,
+				\item $R_1 \subseteq R_2 \subseteq \dots $,
+				\item $\bigcup R_i = X \times Y$,
+				\item $\gamma_1(R_i) = \gamma_2(R_i)$ for all $i$.
+			\end{enumerate} 
+			By the previous corollary, $\gamma_1 = \gamma_2$ on a $\pi$-system that generates $\mc{A}$, thus $\gamma_1 = \gamma_2$ on $\mc{A}$.
 		\end{proof}
 		\begin{proof}[Proof. Existence]
 			$\forall E \in \mc{A} \times \mc{B}$ and $\forall x \in X, y \in Y$, define 
@@ -2743,6 +2800,7 @@
 			\end{align}
 			\begin{tcolorbox}
 			\begin{lemma}
+				The projection of a measurable set is measurable. That is,
 				$\forall E \in \mc{A} \times \mc{B}$, $\forall x \in X$, $E_x \in \mc{B}$; $\forall y \in Y$, $E_y \in \mc{A}$.
 			\end{lemma}
 			\begin{proof}
@@ -2750,7 +2808,7 @@
 				\begin{align}
 					\mc{F} = \{E \in \mc{A} \times \mc{B} : E_x \in \mc{B} \}
 				\end{align}
-				we show that $\mc{F} = \mc{A} \times \mc{B}$.
+				We show that $\mc{F} = \mc{A} \times \mc{B}$.
 				
 				Note that $\forall x \in X$, for every rectangle, $A \in \mc{A},\ B \in \mc{B}$, $(A \times B)_x = B \in \mc{B}$. Thus $\mc{F}$ contains all rectangles.
 				
@@ -2766,56 +2824,100 @@
 			\end{proof}
 			\end{tcolorbox}
 			\begin{tcolorbox}
-			Take any measurable $f: X \times Y \to \R^*$, for all $B \in \mc{B}(\R^*)$, let $x \in X$,
+			\begin{lemma}
+			The projection of measurable function is measurable.
+			\begin{proof}
+			Take any measurable $f: X \times Y \to \R^*$, for all $B \in \mc{B}(\R^*)$, for all $x \in X$,
 			\begin{align}
-				f_x^{-1} &= \{y : f_x(y) \in B\} \\
+				f_x^{-1}(B) &= \{y : f_x(y) \in B\} \\
 				&= \{y : f (x, y) \in B\} \\
 				&= \{y : (x, y) \in f^{-1}(B) \} \\
-				&= (f^{-1}(B))_x \in \mc{B}
+				&= (\underbrace{f^{-1}(B)}_{\in \mc{A} \times \mc{B}})_x \in \mc{B}
 			\end{align}
 			This shows $f_x$ is measurable, a similar argument works for $f_y$.
+			\end{proof}
+			\end{lemma}
 			\end{tcolorbox}
-			\begin{tcolorbox}
-				\begin{proposition}
-					Let $(X, \mc{A}, \mu)$ and $(Y, \mc{B}, \nu)$ be $\sigma$-finite measure spaces. $\forall E \in \mc{A} \times \mc{B}$,
+			\begin{proposition}
+				Let $(X, \mc{A}, \mu)$ and $(Y, \mc{B}, \nu)$ be $\sigma$-finite measure spaces. $\forall E \in \mc{A} \times \mc{B}$,
+				\begin{align}
+					x \mapsto \nu(E_x) \tx{ is measurable with respect to $\mc{A}$} \\
+					y \mapsto \mu(E_y) \tx{ is measurable with respect to $\mc{B}$}
+				\end{align}
+				\emph{Intuitively, $x \mapsto \nu(E_x)$ computes the side length at a particular level of $x$.}
+				\begin{proof}[Proof. First, suppose $\mu$ and $\nu$ are finite measures]
 					\begin{align}
-						x \mapsto \nu(E_x) \\
-						y \mapsto \mu(E_y)
+						\mc{D} = \{E \in \mc{A} \times \mc{B} : x \mapsto \nu(E_x) \tx{ is } \mc{A} \tx{ measurable}\}
 					\end{align}
-					are measurable with respect to $\mc{A}$ and $\mc{B}$.
+					Note that for a rectangle $E = A \times B$ for some $A \in \mc{A}$, $B \in \mc{B}$, then
+					\begin{align}
+						\nu(E_x) &=\begin{cases}
+							\nu(B) &\tx{ if } x \in A \\
+							0 &\tx{ if } x \notin A
+						\end{cases}
+					\end{align}
+					So $\nu(E_x) = \nu(B) \chi_A(x)$. This is a measurable function on $(X, \mc{A})$ since it's a constant multiplied by an indicator function.
+					Thus $\mc{D}$ contains all rectangles.
 					
-					\emph{Intuitively, $x \mapsto \nu(E_x)$ computes the side length at a particular level of $x$.}
-					\begin{proof}
-						First, suppose $\mu$ and $\nu$ are finite measures, let
-						\begin{align}
-							\mc{D} = \{E \in \mc{A} \times \mc{B} : x \mapsto \nu(E_x) \tx{ is } \mc{B} \tx{ measurable}\}
-						\end{align}
-						\hl{TODO}
-					\end{proof}
-				\end{proposition}
-			\end{tcolorbox}
-			Finally, for every $E \in \mc{A} \times \mc{B}$, define
-			\begin{align}
+					Let $E_1, E_2 \in \mc{D}$ such that $E_1 \supseteq E_2$, then
+					\begin{align}
+						\nu((E_1 \backslash E_2)_x) &= \nu((E_1)_x \backslash (E_2)_x) \\
+						&= \nu((E_1)_x) - \nu((E_2)_x) \tx{ since $\nu$ is finite}
+					\end{align}
+					The map $x \mapsto \nu((E_1)_x)$ and $x \mapsto \nu((E_1)_x)$ are both measurable, thus $E_1 \backslash E_2 \in \mc{D}$.
+					
+					Finally, take an increasing sequence $E_1 \subseteq E_2 \subseteq \dots \in \mc{D}$, then
+					\begin{align}
+						\left(\bigcup E_i\right)_x = \bigcup (E_i)_x
+					\end{align}
+					Moreover, $(E_1)_x \subseteq (E_2)_x \subseteq \dots$, so
+					\begin{align}
+						\nu\left(\left(\bigcup E_i\right)_x\right) &= \nu\left(\bigcup (E_i)_x\right) \\
+						&= \lim_{i \to \infty} \nu((E_i)_x)
+					\end{align}
+					Thus $x \mapsto \nu\left(\left(\bigcup E_i\right)_x\right)$ is the limit of a sequence of measurable maps $x \mapsto \nu((E_i)_x)$, thus it is measurable and $\bigcup E_i \in \mc{D}$.
+					
+					Therefore, $\mc{D}$ is a $\lambda$-system containing all rectangles, thus $\mc{D} = \mc{A} \times \mc{B}$.
+				\end{proof}
+				\begin{proof}[Proof. Suppose $\nu$ is $\sigma$-finite]
+					Then there exists a sequence of disjoint sets $D_1, D_2, \dots \in \mc{B}$ such that $\bigcup D_i = Y$ and $\nu(D_i) < \infty$ for all $i \in \N$.
+					It's easy to show that $x \mapsto \nu(D_i \cap E_x)$ is measurable: simply define $\nu_i(B) = \nu(B \cap D_i)$, which is a finite measure, then apply our previous reasoning, $x \mapsto \nu_i(B)$ is measurable.
+					
+					But,
+					\begin{align}
+						\nu(E_x) = \sum_{i=1}^\infty \nu(E_x \cap D_i)
+					\end{align}
+					Being a series of measurable functions (as the limit of measurable partial sums), $x \mapsto \nu(D_i \cap E_x)$ is measurable.
+				\end{proof}
+			\end{proposition}
+			For every $E \in \mc{A} \times \mc{B}$, define
+			{\color{red}\begin{align}
 				\gamma_1(E) &= \int_X \nu(E_x)\dmu(x) \\
 				\gamma_2(E) &= \int_Y \nu(E_y)\ d\nu(y)
-			\end{align}
-			\emph{Intuitively, for $\gamma_1$, at each $x \in X$, we compute the length of vertical cross-section $E_x$, then we sum all these lengths across different locations in $X$.}
-			Obviously, $\gamma_1(\varnothing) = 0$ since $(\varnothing)_x = 0$. The same holds for $\gamma_2$.
+			\end{align}}
+			\emph{Intuitively, for $\gamma_1$, at each $x \in X$, we compute the height of vertical section $E_x$, then we sum all these lengths across different locations in $X$.}
+			\begin{figure}[h]
+				\caption{Intuition for $\gamma_1$}
+				\centering
+				\includegraphics[width=0.6\linewidth]{product_measure.png}
+			\end{figure}
 			
-			Let $E_1, E_2 \dots \in \mc{A} \times \mc{B}$ be a sequence of disjoint sets, $(E_i)_x$ for all $x \in X$.
-			By MCT,
+			(1) Obviously, $\gamma_1(\varnothing) = 0$ since $(\varnothing)_x = 0$. The same holds for $\gamma_2$.
+			
+			(2) Let $E_1, E_2 \dots \in \mc{A} \times \mc{B}$ be a sequence of disjoint sets, $\{(E_i)_x\}_{i=1}^\infty$ are disjoint for any $x \in X$.
+			Since $x \mapsto \nu((E_i)_x)$ is a non-negative measurable function, by (corollary of) the monotone convergence theorem,
 			\begin{align}
-				\sum \gamma_1(E_i) &= \sum \int_X \nu((E_i)_x)\dmu(x) \\
-				&= \int_X \sum \nu((E_i)_x)\dmu(x) \\
+				\sum_{i=1}^\infty \gamma_1(E_i) &= \sum_{i=1}^\infty \int_X \nu((E_i)_x)\dmu(x) \\
+				&= \int_X \sum_{i=1}^\infty \nu((E_i)_x)\dmu(x) \\
 				&= \int_X \nu (\cup (E_i)_x)\dmu(x) \\
 				&= \gamma_1((\cup E_i)_x)
 			\end{align}
-			Therefore, both $\gamma_1$ and $\gamma_2$ are measures.
+			The same applies to $\gamma_2$, both $\gamma_1$ and $\gamma_2$ are measures.
 			
-			Now, for any rectangle $A \times B$, $(A \times B)_x = B$ if $x \in A$ and equals $\varnothing$ otherwise.
+			Now, for any rectangle $A \times B$, $(A \times B)_x = B$ if $x \in A$ and is $\varnothing$ otherwise.
 			\begin{align}
-				\gamma_1(A \times B) &= \int \nu((A \times B)_x)\dmu(x) \\
-				&= \int \nu(B) \chi_A(x)\dmu(x) \\
+				\gamma_1(A \times B) &= \int_X \nu((A \times B)_x)\dmu(x) \\
+				&= \int_A \nu(B)\dmu(x) + \int_{A^c} \nu(\varnothing)\dmu(x) \\
 				&= \nu(B) \mu(A)
 			\end{align}
 			Similarly, we can show that $\gamma_2(A\times B) = \mu(A) \nu(B)$.
@@ -2852,42 +2954,73 @@
 			The second part follows from the construction of product measure:
 			\begin{align}
 				\int_{X \times Y} \chi_E\ d(\mu \times \nu) &= (\mu \times \nu)(E) \\
-				&= \int_X \nu(E_x)\dmu(x) \\
-				&= \int_X \int_Y f_x\ d\nu\dmu(x)
+				&= \int_X \nu(E_x)\dmu \tx{ by definition of product measure}\\
+				&= \int_X \int_Y f_x\ d\nu\dmu \tx{ by Equation (\ref{eq:3})}
 			\end{align}
-			where the last equality holds because of Equation (\ref{eq:3}).
-			
-			So by linearity the theorem holds for any non-negative simple function $f$, and by MCT, for any non-negative measurable function $f$.
+			By linearity the theorem holds for any non-negative simple function $f$.
+			For any non-negative measurable function $f$, there exists an increasing sequence of simple functions $f_n \to f$, each $f_n$ has above properties. 
+			By monotone convergence theorem, the limit function $f$ also satisfies these properties.
 		\end{proof}
 	\end{theorem}
 	
 	\begin{theorem}[Fubini's Theorem]
 		Let $(X, \mc{A}, \mu)$ and $(Y, \mc{B}, \nu)$ be two \ul{$\sigma$-finite} measure spaces, let $f: X \times Y \to \red{[-\infty, \infty]}$ be a measurable mapping and \ul{$(\mu \times \nu)$-integrable}, then
 		\begin{enumerate}
-			\item For $\mu$-a.e. $x$, $f_x$ is $\nu$-integrable; for $\nu$-a.e. $y$, $f_y$ is $\mu$-integrable.
+			\item For $\mu$ almost every $x$, $f_x$ is $\nu$-integrable,
+			\item for $\nu$ almost every $y$, $f_y$ is $\mu$-integrable.
 			\item Define
 			\begin{align}
 				I_f(x) &:= \begin{cases}
-					\int_Y f_x\dmu &\tx{ if $f_x$ is $\mu$-integrable} \\
+					\int_Y f_x\ d\nu &\tx{ if $f_x$ is $\nu$-integrable} \\
 					0 &\tx{ otherwise}
 				\end{cases} \\
 				J_f(y) &:= \begin{cases}
-					\int_X f_y\ d\nu &\tx{ if $f_y$ is $\nu$-integrable} \\
+					\int_X f_y\ d\mu &\tx{ if $f_y$ is $\mu$-integrable} \\
 					0 &\tx{ otherwise}
 				\end{cases}
 			\end{align}
-			then
+			The following iterated formula holds:
 			\begin{align}
 				\int_{X \times Y} f\ d(\mu \times \nu) = \int_X I_f\dmu = \int_Y J_f\ d\nu
 			\end{align}
 		\end{enumerate}
 		
 		\begin{proof}
-			\hl{TODO}.
+			Let $f = f^+ - f^-$ and $f$ integrable implies, by Tonelli's theorem,
+			\begin{align}
+				\int_X \int_Y |f_x(y)|\ d\nu(y) \dmu(x) = \int_{X \times Y} f\ d(\mu \times \nu) < \infty \label{eq:4}
+			\end{align}
+			Thus
+			\begin{align}
+				\int_X \int_Y f_x^+\ d\nu(y)\mu(x) < \infty
+			\end{align}
+			But we know that $x \mapsto \int_Y f_x^+(y)\ d\nu(y)$ is measurable by Tonelli's theorem. So this finiteness in Equation (\ref{eq:4}) shows
+			\begin{align}
+				\int_Y f_x^+\ d\nu(y) < \infty \tx{ $\mu$-a.e.}
+			\end{align}
+			The same for $f_x^-$. So $\mu$-a.e. $x$, $f_x$ is integrable w.r.t. $\nu$.
+			On the set where $f_x^+$ and $f_x^-$ are both integrable, we have
+			\begin{align}
+				I_f(x) = \int_y f_x\ d\nu = \int_Y f_x^+\ d\nu - \int_Y f_x^-\ d\nu
+			\end{align}
+			Outside of this set,
+			\begin{align}
+				\int_X I_f(x)\dmu(x) = 0
+			\end{align}
+			Thus,
+			\begin{align}
+				\int_X I_f(x)\dmu(x) 
+				&= \int_X \left[\int_Y f_x^+\ d\nu - \int_Y f_x^-\ d\nu \right]\dmu \\
+				&= \int_X \int_Y f_x^+\ d\nu\dmu - \int_X \int_Y f_x^-\ d\nu \dmu \\
+				&= \int_{X \times Y} f^+\ d(\mu\times \nu) - \int_{X \times Y} f^-\ d(\mu\times \nu) \\
+				&= \int_{X \times Y} f\ d(\mu\times \nu)
+			\end{align}
 		\end{proof}
 	\end{theorem}
 	
+	\newpage
 	\section{Riesz Representation Theorem}
+	\hl{This section needs to be revised.}
 	\subsection{Locally Compact Hausdorff Spaces}
 	\begin{definition}
 		A \textbf{Hausdorff space} is a topological space where for any two distinct points in it, there exists neighbourhoods of each which are disjoint.
