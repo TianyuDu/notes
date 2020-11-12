@@ -1888,7 +1888,7 @@
 			
 			\emph{Step 1: Find a subsequence $(f_{n_k})$ such that $\norm{f_{n_k} - f_{n_{k+1}}}_p \leq 2^{-k}$ for all $k$.} By Cauchy property, we may find $n_1$ such that $\norm{f_{n_1} - f_n} \leq 2^{-1}$ for all $n \geq n_1$. Also, find a $n_2 \geq n_1$ such that $\norm{f_{n_2} - f_n} \leq 2^{-2}$ for all $n \geq n_2$, etc.
 			
-			\emph{Step 2: construct the limit} Define
+			\emph{Step 2: Construct the limit} Define
 			\begin{align}
 				A_k := \{x: |f_{n_k}(x) - f_{n_{k+1}}(x)| > 2^{-k/2}\}
 			\end{align}
@@ -1903,9 +1903,9 @@
 			\end{align}
 			By Borel-Cantelli lemma, $\mu(B) = 0$. Take any $x \notin B$, then for sufficiently large $k$,
 			\begin{align}
-				\abs{f_{n_k}(x) - f_{n_{k+1}}} \leq 2^{-k/2}
+				\abs{f_{n_k}(x) - f_{n_{k+1}}(x)} \leq 2^{-k/2}
 			\end{align}
-			This shows for all $x \notin B$, the constructed $(f_{n_k}(x))$ is a Cauchy sequence in $\R$, therefore, it's convergent.
+			This shows for all $x \notin B$, the constructed $(f_{n_k}(x))$ is a Cauchy sequence in $\R$, therefore, it's convergent and $\lim_{k \to \infty} f_{n_k}(x)$ exists.
 			
 			Define the almost point-wise limit
 			\begin{align}
@@ -1914,26 +1914,29 @@
 					0 &\tx{ if } x \in B
 				\end{cases}
 			\end{align}
-			\emph{Step 3: Show $f_n \to f$ in $L^p$.} Note that $f_{n_k} \to f$ almost everywhere, so that $|f|^p \to |f_{n_k}|^p$. By Fatou's lemma,
+			\emph{Step 3: Show $f \in L^p$.} Note that $f_{n_k} \to f$ almost everywhere (converges except $B$), so that $|f_{n_k}|^p \to |f|^p$ a.e.. By Fatou's lemma,
 			\begin{align}
 				\int \abs{f}^p\dmu \leq \liminf_{k\to\infty} \int \abs{f_{n_k}}^p\dmu
 			\end{align}
-			But the Cauchy property of $f_n$ implies that $\sup_n \norm{f_n}_p < \infty$ (find $n$ such that $\norm{f_n - f_m}_p \leq 1$ for all $m \geq n$. Thus, $\forall m \geq n$, $\norm{f_m}_p \leq \norm{f_n - f_m}_p + \norm{f_n}_p \leq 1 + \norm{f_n}_p$.
+			But the Cauchy property of $f_n$ implies that $\sup_n \norm{f_n}_p < \infty$: find $n$ such that $\norm{f_n - f_m}_p \leq 1$ for all $m \geq n$.
+			Thus, $\forall m \geq n$, $\norm{f_m}_p \leq \norm{f_n - f_m}_p + \norm{f_n}_p \leq 1 + \norm{f_n}_p$.
 			Therefore, $\norm{f}_p < \infty$.
 			
-			For any $\varepsilon > 0$, we can find $N$ so large that $\norm{f_n - f_m}_p < \varepsilon$ for all $n, m \geq N$ since $f_n$ is Cauchy.
+			\emph{Step 4: Show $f_n \overset{L^p}{\to} f$.}
+			For any $\varepsilon > 0$, we can find $N$ so large that $\norm{f_n - f_m}_p < \varepsilon$ for all $n, m \geq N$ since $\{f_n\}$ is Cauchy.
+
 			By Fatou's lemma, for all $n \geq N$,
 			\begin{align}
-				\int \abs{f_n - f}^p\dmu \leq \liminf_{n \to \infty} \int \abs{f_n - f}^p\dmu
+				\int \abs{f_n - f}^p\dmu \leq \liminf_{k \to \infty} \int \abs{f_n - f_{n_k}}^p\dmu
 			\end{align}
-			But when $k$ is so large that $n_K \geq N$, we have
+			But when $k$ is so large that $n_k \geq N$, we have
 			\begin{align}
 				\int \abs{f_n - f_{n_k}}^p\dmu = \norm{f_n - f_{n_k}}_p^p \leq \varepsilon^p
 			\end{align}
-			Thus, fo all $n \geq N$, $\norm{f - f_n}_p \leq \varepsilon$.
+			Thus, fo all $n \geq N$, $\norm{f_n - f}_p \leq \varepsilon$.
 		\end{proof}
 		\begin{proof}[Proof. for $p = \infty$ case]
-			Let $f_n$ be Cauchy in $L^\infty$, as before, find a subsequence $f_{n_k}$ such that
+			Let $\{f_n\}$ be Cauchy in $L^\infty$, as before, find a subsequence $f_{n_k}$ such that
 			\begin{align}
 				\norm{f_{n_k} - f_{n_{k+1}}}_\infty \leq 2^{-k}\quad \forall k
 			\end{align}
@@ -1950,9 +1953,9 @@
 			\end{align}
 			Thus, $\norm{f - f_{n_k}}_\infty \leq 2^{-k+1}$.
 			
-			Take any $\varepsilon > 0$, find $N$ so large that $\forall m, n \geq N$, $\norm{f_m - f_n}_\infty \leq \varepsilon$. Then find $k$ so large that $n_k \geq N$ and $2^{-k+1} \leq \varepsilon$. Then for all $n \geq N$,
+			Take any $\varepsilon > 0$, find $N \in \N$ so large that $\forall m, n \geq N$, $\norm{f_m - f_n}_\infty \leq \varepsilon$. Then find $k$ so large that $n_k \geq N$ and $2^{-k+1} \leq \varepsilon$. Then for all $n \geq N$,
 			\begin{align}
-				\norm{f - f_n}_\infty \leq \norm{f - f_{n_k}}_\infty + + \norm{f_{n_k} - f_n} \leq 2 \varepsilon
+				\norm{f - f_n}_\infty \leq \norm{f - f_{n_k}}_\infty + \norm{f_{n_k} - f_n} \leq 2 \varepsilon
 			\end{align}
 			Taking $\varepsilon' = \varepsilon/2$ concludes $f_n \to f$ in $L^\infty$.
 		\end{proof}

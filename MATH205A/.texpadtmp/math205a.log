@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.5.8)  11 NOV 2020 19:20
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.5.8)  11 NOV 2020 23:29
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -776,7 +776,7 @@ File: mode_of_convergence.png Graphic file (type png)
 Package pdftex.def Info: mode_of_convergence.png  used on input line 1394.
 (pdftex.def)             Requested size: 328.82707pt x 229.7664pt.
  [30 <./mode_of_convergence.png>] [31] [32] [33] [34] [35] [36] [37] [38] [39] [40] [41] [42] [43] [44] [45] [46] [47] [48]
-Overfull \hbox (46.03346pt too wide) in paragraph at lines 2209--2211
+Overfull \hbox (46.03346pt too wide) in paragraph at lines 2212--2214
 \OT1/cmr/m/n/10.95 Conversely, let $\OML/cmm/m/it/10.95 C[]; [] ; C[]$ \OT1/cmr/m/n/10.95 be a par-ti-tion of $\OML/cmm/m/it/10.95 A$ \OT1/cmr/m/n/10.95 and $\OML/cmm/m/it/10.95 D[]; [] ; D[]$ \OT1/cmr/m/n/10.95 be a par-ti-tion of $\OML/cmm/m/it/10.95 B$\OT1/cmr/m/n/10.95 , then $\OML/cmm/m/it/10.95 C[]; [] ; C[]; D[]; [] ; D[]$
  []
 
@@ -784,10 +784,10 @@ Overfull \hbox (46.03346pt too wide) in paragraph at lines 2209--2211
 <product_measure.png, id=258, 445.665pt x 248.93pt>
 File: product_measure.png Graphic file (type png)
 <use product_measure.png>
-Package pdftex.def Info: product_measure.png  used on input line 2921.
+Package pdftex.def Info: product_measure.png  used on input line 2924.
 (pdftex.def)             Requested size: 281.85587pt x 157.43446pt.
  [66] [67 <./product_measure.png>] [68] [69] [70] [71]
-Overfull \hbox (6.9482pt too wide) in paragraph at lines 3112--3115
+Overfull \hbox (6.9482pt too wide) in paragraph at lines 3115--3118
 \OT1/cmr/m/n/10.95 and $[]$ is com-pact. $\OMS/cmsy/m/n/10.95 f\OML/cmm/m/it/10.95 V[]\OMS/cmsy/m/n/10.95 g[]$ \OT1/cmr/m/n/10.95 is an open cover for $\OML/cmm/m/it/10.95 K$\OT1/cmr/m/n/10.95 , thus take a fi-nite sub-cover of it: $\OML/cmm/m/it/10.95 V[]; V[]; [] ; V[]$\OT1/cmr/m/n/10.95 .
  []
 
@@ -795,13 +795,13 @@ Overfull \hbox (6.9482pt too wide) in paragraph at lines 3112--3115
 Here is how much of TeX's memory you used:
  27166 strings out of 492616
  539114 string characters out of 6129482
- 665737 words of memory out of 5000000
+ 666737 words of memory out of 5000000
  30673 multiletter control sequences out of 15000+600000
  545113 words of font info for 78 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  69i,20n,83p,811b,1093s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/doublestroke/dsrom10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on "/Users/tianyudu/Documents/Stanford/Stanford Notes/MATH205A/.texpadtmp/math205a.pdf" (73 pages, 536791 bytes).
+Output written on "/Users/tianyudu/Documents/Stanford/Stanford Notes/MATH205A/.texpadtmp/math205a.pdf" (73 pages, 537178 bytes).
 PDF statistics:
  350 PDF objects out of 1000 (max. 8388607)
  233 compressed objects within 3 object streams
