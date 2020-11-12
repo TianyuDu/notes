@@ -1190,15 +1190,22 @@
 		\end{align}
 		\emph{Note: this definition is a generalization of convergence in probability.}
 	\end{definition}
-	
+
 	\begin{remark}
 		Convergence almost everywhere does not imply convergence in measure.
 		\begin{proof}[Counter-example]
-			Take $\mu = \lambda$, and define $f_n(x) = \id{x \in [n, \infty)}$, then $f_n \to 0$ everywhere.
-			However, $\lambda(\{x : \abs{f_n(x)} > 1/2\}) = \lambda([n, \infty)) = \infty \centernot{\to} 0$.
+			Take $\mu = \lambda$, and define
+			\begin{align}
+				f_n(x) = \id{x \in [n, \infty)}
+			\end{align}
+			then $f_n \to 0$ everywhere.
+			However,
+			\begin{align}
+				\lambda(\{x : \abs{f_n(x)} > 1/2\}) = \lambda([n, \infty)) = \infty \centernot{\to} 0	
+			\end{align}
 		\end{proof}
 	\end{remark}
-	
+
 	\begin{remark}
 		Convergence in measure does not imply convergence almost everywhere (even if we are considering a finite measure).
 		\begin{proof}[Counter-example]
@@ -1213,10 +1220,11 @@
 				f_7(x) &= \id{x \in [3/4, 1]} \\
 				f_8(x) &= \id{x \in [1/8, 1/4]}
 			\end{align}
-			and so on. in general, $\{x : f_n(x) = 1\}$ shrinks exponentially as $n \to \infty$, hence $f_n \to 0$ in Lebesgue measure. However, for any fixed $x \in [0, 1]$, there are infinitely many $n$ such that $f_n(x) = 1$, therefore, $f_n$ does not converge to $0$ pointwise.
+			and so on.
+			In general, $\{x : f_n(x) = 1\}$ shrinks exponentially as $n \to \infty$, hence $f_n \to 0$ in Lebesgue measure. However, for any fixed $x \in [0, 1]$, there are infinitely many $n$ such that $f_n(x) = 1$, therefore, $f_n$ does not converge to $0$ point-wise.
 		\end{proof}
 	\end{remark}
-	
+
 	\begin{proposition}
 		Let $\mu$ be a \ul{finite measure}, then convergence a.e. implies convergence in measure.
 		\begin{proof}
@@ -1274,7 +1282,7 @@
 	\end{proposition}
 	
 	\begin{lemma}[Borel-Cantelli Lemma]
-		If $A_1, A_2, \cdots, $ is a sequence of measurable sets such that
+		If $A_1, A_2, \cdots$ is a sequence of measurable sets such that
 		\begin{align}
 			\sum_{k=1}^\infty \mu(A_k) < \infty
 		\end{align}
@@ -1300,7 +1308,7 @@
 	\end{lemma}
 	
 	\begin{theorem}[Egorov's Theorem]
-		Let $(X, \mc{A}, \mu)$ be a measure space with $\mu(X) < \infty$. Let $f_n$ be a sequence of measurable $\R$-valued functions \ul{converging a.e.} to a $\R$-valued function $f$.
+		Let $(X, \mc{A}, \mu)$ be a measure space with \ul{$\mu(X) < \infty$}. Let $f_n$ be a sequence of measurable $\R$-valued functions \ul{converging a.e.} to a $\R$-valued function $f$.
 		
 		Then for all $\varepsilon > 0$, $\exists$ a set $B \in \mc{A}$ such that
 		\begin{enumerate}
@@ -1337,7 +1345,7 @@
 	\end{theorem}
 	
 	\begin{definition}
-		A sequence of measurable $\R$-valued functions $f_n$ converges to a $\R$-valued measurable function $f$ in $L^1$ if
+		A sequence of measurable $\R$-valued functions $f_n$ converges to a $\R$-valued measurable function $f$ in $L^1$ (also called convergence in mean) if
 		\begin{align}
 			\lim_{n\to\infty} \int \abs{f_n - f}\ d\mu = 0
 		\end{align}
@@ -1458,6 +1466,16 @@
 		\emph{Note: the converse is false, i.e., there are metrics not induced by any norm. For example, $d(x, y) := \id{x = y}$ is in general not induced by any norm.}
 	\end{definition}
 	
+	\begin{proof}
+		Verify properties of metric induced by norm:
+		\begin{enumerate}
+			\item $d(x, y) = \norm{x - y} \geq 0$.
+			\item $x = y \implies d(x, y) = \norm{x - y} = 0$. $\norm{x - y} = d(x, y) = 0 \implies x = y$.
+			\item $d(x, y) = \norm{x - y} = \norm{y - x} = d(y, x)$.
+			\item $d(x, y) = \norm{x - y} = \norm{x - z + z - y} \leq \norm{x - z} + \norm{z - y} = d(x, y) + d(x, z)$.
+		\end{enumerate}
+	\end{proof}
+	
 	\begin{definition}
 		Let $S$ be a set with a metric $d$, a sequence of points $\{x_n\}_{n=1}^\infty$ \textbf{converges} to $x \in S$ if
 		\begin{align}
@@ -1465,12 +1483,12 @@
 		\end{align}
 		A sequence is \textbf{Cauchy} with respect to $d$ if
 		\begin{align}
-			\forall \varepsilon > 0, \exists n_0 \in \N\ s.t.\ \forall m, n \geq n_0, d(x_m, x_n) < \varepsilon
+			\forall \varepsilon > 0, \exists\ n_0 \in \N\ s.t.\ \forall m, n \geq n_0, d(x_m, x_n) < \varepsilon
 		\end{align}
 	\end{definition}
 	
 	\begin{definition}
-		A metric space w.r.t $d$ is \textbf{complete} if every Cauchy sequence w.r.t. $d$ converges to somewhere in the space.
+		A metric space w.r.t $d$ is \textbf{complete} if every Cauchy sequence w.r.t. $d$ converges to an \ul{element in the space}.
 	\end{definition}
 
 	\begin{remark}
@@ -1567,7 +1585,7 @@
 		\item For all $x \in X$,
 		\begin{align}
 			\abs{f(x) + g(x)}^p &\leq (\abs{f(x)} + \abs{g(x)})^p \\
-			&\leq (2 \max\{\abs{f(x)}, \abs{g(x)}\})^2 \\
+			&\leq (2 \max\{\abs{f(x)}, \abs{g(x)}\})^p \\
 			&\leq 2^p \max\{\abs{f(x)}^p, \abs{g(x)}^p\} \\
 			&\leq 2^p (\abs{f(x)}^p + \abs{g(x)}^p)
 		\end{align}
@@ -2618,10 +2636,11 @@
 		\emph{Usage: suppose we wish to check some property on $\mc{A}$, and we find some $\pi$-system $\mc{P}$ that generates $\mc{A}$, it suffices to check this property on any $\lambda$-system covers $\mc{P}$.}
 		\begin{proof}
 			Note that an arbitrary intersection of $\lambda$-system is a $\lambda$-system.
-			
+
+			It suffices to show this implication for the smallest $\lambda$-system $\mc{D}$ containing $\mc{P}$: let $\mc{D}'$ be an arbitrary $\lambda$-system containing $\mc{P}$, therefore $\mc{P} \subseteq \mc{D} \subseteq \mc{D}'$.
+			If we show $\sigma(\mc{P}) \subseteq \mc{D}$, it must be $\sigma(\mc{P}) \subseteq \mc{D}'$.
+
 			Let $\mc{D}$ be \ul{the smallest} (i.e., the intersection) $\lambda$-system contains $\mc{P}$.
-			\todo{Why is it sufficient to show this holds on the smallest $\mc{D}$?}
-			\todo{Is this proof overshot?}
 			Suppose $\mc{P} \subseteq \mc{D}$,
 			define:
 			\begin{align}
