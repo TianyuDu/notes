@@ -11,10 +11,212 @@
 \usepackage{setspace}
 \linespread{1.15}
 
-\title{Lecture Notes \\ STATS214 / CS229M: Machine Learning Theory (Winter 2021) \\ @ Stanford University}
+\newcommand{\thetahat}[0]{\hat{\theta}}
+\newcommand{\convp}[0]{\overset{p}{\rightarrow}}
+\newcommand{\convd}[0]{\overset{d}{\rightarrow}}
+\newcommand{\eqd}[0]{\overset{d}{=}}
+\newcommand{\inv}[0]{^{-1}}
+\newcommand{\cov}[0]{\text{cov}}
+\newcommand{\tr}[0]{\text{tr}}
+\newcommand{\suchthat}[0]{\text{ s.t. }}
+\newcommand{\explr}[1]{\exp\left({#1}\right)}
+
+\title{Lecture Notes (in Progress) \\ STATS214 / CS229M: Machine Learning Theory (Winter 2021) \\ @ Stanford University}
 
 \author{Tianyu Du}
 \begin{document}
 	\maketitle
+	\textbf{Note: CS229M is different from CS229: Machine Learning}
+	\section{Preliminary}
 	
+	\subsection{Formulation and Notations}
+	\begin{theorem}
+		\label{thm:1}
+		Assume the consistency of $\hat{\theta}$, 
+		\begin{align}
+			\thetahat \convp \theta^* \tx{ as } n \to \infty
+		\end{align}
+		Further, suppose $\nabla^2L(\theta^*)$ has full-rank, and mild regularity conditions, there exists absolute constants $c_0, c_1 \in \R_+$ such that
+		\begin{enumerate}
+			\item $\sqrt{n} \norm{\thetahat - \theta^*} \convp c_0$,
+			\item $n[L(\thetahat) - L(\theta^*)] \convp c_1$,
+			\item $\sqrt{n} (\thetahat - \theta^*) \convd \mc{N}(0, \nabla^2L(\theta^*)\inv \cov(\nabla \ell((x,y),\theta^*)) \nabla^2L(\theta^*)\inv)$,
+			\item Let $S \sim \mc{N}(0, \underbrace{\nabla^2 L(\theta^*)^{-1/2} \cov(\nabla \ell((x,y),\theta)) \nabla^2 L(\theta^*)^{-1/2}}_{W})$,
+			then $$n(L(\thetahat) - L(\theta^*)) \convd \frac{1}{2} \norm{S}_2^2$$
+			and $$\lim_{n \to \infty} \expect{n(L(\thetahat) - L(\theta^*))} = \frac{1}{2} \tr(\nabla^2 L(\theta^*)^{-1} \cov(\nabla \ell((x,y),\theta))) $$
+		\end{enumerate}
+	\end{theorem}
+	\begin{proof}
+		Together with the optimality of $\thetahat$ with respect to $\hat{L}$, the Taylor expansion of $\hat{L}$ around $\theta^*$ indicates
+		\begin{align}
+			0 = \nabla \hat{L}(\thetahat) &= \nabla \hat{L}(\theta^*) + \nabla^2 \hat{L}(\theta^*) (\thetahat - \theta^*) + \mc{O}(\norm{\thetahat - \theta^*}_2^2) \\
+			\implies
+			\thetahat - \theta^* &= - \nabla^2 \hat{L}(\theta^*)\inv \nabla \hat{L}(\theta^*) + \mc{O}(\norm{\thetahat - \theta^*}_2^2)
+		\end{align}
+		Let $\ell_i(\theta) = \ell((x\upi, y\upi), \theta)$ denote the individual loss, then the following holds
+		\begin{itemize}
+			\item $\nabla \hat{L}(\theta^*) = \frac{1}{n} \sum_{i=1}^n \nabla \ell_i(\theta^*)$.
+			\item $\nabla^2 \hat{L}(\theta^*) = \frac{1}{n} \sum_{i=1}^n \nabla^2 \ell_i(\theta^*)$.
+		\end{itemize}
+		Moreover, by law of large numbers (LLN),
+		\begin{itemize}
+			\item $\nabla \hat{L}(\theta^*) \convp \nabla L(\theta^*) = 0$ and $\expect{\nabla \hat{L}(\theta^*)} = \nabla L(\theta^*)$.
+			\item $\nabla^2 \hat{L}(\theta^*) \convp \nabla^2 L(\theta^*) \neq 0$ and $\expect{\nabla^2 \hat{L}(\theta^*)} = \nabla^2 L(\theta^*)$
+		\end{itemize}
+		\begin{tcolorbox}
+			\begin{theorem}[Central Limit Theorem]
+				Let $X_1, \dots, X_n$ be $n$ i.i.d. random variables, let $\Sigma = \cov(X_i)$. As $n \to \infty$, define $\hat{X} = \frac{1}{n}\sum_{i=1}^n X_i$,
+				\begin{itemize}
+					\item $\hat{X} \convp \expe[\hat{X}]$,
+					\item $\sqrt{n} (\hat{X} - \expe[\hat{X}]) \convd \mc{N}(0, \Sigma)$.
+				\end{itemize}
+			\end{theorem}
+		\end{tcolorbox}
+		Since $\nabla \hat{L}(\theta^*)$ is the mean of $n$ i.i.d. random variables $\ell_i(\theta^*)$, by the central limit theorem (CLT),
+		\begin{align}
+			\sqrt{n}(\nabla \hat{L}(\theta^*) - \nabla L(\theta^*)) &\to \mc{N}(0, \cov(\nabla \ell_i)) \\
+			\sqrt{n}\nabla \hat{L}(\theta^*) &\to \mc{N}(0, \cov(\nabla \ell_i))
+		\end{align}
+		where $\Sigma = \cov(\ell_i)$.
+		\begin{align}
+			\thetahat - \theta^* &= - \nabla^2 \hat{L}(\theta^*)\inv \frac{1}{n}\sum_{i=1}^n \nabla \ell_i(\theta^*) + \mc{O}(\norm{\thetahat - \theta^*}_2^2) \\
+			&= - \left(\nabla^2 L(\theta^*) + \mc{O}(\frac{1}{\sqrt{n}})\right)\inv \mc{O}(\frac{1}{\sqrt{n}}) + \mc{O}(\norm{\thetahat - \theta^*}_2^2) \\
+			&= \nabla^2 L(\theta^*) \mc{O}(\frac{1}{\sqrt{n}}) \approx \frac{1}{\sqrt{n}}
+		\end{align}
+		More precisely,
+		\begin{align}
+			\sqrt{n}(\thetahat - \theta^*) &= - \underbrace{\nabla^2 \hat{L}(\theta^*)\inv}_{\approx \nabla^2 L(\theta^*)\inv}
+			\underbrace{\sqrt{n}[\nabla \hat{L}(\theta^*) - \nabla L(\theta^*)]}_{\mc{N}(0, \Sigma)}
+			+ \mc{O}(\norm{\thetahat - \theta^*}_2^2) \\
+			&= \nabla^2 L(\theta^*)\inv Z \tx{ where } Z \sim \mc{N}(0, \cov(\nabla \ell_i)) \\
+			&\eqd \mc{N}(0, \nabla^2 L(\theta^*)\inv \cov(\nabla \ell_i) \nabla^2 L(\theta^*)\inv)
+		\end{align}
+		The Taylor's expansion of $L$ around $\theta^*$ implies
+		\begin{align}
+			L(\thetahat) - L(\theta^*) &= \inner{\nabla L(\theta^*)}{\thetahat - \theta^*} + \frac{1}{2} \inner{\thetahat - \theta^*}{\nabla^2 L(\theta^*) (\thetahat - \theta^*)} + \mc{O}(\norm{\thetahat - \theta^*}_2^2)
+		\end{align}
+		Since $\theta^* \equiv \argmin_{\theta \in \Theta} L(\theta)$, $\nabla L(\theta^*) = 0$. Multiply both sides by $n$,
+		\begin{align}
+			n[L(\thetahat) - L(\theta^*)] = \frac{1}{2} \inner{\sqrt{n}(\thetahat - \theta^*)}{\nabla^2 L(\theta^*) \sqrt{n} (\thetahat - \theta^*)} + \tx{higher order terms} \label{eq:0}
+		\end{align}	
+		Note that $\inner{v}{Av} = \norm{A^{1/2}v}_2^2$,
+		\begin{align}
+			(\ref{eq:0}) &= \frac{1}{2} \norm{
+				\nabla^2 L(\theta^*)^{1/2} \sqrt{n}(\thetahat - \theta^*) 
+			}_2^2 + \tx{higher order terms} \label{eq:1}
+		\end{align}
+		By result (3) and property of Gaussian distribution,
+		\begin{align}
+			\nabla^2 L(\theta^*)^{1/2} \sqrt{n}(\thetahat - \theta^*)
+			&\sim \mc{N}(0, \nabla^2 L(\theta^*)^{1/2} \nabla^2L(\theta^*)\inv \cov(\nabla \ell((x,y),\theta)) \nabla^2L(\theta^*)\inv \nabla^2 L(\theta^*)^{1/2})  \\
+			&=\mc{N}(0, \nabla^2 L(\theta^*)^{-1/2} \cov(\nabla \ell((x,y),\theta)) \nabla^2 L(\theta^*)^{-1/2})
+			\overset{d}{=} S
+		\end{align}
+		Consequently, 
+		\begin{align}
+			(\ref{eq:1}) \overset{d}{=} \frac{1}{2}\norm{S}_2^2 + \tx{higher order terms}
+		\end{align}
+		The first moment of $n[L(\thetahat) - L(\theta^*)]$ converges as well, and because $\expect{\norm{v}_2^2} = \expect{\tr(v v^T)} = \tr(\expect{v v^T})$,
+		\begin{align}
+			\expect{n[L(\thetahat) - L(\theta^*)]} &\convp \frac{1}{2} \expect{\norm{S}_2^2} \\
+			&= \frac{1}{2} \tr(\nabla^2 L(\theta^*)^{-1/2} \cov(\nabla \ell) \nabla^2 L(\theta^*)^{-1/2}) \\
+			&= \frac{1}{2} \tr(\nabla^2L(\theta^*)\inv \cov(\nabla \ell))
+		\end{align}
+	\end{proof}
+
+	\subsection{Well-Specified Case}
+	\begin{theorem}[Well-Specification]
+		In addition to assumptions in Theorem \ref{thm:1}, suppose there exists some probabilistic model $P(y|x; \theta)$ parameterized by $\theta$, that is,
+		\begin{align}
+			\exists \theta_* \suchthat y\upi |x\upi \sim P(y|x;\theta_*)\ \forall i \in [n] 
+		\end{align}
+		take the loss function to be the negative log likelihood
+		\begin{align}
+			\ell((x\upi, y\upi); \theta) = - \log P(y\upi | x\upi; \theta)
+		\end{align}
+		then,
+		\begin{enumerate}
+			\item The excess risk minimizer equals the ground truth: $\theta^* \equiv \argmin_{\theta} L(\theta) = \theta_*$.
+			\item $\expect{\nabla \ell((x, y), \theta^*)} = 0$.
+			\item $\cov(\nabla \ell((x, y), \theta^*)) = \nabla^2 L(\theta^*)$.
+			\item $\sqrt{n}(\thetahat - \theta^*) \convd \mc{N}(0, \nabla^2 L(\theta^*)\inv)$, suppose $S \sim \mc{N}(0, 1)$,
+			\begin{align}
+				n (L(\thetahat) - L(\theta^*)) \convd \frac{1}{2} \norm{S}_2^2 \sim \chi^2(p)
+			\end{align}
+			So that
+			\begin{align}
+				\expect{L(\thetahat) - L(\theta^*)} \approx \frac{p}{2n}
+			\end{align}
+		\end{enumerate}
+	\end{theorem}
+	
+	\begin{remark}[Limitation of Asymptotic Analysis]
+		Asymptotic analysis hides dependencies on $p$, for instance, both $\frac{p}{2n} + \frac{1}{n^2}$ and $ \frac{p}{2n} + \frac{p^{100}}{n^2}$ are classified into $\frac{p}{2n} + o(1/n)$ by asymptotic analysis.
+		In contrast, non-asymptotic analysis only hides absolute constants and we can bound model performance with form $L(\thetahat) - L(\theta^*) \leq \mc{O}(f(p, n))\ \forall p, n \geq 1$.
+	\end{remark}
+	
+	\begin{notation}
+		In the following non-asymptotic analysis, every occurrence of $\mc{O}(x)$ is a placeholder for some function $f \in \mc{O}(x)$.
+		
+		For all $a, b \geq 0$,
+		\begin{align}
+			a \precsim b \iff \exists \tx{ absolute constant } c \geq 0 \suchthat a \leq c b
+		\end{align}
+	\end{notation}
+	
+	\section{Uniform Convergence}
+	\paragraph{Key Idea} For every $\theta \in \Theta$, $\hat{L}(\theta)$ is an empirical estimate of $L(\theta)$ and $\hat{L}(\theta) \approx L(\theta)$.
+	If we can bound
+	\begin{align}
+		\abs{\hat{L}(\theta^*) - L(\theta^*)} \leq \alpha \\
+		L(\thetahat) - \hat{L}(\thetahat) \leq \alpha
+	\end{align}
+	then
+	\begin{align}
+		L(\thetahat) - L(\theta^*) &= [L(\thetahat) - \hat{L}(\thetahat)] + [\hat{L}(\thetahat) - \hat{L}(\theta^*)] + [\hat{L}(\theta^*) - L(\theta^*)] \\
+		&\leq \alpha + 0 + \alpha = 2 \alpha
+	\end{align}
+
+	\subsection{Contraction Inequality (to show $L(\theta) \approx \hat{L}(\theta)$)}
+	\begin{theorem}[Hoeffding's Inequality]
+		Let $X_1, \dots, X_n$ be i.i.d. real-valued random variables, assume $a_i \leq x_i \leq b_i$ for all $i$ almost surely. Let $\mu = \expect{\frac{1}{n} \sum_{i=1}^n X_i}$, then
+		\begin{align}
+			\prob{\abs{\frac{1}{n} \sum_{i=1}^n X_i - \mu} \leq \varepsilon} &\geq 1 - 2 \explr{\frac{-2n^2 \varepsilon^2}{\sum_{i=1}^n (b_i - a_i)^2}} \\
+			\prob{\abs{\frac{1}{n} \sum_{i=1}^n X_i - \mu} \geq \varepsilon} &\leq 2 \explr{\frac{-2n^2 \varepsilon^2}{\sum_{i=1}^n (b_i - a_i)^2}}
+		\end{align}
+	\end{theorem}
 \end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
