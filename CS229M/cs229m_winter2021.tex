@@ -5,6 +5,7 @@
 \usepackage[margin=1in]{geometry}
 \usepackage{float}
 \usepackage{tcolorbox}
+\usepackage{enumitem}
 
 \counterwithin*{equation}{section}
 
@@ -20,6 +21,9 @@
 \newcommand{\tr}[0]{\text{tr}}
 \newcommand{\suchthat}[0]{\text{ s.t. }}
 \newcommand{\explr}[1]{\exp\left({#1}\right)}
+\newcommand{\yhat}[0]{\hat{y}}
+\newcommand{\defas}[0]{\overset{\triangle}{=}}
+\newcommand{\dash}[0]{\text{-}}
 
 \title{Lecture Notes (in Progress) \\ STATS214 / CS229M: Machine Learning Theory (Winter 2021) \\ @ Stanford University}
 
@@ -28,8 +32,64 @@
 	\maketitle
 	\textbf{Note: CS229M is different from CS229: Machine Learning}
 	\section{Preliminary}
+	\begin{center}
+	\line(1,0){150}\ \emph{Lecture 1. Jan. 11, 2021}\ \line(1,0){150}
+	\end{center}
+	\subsection{Formulation and Asymptotics}
+	\par For components of standard supervised learning problems, we use the following notations.
+	\begin{itemize}
+		\item Input space: $\mc{X}$.
+		\item Output space: $\mc{Y}$.
+		\item Joint probability distribution $P$ over $\mc{X} \times \mc{Y}$.
+		\item Training data $(x^{(1)}, y^{(1)}), \dots, (x^{(n)}, y^{(n)}) \overset{i.i.d.}{\sim} P$.
+		\item Predictors/model/hypothesis $h: \mc{X} \to \mc{Y}$.
+		\item Loss function $\ell: \mc{Y} \times \mc{Y} \to \R$, typically we assume $\ell(\yhat, y) \geq 0$ for all $\yhat, y \in \mc{Y}$.
+		\item The expected/population risk/loss $L(h) \defas \expe_{(x,y)\sim P} \ell(h(x), y))]$, \emph{the goal of supervised learning problems is to minimize the population risk}.
+		\item Hypothesis class/family $\mc{H}$ is the set of all functions from $\mc{X}$ to $\mc{Y}$.
+		\item Excess risk (w.r.t. $\mc{H}$) of a particular $h \in \mc{H}$ is defined as $L(h) - \inf_{g \in \mc{H}} L(g)$, the excess risk is always non-negative.
+	\end{itemize}
+	\begin{example}
+		For regression problems, $\mc{Y} = \R$ and typically $\ell(\yhat, y) = \frac{1}{2} (\yhat - y)^2$. For $k$-class classification problems, $\mc{Y} = \{1, 2, \dots, k\}$ and $\ell_{0\dash 1}(\yhat, y) = \id{\yhat \neq y}$.
+	\end{example}
+	\subsection{Empirical Risk Minimization (ERM)}
+	\par The training loss / empirical loss / empirical risk associated a particular dataset $\{(x\upi, y\upi)\}_{i=1}^n$ is defined as
+	\begin{align}
+		\hat{L} \defas \frac{1}{n} \sum_{i=1}^n \ell(h(x\upi), y\upi)
+	\end{align}
+	The ERM estimator is
+	\begin{align}
+		\hat{h} \defas \argmin_{h \in \mc{H}} \hat{L}(h)
+	\end{align}
+	Because $(x\upi, y\upi) \sim P$, for every $h \in \mc{H}$,
+	\begin{align}
+		\expe_{\{(x\upi, y\upi)\}_{i=1}^n \overset{i.i.d.}{\sim} P} [\hat{L}(h)] = L(h)
+	\end{align}
+
+	\subsection{Parameterization}
+	\par Consider the family of hypothesis parameterized by $\theta$: $\mc{H} = \{h_\theta \mid \theta \in \Theta\}$. For instance, with $\Theta = \R^d$ and $h_\theta(x) = \theta^T x$, $\mc{H}$ becomes the family of linear models. The ERM for parameterized family is
+	\begin{align}
+		\hat{L}(\theta) &= \frac{1}{n} \sum_{i=1}^n \ell(h_\theta(x\upi), y\upi) \\
+		\thetahat = \thetahat_{ERM} &= \argmin_{\theta \in \Theta} \hat{L}(\theta)
+	\end{align}
+	Sometimes we use the alternative notion $\ell((x\upi, y\upi), \theta)$ for $\ell(h_\theta(x\upi), y\upi)$.
 	
-	\subsection{Formulation and Notations}
+	\emph{Goal: bound the excess risk of $\thetahat$}.
+	
+	\subsection{Asymptotic Analysis}
+	\par Let $n \to \infty$, we wish to obtain a bound with form
+	\begin{align}
+		L(\thetahat) - \argmin L(\theta) \leq \frac{c}{n} + o(\frac{1}{n})
+	\end{align}
+	where $c$ depends on the problem.
+	
+	From now on,
+	\begin{align}
+		\Theta &= \R^p \\
+		\thetahat &= \argmin_{\theta \in \R^p} \hat{L}(\theta) \\
+		\theta^* &= \argmin_{\theta \in \R^p} L(\theta) \\
+		\tx{excess risk} &= L(\thetahat) - L(\theta^*)
+	\end{align}
+
 	\begin{theorem}
 		\label{thm:1}
 		Assume the consistency of $\hat{\theta}$, 
@@ -91,6 +151,11 @@
 			&= \nabla^2 L(\theta^*)\inv Z \tx{ where } Z \sim \mc{N}(0, \cov(\nabla \ell_i)) \\
 			&\eqd \mc{N}(0, \nabla^2 L(\theta^*)\inv \cov(\nabla \ell_i) \nabla^2 L(\theta^*)\inv)
 		\end{align}
+
+	\begin{center}
+	\line(1,0){150}\ \emph{Lecture 2. Jan. 13, 2021}\ \line(1,0){150}
+	\end{center}
+
 		The Taylor's expansion of $L$ around $\theta^*$ implies
 		\begin{align}
 			L(\thetahat) - L(\theta^*) &= \inner{\nabla L(\theta^*)}{\thetahat - \theta^*} + \frac{1}{2} \inner{\thetahat - \theta^*}{\nabla^2 L(\theta^*) (\thetahat - \theta^*)} + \mc{O}(\norm{\thetahat - \theta^*}_2^2)
@@ -135,7 +200,7 @@
 			\ell((x\upi, y\upi); \theta) = - \log P(y\upi | x\upi; \theta)
 		\end{align}
 		then,
-		\begin{enumerate}
+		\begin{enumerate}[label=(\arabic*)]
 			\item The excess risk minimizer equals the ground truth: $\theta^* \equiv \argmin_{\theta} L(\theta) = \theta_*$.
 			\item $\expect{\nabla \ell((x, y), \theta^*)} = 0$.
 			\item $\cov(\nabla \ell((x, y), \theta^*)) = \nabla^2 L(\theta^*)$.
@@ -150,28 +215,23 @@
 		\end{enumerate}
 	\end{theorem}
 	
-	\begin{remark}[Limitation of Asymptotic Analysis]
-		Asymptotic analysis hides dependencies on $p$, for instance, both $\frac{p}{2n} + \frac{1}{n^2}$ and $ \frac{p}{2n} + \frac{p^{100}}{n^2}$ are classified into $\frac{p}{2n} + o(1/n)$ by asymptotic analysis.
-		In contrast, non-asymptotic analysis only hides absolute constants and we can bound model performance with form $L(\thetahat) - L(\theta^*) \leq \mc{O}(f(p, n))\ \forall p, n \geq 1$.
-	\end{remark}
+	\subsection{Limitation of Asymptotic Analysis}
+	\par Asymptotic analysis hides dependencies on $p$, for instance, both $\frac{p}{2n} + \frac{1}{n^2}$ and $ \frac{p}{2n} + \frac{p^{100}}{n^2}$ are classified into $\frac{p}{2n} + o(1/n)$ by asymptotic analysis.
+
+	In contrast, non-asymptotic analysis only hides absolute constants and we can bound model performance with form $L(\thetahat) - L(\theta^*) \leq \mc{O}(f(p, n))\ \forall p, n \geq 1$.
 	
-	\begin{notation}
-		In the following non-asymptotic analysis, every occurrence of $\mc{O}(x)$ is a placeholder for some function $f \in \mc{O}(x)$.
+	In the following non-asymptotic analysis, every occurrence of $\mc{O}(x)$ is a placeholder for some function $f \in \mc{O}(x)$.
 		
-		For all $a, b \geq 0$,
-		\begin{align}
-			a \precsim b \iff \exists \tx{ absolute constant } c \geq 0 \suchthat a \leq c b
-		\end{align}
-	\end{notation}
+	For all $a, b \geq 0$, $a \precsim b \iff \exists \tx{ absolute constant } c \geq 0 \suchthat a \leq c b$.
 	
-	\section{Uniform Convergence}
-	\paragraph{Key Idea} For every $\theta \in \Theta$, $\hat{L}(\theta)$ is an empirical estimate of $L(\theta)$ and $\hat{L}(\theta) \approx L(\theta)$.
+	\subsection{Uniform Convergence}
+	\paragraph{Key Idea} For every $\theta \in \Theta$, $\hat{L}(\theta)$ is an empirical estimate of $L(\theta)$, so $\hat{L}(\theta) \approx L(\theta)$ (we still need to prove this).
 	If we can bound
 	\begin{align}
 		\abs{\hat{L}(\theta^*) - L(\theta^*)} \leq \alpha \\
 		L(\thetahat) - \hat{L}(\thetahat) \leq \alpha
 	\end{align}
-	then
+	Recall that we wanted to bound the excess risk of $\thetahat$, which is
 	\begin{align}
 		L(\thetahat) - L(\theta^*) &= [L(\thetahat) - \hat{L}(\thetahat)] + [\hat{L}(\thetahat) - \hat{L}(\theta^*)] + [\hat{L}(\theta^*) - L(\theta^*)] \\
 		&\leq \alpha + 0 + \alpha = 2 \alpha
@@ -185,6 +245,47 @@
 			\prob{\abs{\frac{1}{n} \sum_{i=1}^n X_i - \mu} \geq \varepsilon} &\leq 2 \explr{\frac{-2n^2 \varepsilon^2}{\sum_{i=1}^n (b_i - a_i)^2}}
 		\end{align}
 	\end{theorem}
+	To use this theorem, consider
+	\begin{align}
+		\sigma^2 = \frac{1}{n^2} \sum_{i=1}^n (b_i - a_i)^2
+	\end{align}
+	as a proxy for the variance of $\frac{1}{n} \sum_{i=1}^n X_i$:
+	\begin{align}
+		Var(\frac{1}{n} \sum_{i=1}^n X_i) = \frac{1}{n^2} \sum_{i=1}^n Var(X_i) \leq \frac{1}{n^2} \leq \frac{1}{n^2} \sum_{i=1}^n (b_i - a_i)^2
+	\end{align}
+	Take $\varepsilon = \mc{O}(\sqrt{\sigma^2 \log(n)}) = \mc{O}(\sqrt{c \sigma^2 \log(n)})$, where $c$ is a large constant.
+	\begin{align}
+		\prob{\abs{\frac{1}{n} \sum X_i - \mu } \leq \sqrt{c \sigma^2 \log n}} &\geq 1 - 2 \explr{\frac{-2 n^2 c \sigma^2 \log n}{n^2 \sigma^2}} \\
+		&= 1 - 2 \explr{-2 c  \log n} \\
+		&= 1 - 2 \explr{\log n^{-2 c}} \\
+		&= 1 - 2n^{-2c} \approx 1
+	\end{align}
+	Moreover, if $a_i = - \mc{O}(1)$ and $b_i = \mc{O}(1)$, then $\sigma^2 = \frac{1}{n}$.
+	With high probability,
+	\begin{align}
+		\abs{\frac{1}{n}\sum X_i - \mu} \leq \mc{O}(\sqrt{\sigma^2 \log n}) = \mc{O}(\sqrt{\frac{\log n}{n}}) = \tilde{\mc{O}}(\frac{1}{\sqrt{n}})
+	\end{align}
+	
+	\subsection{Back to Learning Theory}
+	\par Take $X_i = \ell((x\upi, y\upi); \theta)$, assume $\ell((x,y);\theta) \in [0, 1]$ (such as 0-1 loss).
+	\begin{lemma}
+		For any $\theta$ , with high probability,
+		\begin{align}
+			\abs{\hat{L}(\theta) - L(\theta)} \leq \tilde{\mc{O}}(\frac{1}{\sqrt{n}})
+		\end{align}
+		In particular, $\abs{\hat{L}(\theta^*) - L(\theta^*)} \leq \tilde{\mc{O}}(\frac{1}{\sqrt{n}})$.
+	\end{lemma}
+	\todo{Still need to check.}
+	\subsection{Uniform Convergence}
+	$\hat{L} \to L$ uniformly on $\Theta$ if 
+	\begin{align}
+		\prob{\forall \theta \in \Theta, \abs{\hat{L}(\theta) - L(\theta)} \leq \varepsilon'} \geq 1 - \delta' \\
+		\prob{\exists \theta \in \Theta, \abs{\hat{L}(\theta) - L(\theta)} \geq \varepsilon'} 
+		\leq \sum_{\theta \in \Theta} \prob{\abs{\hat{L}(\theta) - L(\theta)} \geq \varepsilon'}
+	\end{align}
+	\begin{align}
+		\prob{\forall \theta \in \Theta, \abs{\hat{L}(\theta) - L(\theta)} \geq \varepsilon'} = 1 - \prob{\forall \theta \in \Theta, \abs{\hat{L}(\theta) - L(\theta)} \leq \varepsilon'}
+	\end{align}
 \end{document}
 
 
